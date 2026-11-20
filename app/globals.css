@@ -253,21 +253,35 @@
   .k-link { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 0.24em; transition: text-decoration-color 0.16s; }
   .k-link:hover { text-decoration-color: currentColor; }
 
-  /* ---------- Showroom portals (homepage, first section) ----------
-     Each portal is the house from the logo: walls under a 45-degree roof. At 3:4 the roof is half
-     the width tall, so the eaves sit 37.5% down. */
-  .sr-house { clip-path: polygon(50% 0, 100% 37.5%, 100% 100%, 0 100%, 0 37.5%); }
-  /* Sized by width so the 3:4 shape (and its 45-degree roof) never distorts; bound by the viewport height. */
-  .sr-portal { position: relative; aspect-ratio: 3 / 4; width: min(100%, calc((100svh - var(--header-h) - 13rem) * 0.75)); }
-  @media (min-width: 768px) { .sr-portal { width: min(44vw, calc((100svh - var(--header-h) - 9rem) * 0.75), 34.5rem); } }
+  /* ---------- Showroom (homepage, first section) ----------
+     Each range's photograph fills the section. A new range opens as a window that grows out of its
+     own thumbnail until it is the whole screen, its edge drawn as a hairline while it travels. */
   .sr-layer { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
   .sr-layer[data-active="true"] { visibility: visible; z-index: 1; }
+  .sr-layer img { object-position: var(--pos-m); }
+  @media (min-width: 768px) { .sr-layer img { object-position: var(--pos); } }
   .sr-dim { position: absolute; inset: 0; background: #0c1a28; opacity: 0; pointer-events: none; }
+  /* Midnight shade where the words sit: bottom and top on phones, the left side on wider screens. */
+  .sr-scrim {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background:
+      linear-gradient(0deg, rgb(12 26 40 / 0.95) 0%, rgb(12 26 40 / 0.78) 36%, rgb(12 26 40 / 0) 66%),
+      linear-gradient(180deg, rgb(12 26 40 / 0.72) 0%, rgb(12 26 40 / 0) 28%);
+  }
+  @media (min-width: 768px) {
+    .sr-scrim {
+      background:
+        linear-gradient(90deg, rgb(12 26 40 / 0.9) 0%, rgb(12 26 40 / 0.66) 30%, rgb(12 26 40 / 0) 60%),
+        linear-gradient(0deg, rgb(12 26 40 / 0.8) 0%, rgb(12 26 40 / 0) 34%),
+        linear-gradient(180deg, rgb(12 26 40 / 0.68) 0%, rgb(12 26 40 / 0) 30%);
+    }
+  }
+  .sr-aperture { position: absolute; z-index: 4; pointer-events: none; visibility: hidden; box-shadow: inset 0 0 0 1px rgb(242 239 232 / 0.85); }
   .sr-tab { position: relative; display: grid; gap: 6px; justify-items: center; padding: 4px 2px; cursor: pointer; color: var(--text-soft); transition: color 0.16s var(--ease-out); }
-  .sr-tab .sr-thumb { position: relative; width: 44px; aspect-ratio: 3 / 4; overflow: hidden; opacity: 0.5; transition: opacity 0.24s var(--ease-out), transform 0.24s var(--ease-out); }
-  .sr-tab:hover .sr-thumb { opacity: 0.85; }
+  .sr-tab .sr-thumb { position: relative; width: 40px; aspect-ratio: 3 / 4; overflow: hidden; opacity: 0.55; box-shadow: 0 0 0 1px rgb(242 239 232 / 0.22); transition: opacity 0.24s var(--ease-out), transform 0.24s var(--ease-out), box-shadow 0.24s var(--ease-out); }
+  .sr-tab:hover .sr-thumb { opacity: 0.9; }
   .sr-tab[aria-selected="true"] { color: var(--accent-ink); }
-  .sr-tab[aria-selected="true"] .sr-thumb { opacity: 1; transform: translateY(-3px); }
+  .sr-tab[aria-selected="true"] .sr-thumb { opacity: 1; transform: translateY(-3px); box-shadow: 0 0 0 1px var(--accent-ink); }
   @media (min-width: 1024px) { .sr-tab { padding: 4px; } .sr-tab .sr-thumb { width: 52px; } }
 
   /* ---------- Chapters ---------- */

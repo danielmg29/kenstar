@@ -15,32 +15,32 @@ const COUNT = SHOWROOM.length;
 const pad = (n: number) => String(n).padStart(2, "0");
 const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/** The logo's house (walls under a 45-degree roof), scaled by `s` about a point low in the doorway. */
-function house(s: number, cx = 50, cy = 64) {
-  const p = (x: number, y: number) => `${(cx + (x - cx) * s).toFixed(3)}% ${(cy + (y - cy) * s).toFixed(3)}%`;
-  return `polygon(${p(50, 0)}, ${p(100, 37.5)}, ${p(100, 100)}, ${p(0, 100)}, ${p(0, 37.5)})`;
-}
-
-// Motion, from the approved system: the door opens over 900ms; text follows in steps; input waits 300ms.
+// Motion, from the approved system: the window opens over 900ms; words follow in steps; input waits 300ms.
 const OPEN_FOR = 0.9;
 const TEXT_OUT = 0.12;
 const INPUT_LOCK = 300;
 
+type Inset = { t: number; r: number; b: number; l: number };
+const insetCss = (i: Inset) => `inset(${i.t}px ${i.r}px ${i.b}px ${i.l}px)`;
+
 /**
- * The homepage's first section: six showroom ranges seen through house-shaped portals.
- * One range is active at a time and drives the photograph, headline, description, both actions
- * and the index. Moving between ranges walks through a doorway into the next room. Manual only.
+ * The homepage's first section: the showroom, one range at a time, each photograph filling the
+ * screen. Choosing a range opens its photograph as a window that grows out of its thumbnail until
+ * it is the whole view, its edge drawn as a hairline on the way. The active range drives the
+ * photograph, headline, description, both actions and the index. Manual only.
  */
 export function ShowroomCarousel() {
   const [index, setIndex] = useState(SHOWROOM_START);
   const shown = useRef(SHOWROOM_START); // the range being shown or arriving
   const lockUntil = useRef(0);
+  const root = useRef<HTMLElement>(null);
   const layers = useRef<(HTMLDivElement | null)[]>([]);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const aperture = useRef<HTMLDivElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const headline = useRef<HTMLHeadingElement>(null);
   const split = useRef<SplitText | null>(null);
-  const doorway = useRef<gsap.core.Timeline | null>(null);
+  const opening = useRef<gsap.core.Timeline | null>(null);
   const textIn = useRef<gsap.core.Timeline | null>(null);
   const firstPaint = useRef(true);
   const swap = useRef(0);
@@ -49,12 +49,15 @@ export function ShowroomCarousel() {
 
   const range = SHOWROOM[index];
 
-  /** Walk from one room into the next: the new photograph opens out of a doorway in the old one. */
-  const openDoor = useCallback((from: number, to: number) => {
-    doorway.current?.progress(1).kill();
+  /** The new room opens out of its own thumbnail and grows to fill the screen; the old one recedes. */
+  const openWindow = useCallback((from: number, to: number) => {
+    opening.current?.progress(1).kill();
+    const section = root.current;
     const incoming = layers.current[to];
     const outgoing = layers.current[from];
-    if (!incoming || !outgoing) return;
+    const frame = aperture.current;
+    if (!section || !incoming || !outgoing || !frame) return;
+
     layers.current.forEach((layer, i) => {
       if (layer && i !== to && i !== from) gsap.set(layer, { visibility: "hidden", zIndex: 0, clearProps: "clipPath" });
     });
@@ -64,29 +67,41 @@ export function ShowroomCarousel() {
     const outImg = outgoing.querySelector("img");
     const outDim = outgoing.querySelector(".sr-dim");
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        gsap.set(outgoing, { visibility: "hidden", zIndex: 0 });
-        gsap.set([outImg, outDim, inImg], { clearProps: "transform,opacity" });
-        gsap.set(incoming, { clearProps: "clipPath" });
-      },
-    });
+    const done = () => {
+      gsap.set(outgoing, { visibility: "hidden", zIndex: 0 });
+      gsap.set([outImg, outDim, inImg], { clearProps: "transform,opacity" });
+      gsap.set(incoming, { clearProps: "clipPath" });
+      gsap.set(frame, { visibility: "hidden" });
+    };
+    const tl = gsap.timeline({ onComplete: done });
+    opening.current = tl;
+
     if (reducedMotion()) {
       tl.fromTo(incoming, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power1.out", clearProps: "opacity" });
-    } else {
-      const door = { s: 0.12 };
-      tl.fromTo(
-        door,
-        { s: 0.12 },
-        { s: 1, duration: OPEN_FOR, ease: "power2.inOut", onUpdate: () => void (incoming.style.clipPath = house(door.s)) },
-        0,
-      )
-        // The room you are entering settles as you step in; the one you leave falls back into shadow.
-        .fromTo(inImg, { scale: 1.14 }, { scale: 1, duration: OPEN_FOR + 0.2, ease: "power3.out" }, 0)
-        .to(outImg, { scale: 1.08, duration: OPEN_FOR, ease: "power2.inOut" }, 0)
-        .to(outDim, { opacity: 0.5, duration: OPEN_FOR, ease: "power2.in" }, 0);
+      return;
     }
-    doorway.current = tl;
+
+    // Where the window starts: the thumbnail of the range being opened.
+    const s = section.getBoundingClientRect();
+    const t = tabs.current[to]?.querySelector(".sr-thumb")?.getBoundingClientRect();
+    const start: Inset = t
+      ? { t: t.top - s.top, r: s.right - t.right, b: s.bottom - t.bottom, l: t.left - s.left }
+      : { t: s.height / 2, r: s.width / 2, b: s.height / 2, l: s.width / 2 };
+    const win = { ...start };
+    const draw = () => {
+      incoming.style.clipPath = insetCss(win);
+      frame.style.inset = `${win.t}px ${win.r}px ${win.b}px ${win.l}px`;
+    };
+    draw();
+    gsap.set(frame, { visibility: "visible", opacity: 1 });
+
+    tl.to(win, { t: 0, r: 0, b: 0, l: 0, duration: OPEN_FOR, ease: "power3.inOut", onUpdate: draw }, 0)
+      // The line that drew the window gives way to the photograph as it reaches the edges.
+      .to(frame, { opacity: 0, duration: 0.24, ease: "power1.in" }, OPEN_FOR - 0.3)
+      // Stepping into the new room, it settles; the one behind falls back into shadow.
+      .fromTo(inImg, { scale: 1.18 }, { scale: 1, duration: OPEN_FOR + 0.25, ease: "power3.out" }, 0)
+      .to(outImg, { scale: 1.06, duration: OPEN_FOR, ease: "power2.inOut" }, 0)
+      .to(outDim, { opacity: 0.55, duration: OPEN_FOR, ease: "power2.in" }, 0);
   }, []);
 
   const go = useCallback(
@@ -105,7 +120,7 @@ export function ShowroomCarousel() {
       split.current?.revert();
       split.current = null;
 
-      openDoor(from, to);
+      openWindow(from, to);
       clearTimeout(swap.current);
       const parts = panel.current ? Array.from(panel.current.children) : [];
       if (reducedMotion() || !parts.length) {
@@ -117,7 +132,7 @@ export function ShowroomCarousel() {
       gsap.to(parts, { opacity: 0, y: -8, duration: TEXT_OUT, ease: "power1.in", overwrite: true });
       swap.current = window.setTimeout(() => setIndex(to), TEXT_OUT * 1000);
     },
-    [openDoor],
+    [openWindow],
   );
 
   // The new range's words arrive in steps: headline lines, then description, then actions.
@@ -148,12 +163,12 @@ export function ShowroomCarousel() {
     textIn.current = tl;
   }, [index]);
 
-  // Keep the plain headline on unmount.
+  // Leave plain text and no running tweens behind on unmount.
   useLayoutEffect(
     () => () => {
       clearTimeout(swap.current);
       textIn.current?.kill();
-      doorway.current?.kill();
+      opening.current?.kill();
       split.current?.revert();
     },
     [],
@@ -167,13 +182,69 @@ export function ShowroomCarousel() {
   };
 
   return (
-    <section id="ranges" aria-labelledby="sr-title" className="env-midnight relative overflow-x-clip">
-      <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-y-8 px-5 pb-14 pt-9 [grid-template-areas:'title'_'portal'_'tabs'_'panel'_'visit'] md:grid-cols-[minmax(0,1fr)_auto] md:grid-rows-[auto_1fr_auto_auto] md:gap-x-12 md:gap-y-7 md:px-10 md:py-12 md:[grid-template-areas:'title_portal'_'panel_portal'_'tabs_portal'_'visit_portal'] lg:min-h-[calc(100svh-var(--header-h))] xl:gap-x-24 xl:px-[clamp(3rem,5vw,6rem)]">
+    <section
+      ref={root}
+      id="ranges"
+      aria-labelledby="sr-title"
+      className="env-midnight relative isolate h-[calc(100svh-var(--header-h))] min-h-[38rem] touch-pan-y overflow-hidden"
+      onPointerDown={(e) => (swipe.current = { x: e.clientX, y: e.clientY })}
+      onPointerUp={(e) => {
+        const start = swipe.current;
+        swipe.current = null;
+        if (!start) return;
+        const dx = e.clientX - start.x;
+        if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(e.clientY - start.y) * 1.5) go(shown.current + (dx < 0 ? 1 : -1));
+      }}
+    >
+      {/* The photographs, full bleed */}
+      <div className="absolute inset-0 -z-10 select-none">
+        {SHOWROOM.map((r, i) => (
+          <div
+            key={r.slug}
+            ref={(el) => {
+              layers.current[i] = el;
+            }}
+            className="sr-layer"
+            data-active={i === SHOWROOM_START ? "true" : undefined}
+            style={{ "--pos": r.photo.position, "--pos-m": r.photo.positionMobile } as React.CSSProperties}
+          >
+            <Image
+              src={r.photo.src}
+              alt={i === index ? r.photo.alt : ""}
+              aria-hidden={i === index ? undefined : true}
+              fill
+              draggable={false}
+              preload={i === SHOWROOM_START}
+              loading={i === SHOWROOM_START ? undefined : "lazy"}
+              sizes="100vw"
+              className="object-cover"
+              {...(i === SHOWROOM_START ? { "data-loader-reveal": "" } : {})}
+            />
+            <span className="sr-dim" aria-hidden="true" />
+          </div>
+        ))}
+        <div className="sr-scrim" aria-hidden="true" />
+        <div ref={aperture} className="sr-aperture" aria-hidden="true" />
+      </div>
+
+      {/* The words and controls, laid over the photograph */}
+      <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] grid-rows-[auto_1fr_auto_auto_auto] gap-x-4 gap-y-4 px-5 pb-[calc(56px+1.5rem)] pt-7 [grid-template-areas:'title_title'_'._.'_'count_count'_'tabs_tabs'_'panel_panel'] md:grid-cols-[minmax(0,1fr)_auto] md:grid-rows-[auto_1fr_auto_auto] md:gap-x-12 md:gap-y-6 md:px-10 md:pb-10 md:pt-10 md:[grid-template-areas:'title_count'_'._.'_'panel_tabs'_'visit_tabs'] xl:px-[clamp(3rem,5vw,6rem)]">
         <div className="[grid-area:title]">
           <h1 id="sr-title" className="t-display-2 max-w-[11ch]">
             The making of a space.
           </h1>
-          <p className="t-lede t-soft mt-4 max-w-[36ch]">From the first line to the final light: six showroom ranges on Market Road, {TOWN}.</p>
+          <p className="t-lede mt-3 hidden max-w-[34ch] text-[var(--text)]/85 md:block">From the first line to the final light: six showroom ranges on Market Road, {TOWN}.</p>
+        </div>
+
+        {/* Where we are, and whose photograph this is */}
+        <div className="flex items-baseline justify-end gap-3 whitespace-nowrap text-right [grid-area:count] md:block">
+          <p className="order-2 font-[family-name:var(--font-manrope)] text-[clamp(1.5rem,1.2rem+1.9vw,3.25rem)] font-light leading-none tracking-[-0.03em] md:order-none" aria-hidden="true">
+            {range.number}
+            <span className="t-soft"> / {pad(COUNT)}</span>
+          </p>
+          <p className="t-tech text-[var(--text)]/85 md:mt-3">
+            {range.photo.standIn ? "Illustrative photo" : `Photographed at Kenstar, ${TOWN}`}
+          </p>
         </div>
 
         {/* The active range */}
@@ -183,13 +254,13 @@ export function ShowroomCarousel() {
           role="tabpanel"
           aria-labelledby={`sr-tab-${range.slug}`}
           aria-live="polite"
-          className="self-end [grid-area:panel] md:pt-6"
+          className="max-w-[34rem] [grid-area:panel] md:self-end"
         >
           <h2 ref={headline} className="t-h1 max-w-[16ch]">
             {range.name}
           </h2>
-          <p className="t-lede t-soft mt-4">{range.description}</p>
-          <div className="mt-7 flex flex-wrap gap-3">
+          <p className="t-lede mt-3 text-[var(--text)]/85 md:mt-4">{range.description}</p>
+          <div className="mt-5 flex flex-wrap gap-3 md:mt-7">
             <a href={range.primary.href} target="_blank" rel="noopener noreferrer" className="k-btn k-btn-primary">
               <Chat size={18} />
               {range.primary.label}
@@ -201,9 +272,23 @@ export function ShowroomCarousel() {
           </div>
         </div>
 
-        {/* Index: one small portal per range, then previous/next with the count */}
-        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-[var(--line)] pt-5 [grid-area:tabs]">
-          <div role="tablist" aria-label="Showroom ranges" className="-ml-0.5 flex gap-1 sm:gap-2 md:gap-1 lg:gap-2" onKeyDown={onTabKey}>
+        {/* The showroom itself: open now, where, and how to get there */}
+        <div className="t-small hidden gap-1 border-t border-[var(--line)] pt-4 [grid-area:visit] md:grid">
+          <p className="flex items-center gap-2">
+            <span className="status-dot" style={{ background: status?.open ? "var(--status-open)" : "var(--text-soft)" }} aria-hidden="true" />
+            {status ? status.text : "Open daily: weekdays from 8am, weekends from 10am"}
+          </p>
+          <p className="t-soft">
+            {ADDRESS_LINE}, {TOWN}.{" "}
+            <a href={MAPS_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className="k-link whitespace-nowrap font-semibold text-[var(--text)]">
+              Get directions
+            </a>
+          </p>
+        </div>
+
+        {/* Index: one window per range, then previous/next with the count */}
+        <div className="flex items-end justify-between gap-4 [grid-area:tabs] md:flex-col md:items-end md:justify-end md:self-end">
+          <div role="tablist" aria-label="Showroom ranges" className="flex w-full justify-between md:-ml-0.5 md:w-auto md:justify-start md:gap-2" onKeyDown={onTabKey}>
             {SHOWROOM.map((r, i) => (
               <button
                 key={r.slug}
@@ -220,97 +305,23 @@ export function ShowroomCarousel() {
                 onClick={() => go(i)}
                 className="sr-tab"
               >
-                <span className="sr-thumb sr-house">
-                  <Image src={r.photo.src} alt="" fill sizes="56px" className="object-cover" style={{ objectPosition: r.photo.position }} />
+                <span className="sr-thumb">
+                  <Image src={r.photo.src} alt="" fill sizes="56px" className="object-cover" style={{ objectPosition: r.photo.positionMobile }} />
                 </span>
                 <span className="t-tech">{r.number}</span>
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+          {/* On phones the thumbnails and a swipe do this job; the arrows join from tablet width. */}
+          <div className="hidden items-center gap-3 md:flex">
             <button type="button" className="k-icon-btn" aria-label="Previous range" onClick={() => go(shown.current - 1)}>
               <ChevronLeft size={20} />
             </button>
-            <p className="t-tech min-w-[4.6em] text-center" aria-hidden="true">
-              <span className="text-[var(--text)]">{range.number}</span> / {pad(COUNT)}
-            </p>
             <button type="button" className="k-icon-btn" aria-label="Next range" onClick={() => go(shown.current + 1)}>
               <ChevronRight size={20} />
             </button>
           </div>
         </div>
-
-        {/* The showroom itself: open now, where, and how to get there */}
-        <div className="t-small t-soft grid gap-1 [grid-area:visit]">
-          <p className="flex items-center gap-2 text-[var(--text)]">
-            <span className="status-dot" style={{ background: status?.open ? "var(--status-open)" : "var(--text-soft)" }} aria-hidden="true" />
-            {status ? status.text : "Open daily: weekdays from 8am, weekends from 10am"}
-          </p>
-          <p>
-            {ADDRESS_LINE}, {TOWN}.{" "}
-            <a href={MAPS_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className="k-link whitespace-nowrap font-semibold text-[var(--text)]">
-              Get directions
-            </a>
-          </p>
-        </div>
-
-        {/* The portal */}
-        <figure className="m-0 justify-self-center [grid-area:portal] md:self-start md:justify-self-end md:pt-2">
-          <div
-            className="sr-portal touch-pan-y select-none"
-            onPointerDown={(e) => (swipe.current = { x: e.clientX, y: e.clientY })}
-            onPointerUp={(e) => {
-              const start = swipe.current;
-              swipe.current = null;
-              if (!start) return;
-              const dx = e.clientX - start.x;
-              if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(e.clientY - start.y)) go(shown.current + (dx < 0 ? 1 : -1));
-            }}
-          >
-            <div className="sr-house absolute inset-0">
-            {SHOWROOM.map((r, i) => (
-              <div
-                key={r.slug}
-                ref={(el) => {
-                  layers.current[i] = el;
-                }}
-                className="sr-layer"
-                data-active={i === SHOWROOM_START ? "true" : undefined}
-              >
-                <Image
-                  src={r.photo.src}
-                  alt={i === index ? r.photo.alt : ""}
-                  aria-hidden={i === index ? undefined : true}
-                  fill
-                  draggable={false}
-                  preload={i === SHOWROOM_START}
-                  loading={i === SHOWROOM_START ? undefined : "lazy"}
-                  sizes="(min-width: 768px) 34rem, 92vw"
-                  className="object-cover"
-                  style={{ objectPosition: r.photo.position }}
-                  {...(i === SHOWROOM_START ? { "data-loader-reveal": "" } : {})}
-                />
-                <span className="sr-dim" aria-hidden="true" />
-              </div>
-            ))}
-            </div>
-            {/* Architrave: the opening drawn 8 units outside itself, as on an elevation */}
-            <svg
-              className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-              viewBox="0 0 300 400"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path d="M-8 400 L-8 146.69 L150 -11.31 L308 146.69 L308 400" fill="none" stroke="var(--line-strong)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-            </svg>
-          </div>
-          <figcaption className="t-tech t-soft mt-4 flex justify-between gap-4">
-            <span>
-              {range.number} {range.name}
-            </span>
-            <span>{range.photo.standIn ? "Illustrative photo" : `Photographed at Kenstar, ${TOWN}`}</span>
-          </figcaption>
-        </figure>
       </div>
     </section>
   );

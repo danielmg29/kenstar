@@ -11,7 +11,8 @@ export type ShowroomRange = {
   photo: {
     src: string;
     alt: string;
-    position: string; // object-position for the 3:4 portal crop
+    position: string; // object-position on wide screens (the photo fills the section)
+    positionMobile: string; // object-position on phones, where the crop is a tall strip
     // A free stock photo standing in until Kenstar's own arrives (see docs/image-sources.md).
     standIn: boolean;
   };
@@ -30,7 +31,8 @@ export const SHOWROOM: ShowroomRange[] = [
     photo: {
       src: "/images/standin-hardware-store-unsplash.webp",
       alt: "Shelves of boxed hardware and building supplies, with a ladder against the stock",
-      position: "50% 45%",
+      position: "50% 55%",
+      positionMobile: "38% 50%",
       standIn: true,
     },
     primary: { label: "Ask about hardware", href: ask("hardware and building supplies") },
@@ -44,7 +46,8 @@ export const SHOWROOM: ShowroomRange[] = [
     photo: {
       src: "/images/range-electricals-switches-0964.webp",
       alt: "Rows of switch and socket plates on a display board at Kenstar",
-      position: "32% 50%",
+      position: "50% 50%",
+      positionMobile: "30% 50%",
       standIn: false,
     },
     primary: { label: "Ask about electricals", href: ask("electricals") },
@@ -58,7 +61,8 @@ export const SHOWROOM: ShowroomRange[] = [
     photo: {
       src: "/images/range-bathroom-mixer-taps-0686.webp",
       alt: "Basin mixer taps in chrome, grey, black and gold on a counter at Kenstar",
-      position: "40% 50%",
+      position: "50% 50%",
+      positionMobile: "36% 50%",
       standIn: false,
     },
     primary: { label: "Ask about bathroom fittings", href: ask("bathroom fittings") },
@@ -72,7 +76,8 @@ export const SHOWROOM: ShowroomRange[] = [
     photo: {
       src: "/images/standin-finishing-paint-unsplash.webp",
       alt: "A painter rolling white paint onto a wall",
-      position: "42% 50%",
+      position: "50% 50%",
+      positionMobile: "42% 50%",
       standIn: true,
     },
     primary: { label: "Ask about finishing", href: ask("beautification and finishing") },
@@ -84,9 +89,10 @@ export const SHOWROOM: ShowroomRange[] = [
     name: "Furniture & home",
     description: "Sofa sets, recliners, dining tables, beds, TV stands and office furniture, set out on the showroom floor.",
     photo: {
-      src: "/images/range-furniture-dining-0783.webp",
-      alt: "A dining table with gold legs and six upholstered chairs at Kenstar",
-      position: "50% 55%",
+      src: "/images/showroom-furniture-floor-0821.webp",
+      alt: "Dining sets laid out on the Kenstar furniture floor",
+      position: "50% 60%",
+      positionMobile: "55% 50%",
       standIn: false,
     },
     primary: { label: "Ask about furniture", href: ask("furniture") },
@@ -98,9 +104,10 @@ export const SHOWROOM: ShowroomRange[] = [
     name: "Lighting",
     description: "Chandeliers, ceiling fittings and wall brackets hang lit in the showroom, with flood and gate lights for outside.",
     photo: {
-      src: "/images/range-lighting-chandelier-0774.webp",
-      alt: "A cascading crystal and gold chandelier, lit, in the Kenstar showroom",
-      position: "50% 40%",
+      src: "/images/showroom-chandeliers-0916.webp",
+      alt: "Gold and crystal chandeliers, lit, in the Kenstar showroom",
+      position: "50% 45%",
+      positionMobile: "58% 50%",
       standIn: false,
     },
     primary: { label: "Ask about lighting", href: ask("lighting") },

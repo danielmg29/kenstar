@@ -199,7 +199,7 @@ table { border-collapse: collapse; width: 100%; }
 .ratio figcaption .tech { white-space: nowrap; }
 .r-cine { grid-column: 1 / -1; } .r-cine .window { aspect-ratio: 21 / 9; }
 .r-arch { grid-column: 1 / -1; } .r-arch .window { aspect-ratio: 3 / 2; }
-.r-portal { grid-column: span 2; } .r-portal .window { aspect-ratio: 3 / 4; clip-path: polygon(0 14%, 50% 0, 100% 14%, 100% 100%, 0 100%); }
+.r-portal { grid-column: span 2; } .r-portal .window { aspect-ratio: 3 / 4; }
 .r-sq { grid-column: span 2; } .r-sq .window { aspect-ratio: 1; }
 .r-tall { grid-column: span 2; } .r-tall .window { aspect-ratio: 2 / 3; }
 .r-note { grid-column: span 2; } .r-note .window { aspect-ratio: 4 / 3; }
@@ -387,7 +387,7 @@ table { border-collapse: collapse; width: 100%; }
           <tr><td><strong>Ferrow Interiors</strong><br><span class="caption soft">codethatmoves.com</span></td><td>One fixed camera. A room accumulates in layers: sketch lines, surfaces, furniture, then evening light. The caption plate never moves.</td><td>Each journey chapter keeps one camera. Light is the last layer, and the stage caption sits in one fixed grid position.</td></tr>
           <tr><td><strong>Illoca</strong><br><span class="caption soft">rickcreates.com teardown</span></td><td>One unbroken shot in the real working order. The picture is a window cut into the page and placed by counting grid cells. The camera stops while you read. Proof appears only in contained panels.</td><td>Image windows snap to column lines. The journey holds still at each Field Note. Real photos appear only as Field Notes, never as decoration.</td></tr>
           <tr><td><strong>Pearl Towers</strong><br><span class="caption soft">contra.com</span></td><td>A modelled building rendered offline as an image sequence. It reads as 3D without loading 3D. First paint arrives fast and the frames stream in behind it.</td><td>Blender renders become frames. The first frame of each chapter is a real image in the HTML, and the rest stream in.</td></tr>
-          <tr><td><strong>GSAP scroll image sequence</strong><br><span class="caption soft">gsapvault.com</span></td><td>One timeline draws frames to a canvas, opens a viewing aperture, crossfades captions and tracks progress. It pins only for the journey, and everything reverses.</td><td>The star opening and the portals use the same aperture idea. A still <code>img</code> sits under every canvas as the fallback.</td></tr>
+          <tr><td><strong>GSAP scroll image sequence</strong><br><span class="caption soft">gsapvault.com</span></td><td>One timeline draws frames to a canvas, opens a viewing aperture, crossfades captions and tracks progress. It pins only for the journey, and everything reverses.</td><td>The star opening and the showroom carousel use the same aperture idea: each range opens as a window that grows to fill the screen. A still <code>img</code> sits under every canvas as the fallback.</td></tr>
           <tr><td><strong>Archon</strong><br><span class="caption soft">dev.viseni.com</span></td><td>A full-viewport canvas with cover-fit frames. Scroll distance per frame is longer on touch screens (22px against 10px) for thumb pacing.</td><td>Pacing is a token: 10px of scroll per frame on desktop, 20px on touch. Unlike Archon, we never preload a whole sequence.</td></tr>
           <tr><td><strong>landing.love GSAP collection</strong></td><td colspan="2" class="soft">Not reviewed: the page sits behind a Cloudflare bot check. Send any sites from it you want studied and I'll add them.</td></tr>
         </tbody>
@@ -633,7 +633,7 @@ table { border-collapse: collapse; width: 100%; }
     <div class="grid ratios">
       <figure class="ratio r-cine" style="margin:0"><div class="window"><img src="../../public/images/showroom-chandeliers-0916.webp" alt="Rows of gold chandeliers in the Kenstar showroom" style="object-position:50% 40%"></div><figcaption><span class="tech">21:9 · Cinematic</span><span class="caption soft">Homepage, route openers. On phones it becomes 4:5.</span></figcaption></figure>
       <figure class="ratio r-arch" style="margin:0"><div class="window"><img src="../../public/images/showroom-chandelier-floor-0914.webp" alt="Chandeliers over the showroom floor"></div><figcaption><span class="tech">3:2 · Architectural</span><span class="caption soft">Native ratio. Editorial default.</span></figcaption></figure>
-      <figure class="ratio r-portal" style="margin:0"><div class="window"><img src="../../public/images/range-lighting-chandelier-0774.webp" alt="A cascading crystal chandelier"></div><figcaption><span class="tech">3:4 · Portal</span><span class="caption soft">Carousel only. The gable head takes its pitch from the logo's roof.</span></figcaption></figure>
+      <figure class="ratio r-portal" style="margin:0"><div class="window"><img src="../../public/images/range-lighting-chandelier-0774.webp" alt="A cascading crystal chandelier"></div><figcaption><span class="tech">3:4 · Index window</span><span class="caption soft">The carousel's thumbnails. Each range's photograph opens full screen out of its window.</span></figcaption></figure>
       <figure class="ratio r-sq" style="margin:0"><div class="window"><img src="../../public/images/range-bathroom-mixer-taps-0686.webp" alt="Basin mixer taps" style="object-position:40% 50%"></div><figcaption><span class="tech">1:1 · Detail</span><span class="caption soft">Catalogue tiles, details</span></figcaption></figure>
       <figure class="ratio r-tall" style="margin:0"><div class="window"><img src="../../public/images/range-lighting-ring-pendant-0981.webp" alt="A gold ribbon pendant" style="object-position:55% 50%"></div><figcaption><span class="tech">2:3 · Vertical</span><span class="caption soft">Hanging fittings, tall editorial</span></figcaption></figure>
       <figure class="ratio r-note" style="margin:0"><div class="window"><img src="../../public/images/showroom-bathroom-mirrors-0715.webp" alt="Wall mirrors on display"></div><figcaption><span class="tech">4:3 · Field Note</span><span class="caption soft">Evidence crops inside notes</span></figcaption></figure>
@@ -860,7 +860,7 @@ table { border-collapse: collapse; width: 100%; }
       <table class="tokens intensity">
         <thead><tr><th>Route</th><th>Intensity</th><th>What appears</th></tr></thead>
         <tbody>
-          <tr><td>Home</td><td><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></td><td>The full set: the wireframe logo, portal dimensions, drawn chapter scenes, reticles and Field Notes, chapter bubbles</td></tr>
+          <tr><td>Home</td><td><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></td><td>The full set: the wireframe logo, the carousel's drawn window edge, drawn chapter scenes, reticles and Field Notes, chapter bubbles</td></tr>
           <tr><td>Construction</td><td><i class="on"></i><i class="on"></i><i class="on"></i><i></i></td><td>Project sheets: dimensions, datums, coordinates, scope schedules</td></tr>
           <tr><td>Products</td><td><i class="on"></i><i class="on"></i><i></i><i></i></td><td>Hairline grid, sub-category index, one dimension per category opener</td></tr>
           <tr><td>About</td><td><i class="on"></i><i></i><i></i><i></i></td><td>Section rules and a single datum line marking Market Road</td></tr>
@@ -934,7 +934,7 @@ table { border-collapse: collapse; width: 100%; }
         <tbody>
           <tr><td>Header</td><td>60px, menu sheet, fixed action bar</td><td>72px, menu sheet</td><td>72px, full nav, status, WhatsApp</td></tr>
           <tr><td>Logo intro</td><td>Star at 42% of the short side</td><td>Same</td><td>Same; skippable everywhere</td></tr>
-          <tr><td>Portal carousel</td><td>One portal, swipe; text below the image</td><td>Portal 4 of 8 columns, text beside it</td><td>Portal plus stage: image 7, text 5</td></tr>
+          <tr><td>Showroom carousel</td><td>Photograph fills the screen; words over a bottom shade; thumbnails and swipe</td><td>Full screen; words left, index and arrows right</td><td>Full screen; words over a left shade, index and arrows bottom right, count top right</td></tr>
           <tr><td>Journey</td><td>Portrait frames (3:4), 20px scroll per frame, pinned notes</td><td>Landscape frames, notes as pins</td><td>Landscape frames, 10px per frame, full notes</td></tr>
           <tr><td>Catalogue</td><td>2 tiles; the feature tile spans both</td><td>4 tiles</td><td>6 tiles plus feature</td></tr>
           <tr><td>Editorial pairs</td><td>Image then text</td><td>Image 8, text 6</td><td>Plan 7 + 5 or offset 5 + 1 + 6</td></tr>
@@ -956,7 +956,7 @@ table { border-collapse: collapse; width: 100%; }
     <div class="grid motion-cols">
       <div class="a">
         <ol class="principles small">
-          <li><span><strong>Three experiences only.</strong> The logo, the portals and the journey. No scroll-fade on editorial sections, no parallax, no cursor effects.</span></li>
+          <li><span><strong>Three experiences only.</strong> The logo, the showroom carousel and the journey. No scroll-fade on editorial sections, no parallax, no cursor effects.</span></li>
           <li><span><strong>Scroll is the camera.</strong> Scrubbed to native scroll and never hijacked. It pins only inside the journey and reverses exactly.</span></li>
           <li><span><strong>Hold to read.</strong> The camera stops at every Field Note for at least 40% of a screen of scroll.</span></li>
           <li><span><strong>Light is the climax.</strong> Brightness and time-of-day change only at the end of a chapter, and star gold only at the very end.</span></li>
@@ -973,9 +973,9 @@ table { border-collapse: collapse; width: 100%; }
               <tr><td><code>--dur-fast</code></td><td>160ms</td><td>Hover colour, underline</td></tr>
               <tr><td><code>--dur-base</code></td><td>240ms</td><td>Field Note leader, tabs, menus</td></tr>
               <tr><td><code>--dur-slow</code></td><td>480ms</td><td>Menu sheet, image hover zoom (1.03)</td></tr>
-              <tr><td><code>--dur-scene</code></td><td>900ms</td><td>Portal change</td></tr>
+              <tr><td><code>--dur-scene</code></td><td>900ms</td><td>Carousel window opening</td></tr>
               <tr><td><code>--ease-out</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Arrivals</td></tr>
-              <tr><td><code>--ease-in-out</code></td><td>cubic-bezier(0.65, 0, 0.35, 1)</td><td>Camera, aperture, portal mask</td></tr>
+              <tr><td><code>--ease-in-out</code></td><td>cubic-bezier(0.65, 0, 0.35, 1)</td><td>Camera, apertures, the carousel window</td></tr>
               <tr><td><code>--ease-in</code></td><td>cubic-bezier(0.7, 0, 0.84, 0)</td><td>Exits only</td></tr>
             </tbody>
           </table>
@@ -988,7 +988,7 @@ table { border-collapse: collapse; width: 100%; }
         <thead><tr><th>Experience</th><th>Budget</th><th>Sequence</th></tr></thead>
         <tbody>
           <tr><td>Logo</td><td>At most 3.6s, skippable, once per session</td><td>Construction lines 0–0.6s, letters drawn 0.2–1.0s, fills 1.0–1.4s, zoom to the star 1.4–2.0s, eyes 2.0–2.8s, then the star opens in 0.75s. The eyes draw 3–4 moves from a set of six (glance left, glance right, look up, squint, double blink, wide), with 280–620ms gaps and never the same move twice in a row.</td></tr>
-          <tr><td>Portals</td><td>900ms, input-ready after 300ms</td><td>Image mask opens from the portal (900ms, in-out). Headline lines rise 12px with 60ms stagger from 120ms. Description at 280ms, actions at 360ms, index counts at the same moment. Manual only.</td></tr>
+          <tr><td>Showroom carousel</td><td>900ms, input-ready after 300ms</td><td>The new photograph opens as a window out of its thumbnail and grows to fill the screen (900ms, in-out), its edge drawn as a hairline that fades as it reaches the edges; the old photograph recedes and dims. Headline lines rise 12px with 60ms stagger from 120ms. Description at 280ms, actions at 360ms, index counts at the same moment. Manual only.</td></tr>
           <tr><td>Journey</td><td>About 2.2 screens of scroll per chapter</td><td>60–90 frames at 10px each (20px on touch), plus a hold of at least 40% of a screen at each Field Note. Wireframe, then environment, then evidence, in that order inside one sequence.</td></tr>
         </tbody>
       </table>
@@ -1007,7 +1007,7 @@ table { border-collapse: collapse; width: 100%; }
       <table class="tokens routes">
         <thead><tr><th>Route</th><th>Environments</th><th>Art direction</th></tr></thead>
         <tbody>
-          <tr><td><strong>Home</strong></td><td><span class="mix"><i style="width:70%;background:#14283B"></i><i style="width:30%;background:#F2EFE8"></i></span></td><td>Cinematic. The logo opens onto the portals, and the journey runs from road to the lit, furnished room. Full bleed, full annotation.</td></tr>
+          <tr><td><strong>Home</strong></td><td><span class="mix"><i style="width:70%;background:#14283B"></i><i style="width:30%;background:#F2EFE8"></i></span></td><td>Cinematic. The logo opens onto the full-screen showroom carousel, and the journey runs from road to the lit, furnished room. Full bleed, full annotation.</td></tr>
           <tr><td><strong>Products</strong></td><td><span class="mix"><i style="width:15%;background:#14283B"></i><i style="width:35%;background:#F2EFE8"></i><i style="width:50%;background:#fff"></i></span></td><td>A gallery. Category openers in the plan grid, white tile walls, and one midnight band for the showroom visit.</td></tr>
           <tr><td><strong>Construction</strong></td><td><span class="mix"><i style="width:15%;background:#14283B"></i><i style="width:85%;background:#F2EFE8"></i></span></td><td>Technical. Project sheets with real dimensions and coordinates, large daylight photos, olive as the landscape accent.</td></tr>
           <tr><td><strong>Accommodation</strong></td><td><span class="mix"><i style="width:60%;background:#F2EFE8"></i><i style="width:40%;background:#fff"></i></span></td><td>Calm. Generous white space, large interior photos once supplied, a ruled room schedule and almost no drawing.</td></tr>
@@ -1031,7 +1031,7 @@ table { border-collapse: collapse; width: 100%; }
       <li><span><strong>Type.</strong> Manrope for display and headings, 20px and up: 600 at display sizes, 700 for H2 and H3. Inter for text, captions and technical labels, 24px and down. Each heading level is at least 1.25× the next on phones and 1.4× or more on desktop.</span></li>
       <li><span><strong>Corners.</strong> Square throughout. The 45° cut appears only on primary actions and Field Notes.</span></li>
       <li><span><strong>Accent.</strong> Brass is the only accent. Olive is limited to status, success and the construction world.</span></li>
-      <li><span><strong>Portals.</strong> The carousel uses 3:4 openings with a gable head pitched from the logo's roof.</span></li>
+      <li><span><strong>Showroom carousel.</strong> Full-screen photographs; a new range opens as a window growing out of its thumbnail. (Changed on 2026-11-20 at the client's request; this replaces the gable portals.)</span></li>
       <li><span><strong>Renders.</strong> Every Blender render carries a "Visualisation" label. Real photos appear only as evidence.</span></li>
     </ol>
   </div>
