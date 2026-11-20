@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T00:00:00Z",
+  "title": "Design System: Kenstar Limited",
+  "extensions": {
+    "colorMeta": {
+      "drafting-white": { "role": "neutral", "displayName": "Drafting White", "canonical": "#F3F6F9", "tonalRamp": ["#1A2129", "#323D49", "#4E5C6B", "#6F7D8C", "#97A3AF", "#BFC8D1", "#E6ECF2", "#F3F6F9"] },
+      "drafting-white-2": { "role": "neutral", "displayName": "Drafting White 2", "canonical": "#E6ECF2", "tonalRamp": ["#18202A", "#2E3B49", "#4A5A6B", "#6A7B8C", "#91A0AF", "#B9C5D1", "#E6ECF2", "#F5F8FA"] },
+      "architectural-navy": { "role": "primary", "displayName": "Architectural Navy", "canonical": "#0B2D52", "tonalRamp": ["#06203D", "#0B2D52", "#1E446E", "#3C5878", "#5E7B9C", "#86A0BD", "#A9BED6", "#DCE5EF"] },
+      "opening-navy": { "role": "primary", "displayName": "Opening Navy", "canonical": "#06203D", "tonalRamp": ["#020D19", "#06203D", "#123358", "#284A72", "#4A6A8F", "#7590B0", "#A9BED6", "#E0E8F1"] },
+      "navy-soft": { "role": "neutral", "displayName": "Navy Soft", "canonical": "#3C5878", "tonalRamp": ["#14212F", "#243649", "#3C5878", "#56718F", "#7690AB", "#9AB0C6", "#C3D1DF", "#E9EEF4"] },
+      "on-navy-soft": { "role": "neutral", "displayName": "On-Navy Soft", "canonical": "#A9BED6", "tonalRamp": ["#1D2836", "#334558", "#4E6681", "#6D88A6", "#8CA6C2", "#A9BED6", "#CBD8E6", "#EDF2F7"] },
+      "star-gold": { "role": "secondary", "displayName": "Star Gold", "canonical": "#F59E0B", "tonalRamp": ["#3A2302", "#6B4004", "#A35F05", "#D17E07", "#F59E0B", "#FFC24D", "#FFDC94", "#FFF3D9"] },
+      "star-gold-hot": { "role": "secondary", "displayName": "Hot Gold", "canonical": "#FFC24D", "tonalRamp": ["#3D2A05", "#6E4C0A", "#A87410", "#DB9A1A", "#F5B132", "#FFC24D", "#FFDD99", "#FFF5DE"] },
+      "line": { "role": "neutral", "displayName": "Hairline", "canonical": "rgb(11 45 82 / 0.22)" },
+      "line-strong": { "role": "neutral", "displayName": "Strong Line", "canonical": "rgb(11 45 82 / 0.55)" },
+      "line-on-navy": { "role": "neutral", "displayName": "Hairline on Navy", "canonical": "rgb(243 246 249 / 0.22)" },
+      "error": { "role": "neutral", "displayName": "Error Red", "canonical": "#B42318", "tonalRamp": ["#2E0905", "#5A120C", "#861A12", "#B42318", "#D3473B", "#E77C72", "#F4B3AD", "#FCE8E6"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Section titles and chapter names; the hero rises to clamp(2.7rem, 6.2vw, 5.6rem). Archivo 800 at width 120." },
+      "headline": { "displayName": "Headline", "purpose": "Secondary section titles and the hero subline. Archivo 750 at width 112." },
+      "title": { "displayName": "Title", "purpose": "Range names, chapter range names, service rows, mobile nav items." },
+      "body": { "displayName": "Body", "purpose": "Running text." },
+      "lede": { "displayName": "Lede", "purpose": "Section introductions, capped at 62ch, text-wrap pretty." },
+      "label": { "displayName": "Lettering", "purpose": "Tracked caps with tabular figures for facts only: title-block keys, sheet headers, counters, captions, drawing annotations. Size scales via --ls up to about 0.95rem." },
+      "action": { "displayName": "Action", "purpose": "Buttons, text links, title-block actions and nav, in sentence case." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Exponential ease-out for all UI transitions (buttons, links, photo hover scale); never bounce or overshoot." },
+      { "name": "control-transition", "value": "0.25s", "purpose": "Button colour and transform transitions; arrow nudges at 0.3s, 3px." },
+      { "name": "draw", "value": "stroke-dashoffset 1 to 0, power1.inOut, staggered", "purpose": "Linework draws itself in chapter figures and the intro wireframe." },
+      { "name": "wipe", "value": "clip-path inset(0 100% 0 0) to inset(0), power2.inOut, behind a 2px gold construction line", "purpose": "The drawing resolves into its photograph left to right." },
+      { "name": "switch-on", "value": "brightness 0.32 to 1.06, expo.out", "purpose": "Final light: the lamp photograph switches on as the sheet turns navy." },
+      { "name": "scrub", "value": "ScrollTrigger scrub 0.6 inside CSS-sticky 165vh stages", "purpose": "Chapter transformations follow native scroll; no scroll hijacking." },
+      { "name": "intro", "value": "about 3.5s, skippable, once per session", "purpose": "Lockup draws as wireframe, fills, upper panes glance and blink, star opens as a mask onto the showroom photo." },
+      { "name": "reduced-motion", "value": "transitions 0.01ms; resting state", "purpose": "Photo shown, drawing at 38% overlay, Final light navy, no intro, no scrubbing." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (Gold)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single primary action of a view; chamfered top-right corner, opening-navy text on star gold.",
+      "html": "<a href=\"#\" class=\"ds-btn ds-btn-gold\">Explore the ranges <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12l7 7 7-7\"/></svg></a>",
+      "css": ".ds-btn { --ch: 0.75rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3rem; padding: 0.75rem 1.35rem 0.75rem 1.2rem; font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 0.02em; text-decoration: none; white-space: nowrap; cursor: pointer; border: 0; transition: background 0.25s cubic-bezier(0.16,1,0.3,1), transform 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-btn svg { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-btn:hover svg { transform: translateY(3px); } .ds-btn:active { transform: translateY(1px); } .ds-btn:focus-visible { outline: 2px solid #0b2d52; outline-offset: 3px; } .ds-btn-gold { background: linear-gradient(225deg, transparent var(--ch), #f59e0b calc(var(--ch) + 0.5px)); color: #06203d; } .ds-btn-gold:hover { background: linear-gradient(225deg, transparent var(--ch), #ffc24d calc(var(--ch) + 0.5px)); }"
+    },
+    {
+      "name": "Navy Button",
+      "kind": "button",
+      "refersTo": "button-navy",
+      "description": "Default action on paper (header WhatsApp, chapter enquiries, form submit).",
+      "html": "<button class=\"ds-btn ds-btn-navy\">Send on WhatsApp</button>",
+      "css": ".ds-btn { --ch: 0.75rem; display: inline-flex; align-items: center; gap: 0.6rem; min-height: 3rem; padding: 0.75rem 1.35rem 0.75rem 1.2rem; font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 0.02em; border: 0; cursor: pointer; transition: background 0.25s cubic-bezier(0.16,1,0.3,1), transform 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-btn:active { transform: translateY(1px); } .ds-btn:focus-visible { outline: 2px solid #0b2d52; outline-offset: 3px; } .ds-btn-navy { background: linear-gradient(225deg, transparent var(--ch), #0b2d52 calc(var(--ch) + 0.5px)); color: #f3f6f9; } .ds-btn-navy:hover { background: linear-gradient(225deg, transparent var(--ch), #06203d calc(var(--ch) + 0.5px)); }"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Secondary action; a 1px inset stroke in the current colour.",
+      "html": "<button class=\"ds-btn-line\">Send by email instead</button>",
+      "css": ".ds-btn-line { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 3rem; padding: 0.75rem 1.35rem 0.75rem 1.2rem; font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 0.02em; background: transparent; color: #0b2d52; border: 0; box-shadow: inset 0 0 0 1px currentColor; cursor: pointer; transition: background 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-btn-line:hover { background: rgb(11 45 82 / 0.06); } .ds-btn-line:focus-visible { outline: 2px solid #0b2d52; outline-offset: 3px; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Square drafting-white field with a strong hairline border, navy focus outline and gold caret.",
+      "html": "<label class=\"ds-label\">Phone or WhatsApp number<input class=\"ds-input\" placeholder=\"07XX XXX XXX\"></label>",
+      "css": ".ds-label { display: block; font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 600; font-size: 1rem; color: #0b2d52; } .ds-input { margin-top: 0.5rem; display: block; width: 100%; border: 1px solid rgb(11 45 82 / 0.55); background: #f3f6f9; padding: 0.75rem 1rem; font: inherit; font-family: 'Archivo', system-ui, sans-serif; font-weight: 400; font-size: 1.02rem; color: #0b2d52; caret-color: #f59e0b; border-radius: 0; transition: border-color 0.2s; } .ds-input::placeholder { color: rgb(60 88 120 / 0.8); } .ds-input:focus { border-color: #0b2d52; outline: 2px solid #0b2d52; outline-offset: 0; } .ds-input[aria-invalid=true] { border-color: #b42318; }"
+    },
+    {
+      "name": "Title Block",
+      "kind": "card",
+      "refersTo": "title-block",
+      "description": "The showroom's facts set like a drawing's title block: ruled key/value grid plus a two-cell action row.",
+      "html": "<div class=\"ds-tb\"><dl><dt>Showroom</dt><dd>Market Road, Embu</dd><dt>Today</dt><dd><span class=\"ds-dot\"></span>Open now, until 5pm</dd><dt>Hours</dt><dd>Mon–Fri 8am–5pm<br>Sat–Sun 10am–5pm</dd></dl><div class=\"ds-tb-actions\"><a href=\"#\">Directions <span>→</span></a><a href=\"#\">Call us</a></div></div>",
+      "css": ".ds-tb { background: #f3f6f9; color: #0b2d52; border: 1px solid #0b2d52; max-width: 23rem; font-family: 'Archivo', system-ui, sans-serif; } .ds-tb dl { display: grid; grid-template-columns: 6.5rem 1fr; margin: 0; font-size: 0.98rem; } .ds-tb dt { font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; font-size: 0.75rem; color: #3c5878; padding: 0.75rem 1rem; border-bottom: 1px solid rgb(11 45 82 / 0.22); border-right: 1px solid rgb(11 45 82 / 0.22); } .ds-tb dd { margin: 0; padding: 0.75rem 1rem; border-bottom: 1px solid rgb(11 45 82 / 0.22); line-height: 1.35; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; } .ds-dot { width: 0.55rem; height: 0.55rem; border-radius: 999px; background: #f59e0b; display: inline-block; } .ds-tb-actions { display: grid; grid-template-columns: 1fr 1fr; } .ds-tb-actions a { display: flex; justify-content: space-between; padding: 1rem; font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 600; color: #0b2d52; text-decoration: none; transition: background 0.2s; } .ds-tb-actions a:first-child { border-right: 1px solid rgb(11 45 82 / 0.22); } .ds-tb-actions a:hover { background: #e6ecf2; } .ds-tb-actions a:focus-visible { outline: 2px solid #0b2d52; outline-offset: -2px; }"
+    },
+    {
+      "name": "Sheet Frame Figure",
+      "kind": "custom",
+      "description": "Hairline frame with registration ticks, a lettered sheet header and a ruled caption; holds a drawing that resolves into a photograph.",
+      "html": "<figure class=\"ds-sheet\"><div class=\"ds-sheet-head\"><span>Detail 03: Bathroom</span><span>Sheet 03 of 06</span></div><div class=\"ds-sheet-stage\"><svg viewBox=\"0 0 300 200\" aria-hidden=\"true\"><path d=\"M40 160 H260 M40 150 V170 M260 150 V170 M33 167 L47 153 M253 167 L267 153\" fill=\"none\" stroke=\"currentColor\"/><rect x=\"110\" y=\"137\" width=\"80\" height=\"16\" fill=\"#f3f6f9\"/><text x=\"150\" y=\"149\" text-anchor=\"middle\" font-size=\"10\" letter-spacing=\"0.8\" fill=\"#0b2d52\">MIXER TAP</text><path d=\"M120 120 V70 H170 V85\" fill=\"none\" stroke=\"currentColor\"/></svg></div><figcaption>Mixer taps on the bathroom floor.</figcaption></figure>",
+      "css": ".ds-sheet { position: relative; margin: 0; border: 1px solid rgb(11 45 82 / 0.22); background: #f3f6f9; color: #0b2d52; max-width: 28rem; } .ds-sheet::before, .ds-sheet::after { content: ''; position: absolute; width: 14px; height: 14px; border: solid rgb(11 45 82 / 0.55); pointer-events: none; } .ds-sheet::before { top: -4px; left: -4px; border-width: 1px 0 0 1px; } .ds-sheet::after { bottom: -4px; right: -4px; border-width: 0 1px 1px 0; } .ds-sheet-head { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 1rem; border-bottom: 1px solid rgb(11 45 82 / 0.2); font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; font-size: 0.75rem; font-variant-numeric: tabular-nums; } .ds-sheet-head span:last-child { opacity: 0.7; } .ds-sheet-stage svg { display: block; width: 100%; height: auto; font-family: 'Barlow Semi Condensed', sans-serif; } .ds-sheet figcaption { padding: 0.6rem 1rem; border-top: 1px solid rgb(11 45 82 / 0.2); font-family: 'Archivo', system-ui, sans-serif; font-size: 0.9rem; opacity: 0.8; }"
+    },
+    {
+      "name": "Chamfered Headline Panel",
+      "kind": "custom",
+      "refersTo": "headline-panel",
+      "description": "Whole navy field panel with the 45° wordmark chamfer, display headline, on-navy lede and the gold primary action.",
+      "html": "<div class=\"ds-panel\"><h1 class=\"ds-display\">The making of a space.</h1><p class=\"ds-sub\">From the first line to the final light.</p><p class=\"ds-lede\">Hardware, electricals, bathroom, finishing, furniture and lighting, under one roof.</p></div>",
+      "css": ".ds-panel { --ch: 2.25rem; background: #0b2d52; color: #f3f6f9; padding: 2.75rem 3rem; max-width: 40rem; clip-path: polygon(0 0, calc(100% - var(--ch)) 0, 100% var(--ch), 100% 100%, 0 100%); } .ds-display { margin: 0; font-family: 'Archivo', 'Arial Narrow', sans-serif; font-variation-settings: 'wdth' 120; font-weight: 800; letter-spacing: -0.025em; line-height: 0.94; font-size: clamp(2.7rem, 6.2vw, 5.6rem); text-wrap: balance; } .ds-sub { margin: 1rem 0 0; font-family: 'Archivo', sans-serif; font-variation-settings: 'wdth' 112; font-weight: 750; letter-spacing: -0.02em; line-height: 1.02; font-size: clamp(1.3rem, 2.3vw, 1.95rem); } .ds-lede { margin: 1.25rem 0 0; font-family: 'Archivo', system-ui, sans-serif; font-size: 1.0625rem; line-height: 1.55; color: #a9bed6; max-width: 62ch; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "description": "Sticky drafting-white header: wordmark, Barlow links with a 2px gold underline on hover, navy WhatsApp action.",
+      "html": "<header class=\"ds-nav\"><strong class=\"ds-mark\">KENST★R</strong><nav><a href=\"#\">Ranges</a><a href=\"#\">Showroom</a><a href=\"#\">Construction</a><a href=\"#\">Enquire</a></nav></header>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 1.5rem; height: 4rem; padding: 0 1.5rem; background: rgb(243 246 249 / 0.95); border-bottom: 1px solid rgb(11 45 82 / 0.22); color: #0b2d52; } .ds-mark { font-family: 'Archivo', sans-serif; font-weight: 800; font-variation-settings: 'wdth' 120; letter-spacing: 0.02em; } .ds-nav nav { margin-left: auto; display: flex; gap: 1.75rem; } .ds-nav a { font-family: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; font-weight: 500; font-size: 0.98rem; color: #0b2d52; text-decoration: none; text-underline-offset: 0.5em; text-decoration-color: #f59e0b; text-decoration-thickness: 2px; } .ds-nav a:hover { text-decoration-line: underline; } .ds-nav a:focus-visible { outline: 2px solid #0b2d52; outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Drawing Set That Switches On",
+    "overview": "Every surface is a sheet from an architect's drawing set: cool drafting white, architectural-navy linework, real drafting conventions (sheet frames with registration ticks, dimension lines with 45° tick terminators, title blocks, schedules, grid bubbles, numbered sheets). The lines then resolve into Kenstar's own showroom photographs, and the set ends when the final light switches on in gold. The drawing is never decoration: every annotation states a fact or is a working link.\n\nThe palette comes straight from the KENST★R lockup: navy letters, a gold star that doubles as the A. Navy is used as whole fields, not accents; gold is used as light, not colour. Photography carries every other colour. Type pairs a heavy, expanded Archivo for headlines with Barlow Semi Condensed lettering for annotations and actions, so headlines read like a sheet title and labels read like a draughtsman's hand.\n\nDensity is generous and structured: hairline-ruled tables and schedules instead of cards, square corners cut at 45° instead of radii, and depth from tonal fields instead of shadows. Motion is drafting: lines draw, fills resolve, wipes travel behind a gold construction line, nothing bounces.",
+    "keyCharacteristics": [
+      "Cool drafting white sheets with navy linework; navy owns whole fields.",
+      "Gold only for the star, light, and the primary action.",
+      "45° chamfers from the wordmark; gable-topped openings from the logo's house.",
+      "Expanded heavy Archivo headlines; tracked Barlow Semi Condensed lettering with tabular figures.",
+      "Hairline sheet frames, ruled title blocks and schedules; no cards, no shadows, no radii.",
+      "Drafting motion: draw, resolve, wipe. Scroll-scrubbed on native scroll, with a still resting state."
+    ],
+    "rules": [
+      { "name": "The Gold Is Light Rule", "body": "Gold appears only where there is a star, a light, or the primary action. There is no gold text on paper, and no gold haze or glow laid over a navy field (it reads as mud); the light lives inside photographs and marks.", "section": "colors" },
+      { "name": "The Whole Field Rule", "body": "Navy is applied as entire sections or panels, never as tinted cards or accent stripes. A section is either a paper sheet or a navy field.", "section": "colors" },
+      { "name": "The Opening Rule", "body": "Opening navy is reserved for openings and figure grounds. It is not a general dark surface.", "section": "colors" },
+      { "name": "The Lettering States Facts Rule", "body": "Tracked caps are for annotations that carry a fact: a key, a sheet number, a dimension, a counter, a caption. They never sit above a headline as a decorative kicker.", "section": "typography" },
+      { "name": "The Sentence-Case Action Rule", "body": "Actions are set in sentence case Barlow semibold, never tracked caps.", "section": "typography" },
+      { "name": "The Drawn, Not Lifted Rule", "body": "Nothing floats. Separation is a ruled line, a sheet frame, or a change of field; never a drop shadow, blur, or glass layer.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** set every surface as either a drafting-white sheet or a whole navy field.",
+      "**Do** keep gold to the star, light, and one primary action per view, with opening-navy text on gold.",
+      "**Do** cut corners at 45° (0.75rem on controls, about 2.25rem on panels) and keep everything else square.",
+      "**Do** carry structure with hairline rules, sheet frames, ruled title blocks and schedules.",
+      "**Do** make every annotation a fact or a working link, lettered in tracked Barlow caps on a solid plate.",
+      "**Do** switch drawing labels to numbered markers with a caption key below 768px.",
+      "**Do** move with the drafting grammar (draw, resolve, wipe behind a gold line) on expo ease-out, scrubbed to native scroll, with a still reduced-motion state.",
+      "**Do** let photography carry all colour beyond navy, white and gold."
+    ],
+    "donts": [
+      "**Don't** set gold text on paper, or lay a gold haze or glow over a navy field.",
+      "**Don't** use opening navy as a general dark surface; it is for openings and figure grounds.",
+      "**Don't** add drop shadows, blur, glass, or rounded corners (true circles are kept for the status dot and grid bubbles only).",
+      "**Don't** put tracked-caps kickers or eyebrows above headlines; lettering is for annotations only.",
+      "**Don't** use cream or warm off-white for sheets; the paper is cool drafting white.",
+      "**Don't** autoplay the gateway carousel or hijack native scroll.",
+      "**Don't** use bounce, spring or overshoot easing."
+    ]
+  }
+}
