@@ -1,0 +1,5 @@
+# Downloaded source assets and raw render output stay local; only encoded frames in public/journey ship.
+assets/
+out/
+*.blend1
+__pycache__/

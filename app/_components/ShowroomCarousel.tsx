@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ArrowRight, Chat, ChevronLeft, ChevronRight } from "./icons";
@@ -162,6 +162,21 @@ export function ShowroomCarousel() {
     tl.from(desc, { y: 12, opacity: 0, duration: 0.45, ease: "power3.out" }, 0.16).from(actions, { y: 12, opacity: 0, duration: 0.45, ease: "power3.out" }, 0.24);
     textIn.current = tl;
   }, [index]);
+
+  // Links such as the footer's "#range-lighting" open that range and bring the showroom into view.
+  useEffect(() => {
+    const open = () => {
+      const slug = location.hash.startsWith("#range-") ? location.hash.slice(7) : "";
+      const i = SHOWROOM.findIndex((r) => r.slug === slug);
+      if (i < 0) return;
+      lockUntil.current = 0;
+      go(i);
+      root.current?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+    };
+    open();
+    window.addEventListener("hashchange", open);
+    return () => window.removeEventListener("hashchange", open);
+  }, [go]);
 
   // Leave plain text and no running tweens behind on unmount.
   useLayoutEffect(

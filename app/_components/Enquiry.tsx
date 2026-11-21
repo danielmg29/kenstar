@@ -2,9 +2,10 @@
 
 import { useId, useRef, useState } from "react";
 import { Chat, Mail, Phone } from "./icons";
-import { EMAIL, PHONE_DISPLAY, PHONE_TEL, RANGES, whatsappLink } from "../_content/site";
+import { EMAIL, PHONE_DISPLAY, PHONE_TEL, whatsappLink } from "../_content/site";
+import { SHOWROOM } from "../_content/showroom";
 
-const TOPICS = [...RANGES.map((r) => r.name), "Construction & civil works", "Roadworks", "Delivery & equipment hire", "Something else"];
+const TOPICS = [...SHOWROOM.map((r) => r.name), "Construction & civil works", "Roadworks", "Delivery & equipment hire", "Something else"];
 
 type Errors = Partial<Record<"name" | "phone" | "message", string>>;
 

@@ -8,11 +8,11 @@ import {
   PHONE_DISPLAY,
   PHONE_TEL,
   PO_BOX,
-  RANGES,
   TIKTOK_URL,
   TOWN,
   whatsappLink,
 } from "../_content/site";
+import { SHOWROOM } from "../_content/showroom";
 
 export function SiteFooter() {
   return (
@@ -68,9 +68,9 @@ export function SiteFooter() {
           <div>
             <h2 className="letter text-on-navy-soft">Ranges</h2>
             <ul className="mt-4 space-y-2">
-              {RANGES.map((r) => (
+              {SHOWROOM.map((r) => (
                 <li key={r.slug}>
-                  <a href={`#ch-${r.slug}`} className="no-underline hover:underline">
+                  <a href={`#range-${r.slug}`} className="no-underline hover:underline">
                     {r.name}
                   </a>
                 </li>

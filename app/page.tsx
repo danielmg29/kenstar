@@ -1,6 +1,6 @@
 import { SiteHeader } from "./_components/SiteHeader";
 import { ShowroomCarousel } from "./_components/ShowroomCarousel";
-import { Chapters } from "./_components/Chapters";
+import { Journey } from "./_components/journey/Journey";
 import { Showroom } from "./_components/Showroom";
 import { Services } from "./_components/Services";
 import { Enquiry } from "./_components/Enquiry";
@@ -13,7 +13,7 @@ export default function Home() {
       <SiteHeader />
       <main>
         <ShowroomCarousel />
-        <Chapters />
+        <Journey />
         <Showroom />
         <Services />
         <Enquiry />
