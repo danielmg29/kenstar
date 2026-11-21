@@ -1,0 +1,63 @@
+/* Contact: the sign on the showroom door. A midnight panel with the live state set large, the week
+   ruled with today marked in brass, the address and the way in; the channels as ruled rows beside it. */
+
+.ct h2 { color: var(--text-strong); }
+.ct-top { display: grid; gap: 32px var(--col-gap); padding-block: 0; }
+@media (min-width: 768px) { .ct-top { padding-top: 24px; } }
+
+/* ---------- The door sign ---------- */
+.ct-door { display: grid; gap: 28px; padding: 28px 24px 28px; margin-inline: calc(var(--margin) * -1); }
+.ct-headline { display: flex; align-items: center; gap: 16px; font: 600 clamp(3rem, 2.2rem + 3.4vw, 5.25rem)/0.95 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.045em; color: var(--text); }
+.ct-headline .k-dot { width: 0.24em; height: 0.24em; }
+.ct-detail { margin-top: 12px; font: 400 clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem)/1.45 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: #dcd8d0; }
+
+.ct-week { width: 100%; border-collapse: collapse; border-top: 1px solid var(--line-strong); font-variant-numeric: tabular-nums; }
+.ct-week th, .ct-week td { padding: 10px 0; border-bottom: 1px solid var(--line); font: 400 1rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; text-align: left; }
+.ct-week th { font-weight: 500; color: var(--text); }
+.ct-week td { text-align: right; color: var(--text-soft); white-space: nowrap; }
+.ct-week tr[data-today] th, .ct-week tr[data-today] td { color: var(--accent-ink); font-weight: 600; }
+.ct-week tr[data-today] th { box-shadow: inset 3px 0 0 var(--accent); }
+.ct-week tr[data-today] th { padding-left: 14px; }
+.ct-today { margin-left: 10px; padding: 3px 6px; font: 600 0.6875rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #0c1a28; background: var(--accent-ink); vertical-align: 2px; }
+
+.ct-holiday { margin-top: 10px; font: 400 0.875rem/1.45 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.ct-tz { color: var(--text-soft); }
+.ct-where { display: grid; gap: 20px; justify-items: start; }
+.ct-address { display: block; font: 600 1.25rem/1.35 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.01em; color: var(--text); max-width: 26ch; }
+.ct-po { display: block; margin-top: 4px; font: 400 0.9375rem/1.5 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+
+@media (min-width: 768px) {
+  .ct-door { margin-inline: 0; padding: 40px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; align-items: start; }
+  .ct-state { grid-column: 1 / -1; }
+  .ct-where { align-self: stretch; align-content: space-between; }
+}
+
+/* ---------- Channels ---------- */
+.ct-channels-h { padding-top: 14px; border-top: 2px solid var(--text-strong); font: 600 clamp(1.5rem, 1.35rem + 0.6vw, 1.875rem)/1.15 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.025em; }
+.ct-channels ul { margin-top: 12px; }
+.ct-channel {
+  display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 16px; align-items: center;
+  min-height: 76px; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--text-strong); text-decoration: none;
+}
+.ct-channel > svg:first-child { color: var(--text-soft); }
+.ct-channel-static { grid-template-columns: 24px minmax(0, 1fr); }
+.ct-channel-static .ct-channel-text { grid-column: 2; }
+.ct-channel-text { display: grid; gap: 2px; min-width: 0; }
+.ct-channel-name { font: 600 1.375rem/1.2 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.02em; }
+.ct-channel-detail { font: 500 1rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.ct-channel-note { font: 400 0.875rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.ct-channel-go { color: var(--text-soft); transition: transform 0.24s var(--ease-out), color 0.16s var(--ease-out); }
+a.ct-channel:hover .ct-channel-go { transform: translateX(3px); color: var(--text-strong); }
+a.ct-channel:hover .ct-channel-name { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.2em; }
+
+@media (min-width: 1280px) {
+  .ct-top { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: calc(var(--col-gap) * 2); padding-top: 32px; align-items: start; }
+}
+
+/* ---------- Enquiry ---------- */
+.ct-enquire { display: grid; gap: 32px var(--col-gap); padding-block: 72px var(--section-y); }
+.ct-enquire-h { padding-top: 14px; border-top: 2px solid var(--text-strong); font: 600 clamp(1.75rem, 1.5rem + 1vw, 2.375rem)/1.1 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.03em; }
+.ct-enquire-text .t-body { margin-top: 16px; max-width: 42ch; }
+@media (min-width: 1024px) {
+  .ct-enquire { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(var(--col-gap) * 2); align-items: start; padding-top: 96px; }
+}

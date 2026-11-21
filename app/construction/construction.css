@@ -1,0 +1,162 @@
+/* Construction: the journey's stages as the service list. A midnight first viewport with the
+   structure render, a five-stage strip that stays under the header, ruled limestone stages. */
+
+.cs { --strip-h: 64px; }
+.cs h1, .cs h2, .cs h3 { color: var(--text-strong); }
+.cs [id] { scroll-margin-top: calc(var(--header-h) + var(--strip-h) + 8px); }
+.cs #enquire { scroll-margin-top: var(--header-h); }
+
+/* ---------- First viewport ---------- */
+.cs-hero { position: relative; isolation: isolate; display: grid; align-items: end; min-height: 34rem; }
+.cs-hero-img { object-fit: cover; object-position: 50% 60%; z-index: -1; }
+.cs-vis {
+  position: absolute; top: 12px; right: var(--margin); z-index: 1; padding: 4px 8px;
+  background: #f2efe8; color: #565d63;
+  font: 500 0.75rem/1.35 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.cs-hero-in { width: 100%; padding-top: 70vw; }
+/* Phones: the render sits above the copy at its own 4:3, so the frame is seen whole. */
+@media (max-width: 767px) {
+  .cs-hero { background: #0c1a28; }
+  .cs-hero .cs-hero-img { height: 75vw !important; bottom: auto !important; object-position: 50% 50%; }
+}
+.cs-copy { padding: 24px var(--margin) 28px; margin-inline: calc(var(--margin) * -1); background: #0c1a28; }
+.cs-h1 { font: 600 clamp(2.5rem, 1.94rem + 2.29vw, 4rem)/1 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.035em; text-wrap: balance; color: var(--text); }
+.cs-lede { margin-top: 16px; max-width: 44ch; font: 400 clamp(1.0625rem, 1.03rem + 0.15vw, 1.1875rem)/1.55 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: #dcd8d0; text-wrap: pretty; }
+.cs-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 24px; }
+.cs-see { font: 600 0.9688rem/1.3 var(--font-inter), "Segoe UI", system-ui, sans-serif; min-height: 44px; display: inline-flex; align-items: center; }
+
+@media (min-width: 768px) {
+  .cs-hero { min-height: calc(100svh - var(--header-h) - var(--strip-h)); max-height: 60rem; }
+  .cs-hero-in { padding-top: 0; padding-block: 96px 48px; }
+  .cs-copy { max-width: 34rem; margin-inline: 0; padding: 32px; background: rgb(12 26 40 / 0.92); }
+  .cs-vis { top: 16px; }
+}
+@media (min-width: 1280px) {
+  .cs-hero { align-items: center; }
+  .cs-copy { max-width: 36rem; padding: 36px 40px 40px; }
+}
+
+/* ---------- The stage strip: at the base of the first viewport, then under the header ---------- */
+.cs-run { position: relative; }
+.cs-strip { position: sticky; top: var(--header-h); z-index: 30; box-shadow: inset 0 -1px 0 var(--line), 0 1px 0 rgb(12 26 40 / 0.2); }
+.cs-strip-in { display: flex; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent); }
+.cs-strip-in::-webkit-scrollbar { display: none; }
+.cs-strip li { flex: none; }
+.cs-strip a {
+  display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; column-gap: 10px; align-content: center;
+  height: var(--strip-h); padding: 0 20px 0 16px; text-decoration: none; color: var(--text-soft); white-space: nowrap;
+  box-shadow: inset -1px 0 0 var(--line);
+  transition: background-color 0.16s var(--ease-out), color 0.16s var(--ease-out);
+}
+.cs-strip li:first-child a { padding-left: 0; }
+.cs-strip li:last-child a { margin-right: 32px; }
+.cs-strip a:hover { color: var(--text); }
+.cs-strip a[aria-current] { color: var(--text); box-shadow: inset -1px 0 0 var(--line), inset 0 -3px 0 var(--accent-ink); }
+.cs-strip a:focus-visible { outline-offset: -3px; }
+.cs-strip-n { grid-row: 1 / 3; align-self: center; font: 600 0.75rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; color: var(--text-soft); }
+.cs-strip a[aria-current] .cs-strip-n { color: var(--accent-ink); }
+.cs-strip-name { font: 700 1.25rem/1.15 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.01em; }
+.cs-strip-who { font: 400 0.8125rem/1.35 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+@media (min-width: 1024px) {
+  .cs { --strip-h: 76px; }
+  .cs-strip-in { mask-image: none; }
+  .cs-strip li { flex: 1 1 0; min-width: 0; }
+  .cs-strip li:last-child a { margin-right: 0; }
+  .cs-strip a { padding-left: 20px; }
+  .cs-strip-who { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* ---------- Stages ---------- */
+.cs-stage { padding-block: 56px 8px; }
+.cs-stage + .cs-stage { padding-top: 48px; }
+.cs-stage-in { display: grid; gap: 24px var(--col-gap); grid-template-columns: minmax(0, 1fr); }
+.cs-stage-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; align-items: baseline; padding-top: 14px; border-top: 2px solid var(--text-strong); }
+.cs-stage-n { font: 600 0.8125rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.1em; font-variant-numeric: tabular-nums; color: var(--text-strong); min-width: 2.2em; }
+.cs-stage-name { font: 600 clamp(2rem, 1.72rem + 1.14vw, 2.75rem)/1.08 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.035em; }
+.cs-stage-who { grid-column: 2; margin-top: 6px; font: 500 1rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.cs-stage-lede { max-width: 52ch; font: 400 clamp(1.0625rem, 1.03rem + 0.15vw, 1.1875rem)/1.6 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text); text-wrap: pretty; }
+
+.cs-services { margin-top: 20px; border-top: 1px solid var(--line-strong); }
+.cs-services li { display: grid; row-gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.cs-services h3 { font: 700 1.25rem/1.3 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.01em; }
+.cs-services p { margin-top: 2px; font: 400 0.9375rem/1.5 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); text-wrap: pretty; }
+.cs-ask { justify-self: start; min-height: 40px; display: inline-flex; align-items: center; font: 600 0.9375rem/1.3 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-strong); }
+
+.cs-links { margin-top: 20px; display: grid; gap: 8px; }
+.cs-range {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 12px 16px;
+  text-decoration: none; color: var(--text-strong); background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--line);
+  transition: box-shadow 0.16s var(--ease-out);
+}
+.cs-range:hover { box-shadow: inset 0 0 0 1px var(--text-strong); }
+.cs-range-name { font: 700 1.25rem/1.25 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.01em; }
+.cs-range-where { display: inline-flex; align-items: center; gap: 8px; flex: none; font: 500 0.875rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.cs-range svg { transition: transform 0.24s var(--ease-out); }
+.cs-range:hover svg { transform: translateX(3px); }
+
+.cs-photos { display: grid; gap: 8px; }
+.cs-photos-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cs-photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-alt); }
+.cs-photo img { object-fit: cover; }
+.cs-photo-tall { aspect-ratio: 4 / 5; }
+.cs-photos-two .k-plate-label { left: 8px; bottom: 8px; }
+/* Phones: two photographs stack, so each caption keeps its full size and padding. The strip stays
+   in the flow as an index, so header and action bar are the only fixed chrome. */
+@media (max-width: 767px) {
+  .cs-strip { position: relative; top: auto; }
+  .cs [id] { scroll-margin-top: calc(var(--header-h) + 8px); }
+  .cs-photos-two { grid-template-columns: minmax(0, 1fr); }
+  .cs-photos-two .cs-photo { aspect-ratio: 3 / 2; }
+  .cs-photo-tall { aspect-ratio: 4 / 3; }
+}
+
+@media (min-width: 1024px) {
+  .cs-stage { padding-block: 80px 8px; }
+  .cs-stage + .cs-stage { padding-top: 72px; }
+  .cs-stage-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(var(--col-gap) * 2); align-items: start; }
+  .cs-stage-head { grid-column: 1 / -1; }
+  .cs-stage-text { grid-column: 1; }
+  .cs-photos { grid-column: 2; grid-row: 2; }
+  .cs-stage[data-flip] .cs-stage-in { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .cs-stage[data-flip] .cs-stage-text { grid-column: 2; }
+  .cs-stage[data-flip] .cs-photos { grid-column: 1; }
+  /* A stage with no photograph of its own reads across the full width: the line, then what Kenstar supplies. */
+  .cs-stage[data-bare] .cs-stage-text { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(var(--col-gap) * 2); align-items: start; }
+  .cs-stage[data-bare] .cs-services, .cs-stage[data-bare] .cs-links { grid-column: 2; }
+  .cs-stage[data-bare] .cs-services { margin-top: 0; }
+  .cs-stage[data-bare] .cs-links { margin-top: 16px; }
+  .cs-photo-tall { aspect-ratio: auto; height: min(36rem, 70svh); }
+  .cs-photos:not(.cs-photos-two) .cs-photo:not(.cs-photo-tall) { aspect-ratio: 3 / 2; }
+}
+
+/* ---------- Project enquiry ---------- */
+.cs-enquire { margin-top: var(--section-y); }
+.cs-enquire-in { display: grid; gap: 40px; padding-block: var(--section-y); }
+.cs-enquire-text .t-body { margin-top: 20px; max-width: 44ch; }
+.cs-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 32px; border-top: 1px solid var(--line); }
+.cs-facts > div { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); }
+.cs-facts > div + div { padding-left: 16px; box-shadow: inset 1px 0 0 var(--line); }
+.cs-facts dt { font: 600 2rem/1 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.03em; color: var(--text); font-variant-numeric: tabular-nums; }
+.cs-facts dd { margin-top: 6px; font: 400 0.9375rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.cs-call { margin-top: 24px; }
+@media (min-width: 1024px) {
+  .cs-enquire-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: calc(var(--col-gap) * 2); align-items: start; }
+}
+
+/* ---------- The showroom, to close ---------- */
+.cs-visit-in { display: grid; gap: 32px var(--col-gap); padding-block: var(--section-y); }
+.cs-visit-photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0c1a28; margin-inline: calc(var(--margin) * -1); }
+.cs-visit-photo img { object-fit: cover; object-position: 50% 45%; }
+.cs-visit-lede { margin-top: 16px; max-width: 44ch; color: var(--text); }
+.cs-visit-facts { margin-top: 24px; border-top: 1px solid var(--line); }
+.cs-visit-facts > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.cs-visit-facts dt { color: var(--text-soft); padding-top: 3px; }
+.cs-visit-facts dd { font: 400 1rem/1.55 var(--font-inter), "Segoe UI", system-ui, sans-serif; font-variant-numeric: tabular-nums; color: var(--text); }
+.cs-status { display: inline-flex; align-items: center; gap: 8px; }
+.cs-visit-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+@media (min-width: 768px) { .cs-visit-photo { margin-inline: 0; } }
+@media (min-width: 1024px) {
+  .cs-visit-in { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); column-gap: calc(var(--col-gap) * 2); align-items: center; }
+  .cs-visit-photo { aspect-ratio: 5 / 4; }
+}

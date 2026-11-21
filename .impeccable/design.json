@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T00:00:00Z",
+  "title": "Design System: Kenstar Limited",
+  "extensions": {
+    "colorMeta": {
+      "midnight": { "role": "primary", "displayName": "Midnight", "canonical": "#14283B", "tonalRamp": ["#050C14", "#1A2632", "#344454", "#4F6478", "#70859A", "#95A7BA", "#BCCBDB", "#E4F0FD"] },
+      "midnight-deep": { "role": "primary", "displayName": "Midnight Deep", "canonical": "#0C1A28", "tonalRamp": ["#060C12", "#1D262F", "#374350", "#546373", "#748495", "#99A7B6", "#BFCBD7", "#E6F0FA"] },
+      "midnight-raised": { "role": "primary", "displayName": "Midnight Raised", "canonical": "#1C3348", "tonalRamp": ["#040C15", "#192633", "#324455", "#4D647A", "#6D859C", "#93A8BC", "#BACBDC", "#E3F0FE"] },
+      "limestone": { "role": "neutral", "displayName": "Limestone", "canonical": "#F2EFE8", "tonalRamp": ["#0C0B09", "#262522", "#44423D", "#63615B", "#85827C", "#A7A5A0", "#CBC9C5", "#F2EFE8"] },
+      "stone": { "role": "neutral", "displayName": "Stone", "canonical": "#E6E1D6", "tonalRamp": ["#0D0B08", "#272520", "#45423B", "#656158", "#868279", "#A8A59D", "#CCC9C2", "#F1EEE9"] },
+      "white": { "role": "neutral", "displayName": "Gallery White", "canonical": "#FFFFFF", "tonalRamp": ["#0B0B0B", "#252525", "#424242", "#616161", "#828282", "#A5A5A5", "#C9C9C9", "#FFFFFF"] },
+      "limestone-muted": { "role": "neutral", "displayName": "Limestone Muted", "canonical": "#DCD8D0", "tonalRamp": ["#0C0B08", "#272521", "#44423D", "#64615A", "#85827B", "#A8A59F", "#CBC9C4", "#F0EEEA"] },
+      "graphite": { "role": "neutral", "displayName": "Graphite", "canonical": "#343A40", "tonalRamp": ["#090B0E", "#222529", "#3E4347", "#5C6268", "#7D838A", "#A0A6AB", "#C5CACE", "#EBEFF3"] },
+      "graphite-soft": { "role": "neutral", "displayName": "Graphite Soft", "canonical": "#565D63", "tonalRamp": ["#090B0E", "#222629", "#3E4347", "#5C6268", "#7C8389", "#A0A6AB", "#C5CACE", "#EBEFF2"] },
+      "mineral-light": { "role": "neutral", "displayName": "Mineral Light", "canonical": "#AAB3B8", "tonalRamp": ["#090C0D", "#212628", "#3D4346", "#5B6367", "#7C8488", "#9FA6AA", "#C4CACD", "#EBEFF2"] },
+      "brass": { "role": "secondary", "displayName": "Brass", "canonical": "#C58B45", "tonalRamp": ["#190500", "#3A1D00", "#5F3800", "#87550A", "#AA7636", "#C99B68", "#E8C197", "#FFE9C8"] },
+      "brass-light": { "role": "secondary", "displayName": "Brass Light", "canonical": "#D6A160", "tonalRamp": ["#180600", "#391E00", "#5D3901", "#835616", "#A7783C", "#C69D6C", "#E5C39B", "#FFE9CA"] },
+      "brass-ink": { "role": "secondary", "displayName": "Brass Ink", "canonical": "#865826", "tonalRamp": ["#170600", "#371E02", "#5B3914", "#81572A", "#A5784B", "#C49D77", "#E4C2A3", "#FFE9D1"] },
+      "olive": { "role": "tertiary", "displayName": "Olive", "canonical": "#697B68", "tonalRamp": ["#070D07", "#1E281E", "#394639", "#566655", "#778876", "#9BAA9A", "#C1CDC0", "#E8F2E7"] },
+      "olive-light": { "role": "tertiary", "displayName": "Olive Light", "canonical": "#93A691", "tonalRamp": ["#070D06", "#1F281E", "#394638", "#566655", "#778875", "#9BAA99", "#C1CDBF", "#E8F2E7"] },
+      "error": { "role": "neutral", "displayName": "Error", "canonical": "#A8321E", "tonalRamp": ["#230000", "#4B0600", "#761F10", "#A43825", "#CB5B47", "#E88673", "#FFB1A0", "#FFDCCE"] },
+      "error-light": { "role": "neutral", "displayName": "Error Light", "canonical": "#F08A73", "tonalRamp": ["#1F0000", "#451106", "#6E291A", "#994330", "#BF6551", "#DD8D7B", "#FAB6A6", "#FFE0D3"] },
+      "logo-navy": { "role": "brand", "displayName": "Logo Navy (logo only)", "canonical": "#0B2D52", "tonalRamp": ["#020B1B", "#13263C", "#2A4362", "#436389", "#6485AD", "#8BA8CB", "#B3CCE9", "#DDF1FF"] },
+      "star-gold": { "role": "brand", "displayName": "Star Gold (logo only)", "canonical": "#F59E0B", "tonalRamp": ["#1E0100", "#431600", "#6B3000", "#954B00", "#BB6E00", "#D8953F", "#F5BD7C", "#FFE6B4"] }
+    },
+    "environments": {
+      "env-limestone": { "surface": "#F2EFE8", "surface-alt": "#E6E1D6", "surface-raised": "#FFFFFF", "text": "#343A40", "text-strong": "#14283B", "text-soft": "#565D63", "line": "rgb(52 58 64 / 0.16)", "line-strong": "rgb(52 58 64 / 0.42)", "accent": "#C58B45", "accent-ink": "#865826", "action-bg": "#14283B", "action-fg": "#F2EFE8", "action-bg-hover": "#0C1A28", "focus": "#14283B", "status-open": "#697B68", "error": "#A8321E", "field-bg": "#FFFFFF" },
+      "env-white": { "surface": "#FFFFFF", "surface-alt": "#F2EFE8", "surface-raised": "#F2EFE8", "text": "#343A40", "text-strong": "#14283B", "text-soft": "#565D63", "line": "rgb(52 58 64 / 0.16)", "line-strong": "rgb(52 58 64 / 0.42)", "accent": "#C58B45", "accent-ink": "#865826", "action-bg": "#14283B", "action-fg": "#F2EFE8", "action-bg-hover": "#0C1A28", "focus": "#14283B", "error": "#A8321E", "field-bg": "#FFFFFF" },
+      "env-midnight": { "surface": "#14283B", "surface-alt": "#0C1A28", "surface-raised": "#1C3348", "text": "#F2EFE8", "text-strong": "#F2EFE8", "text-soft": "#AAB3B8", "line": "rgb(242 239 232 / 0.14)", "line-strong": "rgb(242 239 232 / 0.38)", "accent": "#C58B45", "accent-ink": "#D6A160", "action-bg": "#C58B45", "action-fg": "#0C1A28", "action-bg-hover": "#D6A160", "focus": "#D6A160", "status-open": "#93A691", "error": "#F08A73", "field-bg": "#0C1A28" },
+      "env-deep": { "surface": "#0C1A28", "surface-alt": "#14283B", "note": "Layered on env-midnight; the footer." }
+    },
+    "legacy": {
+      "status": "Pending migration. Used only by Showroom.tsx, Services.tsx, Enquiry.tsx and the OpenStatus component on the homepage. Not part of the system.",
+      "tokens": { "--paper": "#F3F6F9", "--paper-2": "#E6ECF2", "--navy": "#0B2D52", "--navy-deep": "#06203D", "--navy-soft": "#3C5878", "--on-navy-soft": "#A9BED6", "--gold": "#F59E0B", "--gold-hot": "#FFC24D", "--error": "#B42318", "--gutter": "clamp(1rem, 3vw, 2.5rem)" },
+      "faces": ["Archivo (--font-archivo)", "Barlow Semi Condensed (--font-barlow)"],
+      "classes": [".btn", ".btn-gold", ".btn-navy", ".btn-line", ".display", ".heading", ".letter", ".lede", ".sheet", ".textlink", ".status-dot", "chamfer-tr", "chamfer-tl"]
+    },
+    "typographyMeta": {
+      "display-1": { "displayName": "Display 1", "purpose": "Route openers at cinematic scale; the Accommodation headline and door-sign state run at this scale." },
+      "display-2": { "displayName": "Display 2", "purpose": "Cinematic openers: homepage showroom title, Construction hero, footer closing line." },
+      "headline": { "displayName": "Headline", "purpose": "Page, range and stage titles; editorial H1s run from here to about 60px." },
+      "title": { "displayName": "Title", "purpose": "Titles inside a section." },
+      "title-sm": { "displayName": "Title small", "purpose": "Product lines, service rows, stage-strip names, range links." },
+      "lede": { "displayName": "Lede", "purpose": "Section introductions, max 58ch." },
+      "body": { "displayName": "Body", "purpose": "Running text, max 66ch; the .k-page base." },
+      "small": { "displayName": "Small", "purpose": "Secondary lines, fact values, footer columns, header status." },
+      "caption": { "displayName": "Caption", "purpose": "Source lines and short notes." },
+      "label": { "displayName": "Technical", "purpose": "Uppercase, tabular. Codes, table keys, footer heads, Field Note headers, image labels. Never an eyebrow." },
+      "action": { "displayName": "Action", "purpose": "Buttons and text links, sentence case. Nav links are Inter 500 15px." }
+    },
+    "shadows": [
+      { "name": "field-note-lift", "value": "drop-shadow(0 16px 32px rgb(12 26 40 / 0.32))", "purpose": "Only under a Field Note floating over the journey scene (a filter, so it follows the cut)." },
+      { "name": "dialog-backdrop", "value": "rgb(12 26 40 / 0.6)", "purpose": "Behind the phone schedule sheet; the counter view uses opaque #0C1A28." },
+      { "name": "hairline", "value": "inset 0 0 0 1px var(--line-strong)", "purpose": "Lines are inset box-shadows: secondary buttons, inputs, chips, codes. Not elevation." }
+    ],
+    "cuts": [
+      { "name": "cut-action", "value": "10px at 45deg, top right, via linear-gradient(225deg, transparent var(--cut), var(--action-bg) calc(var(--cut) + 0.5px))", "purpose": "Primary action only; the gradient keeps the focus ring visible." },
+      { "name": "cut-note", "value": "clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px)", "purpose": "Midnight Field Note plates: journey notes, the docked schedule, its index cell, the phone schedule sheet." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "All UI feedback transitions; never bounce or overshoot." },
+      { "name": "dur-fast", "value": "160ms", "purpose": "Hover colour, ring and underline changes." },
+      { "name": "dur-base", "value": "240ms", "purpose": "Arrow nudge (3px), row wash, Field Note reveal." },
+      { "name": "dur-slow", "value": "480ms", "purpose": "Journey plate turning to midnight at dusk." },
+      { "name": "press", "value": "translateY(1px)", "purpose": "Button active state." },
+      { "name": "carousel-open", "value": "about 900ms, power3.inOut", "purpose": "Showroom carousel: a range opens as a window from its thumbnail to full screen; headline lines rise 12px with 60ms stagger. Manual only." },
+      { "name": "logo-loader", "value": "at most about 3.6s, skippable, once per session", "purpose": "Construction lines, letters, fills, the panes glance and blink, the star opens. Loading screen afterwards; none under reduced motion." },
+      { "name": "journey", "value": "scrubbed to native scroll on a sticky stage", "purpose": "Holds at each Field Note, reverses exactly; reduced motion shows each chapter's final still with its notes open." },
+      { "name": "reduced-motion", "value": "transition-duration 0.01ms", "purpose": "Applied globally." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "768px" },
+      { "name": "pair", "value": "1024px" },
+      { "name": "desktop", "value": "1280px" },
+      { "name": "wide", "value": "1440px" }
+    ],
+    "icons": { "grid": "24px", "stroke": "1.75", "caps": "square", "joins": "miter", "sizes": "18-20px in use", "source": "app/_components/icons.tsx" }
+  },
+  "components": [
+    {
+      "name": "Primary Button on Midnight",
+      "kind": "button",
+      "refersTo": "button-primary-midnight",
+      "description": "The one primary action of a midnight view: brass, cut 10px at 45 degrees top right.",
+      "html": "<div class=\"ds-mid\"><a href=\"#\" class=\"ds-btn ds-btn-primary\">Get directions <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"square\" aria-hidden=\"true\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></a></div>",
+      "css": ".ds-mid { background: #14283b; padding: 24px; } .ds-btn { --cut: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px 0 20px; font: 600 0.9688rem/1 Inter, 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.003em; text-decoration: none; white-space: nowrap; border: 0; cursor: pointer; transition: background-color 0.16s cubic-bezier(0.16,1,0.3,1), box-shadow 0.16s cubic-bezier(0.16,1,0.3,1); } .ds-btn svg { transition: transform 0.24s cubic-bezier(0.16,1,0.3,1); } .ds-btn:hover svg { transform: translateX(3px); } .ds-btn:active { transform: translateY(1px); } .ds-btn-primary { color: #0c1a28; background: linear-gradient(225deg, transparent var(--cut), #c58b45 calc(var(--cut) + 0.5px)); } .ds-btn-primary:hover { background: linear-gradient(225deg, transparent var(--cut), #d6a160 calc(var(--cut) + 0.5px)); } .ds-btn-primary:focus-visible { outline: 2px solid #d6a160; outline-offset: 3px; }"
+    },
+    {
+      "name": "Primary Button on Limestone",
+      "kind": "button",
+      "refersTo": "button-primary-light",
+      "description": "The one primary action of a limestone or white view: midnight fill, the same 10px cut.",
+      "html": "<div class=\"ds-lime\"><a href=\"#availability\" class=\"ds-btn ds-btn-primary\">Ask about availability</a></div>",
+      "css": ".ds-lime { background: #f2efe8; padding: 24px; } .ds-btn { --cut: 10px; display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px 0 26px; font: 600 1.0313rem/1 Inter, 'Segoe UI', system-ui, sans-serif; text-decoration: none; border: 0; cursor: pointer; transition: background-color 0.16s cubic-bezier(0.16,1,0.3,1); } .ds-btn:active { transform: translateY(1px); } .ds-btn-primary { color: #f2efe8; background: linear-gradient(225deg, transparent var(--cut), #14283b calc(var(--cut) + 0.5px)); } .ds-btn-primary:hover { background: linear-gradient(225deg, transparent var(--cut), #0c1a28 calc(var(--cut) + 0.5px)); } .ds-btn-primary:focus-visible { outline: 2px solid #14283b; outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Square, a 1px inset ring; call, email, directions and the header's WhatsApp.",
+      "html": "<div class=\"ds-mid\"><a href=\"#\" class=\"ds-btn-2\">WhatsApp us</a> <a href=\"#\" class=\"ds-btn-2\">Email instead</a></div>",
+      "css": ".ds-mid { background: #14283b; padding: 24px; display: flex; gap: 12px; } .ds-btn-2 { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px 0 14px; font: 600 0.875rem/1 Inter, 'Segoe UI', system-ui, sans-serif; color: #f2efe8; text-decoration: none; box-shadow: inset 0 0 0 1px rgb(242 239 232 / 0.38); transition: box-shadow 0.16s cubic-bezier(0.16,1,0.3,1); } .ds-btn-2:hover { box-shadow: inset 0 0 0 1px #f2efe8; } .ds-btn-2:focus-visible { outline: 2px solid #d6a160; outline-offset: 3px; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-light",
+      "description": "Square white field on limestone with a 1px inset ring, brass caret and a 2px error ring.",
+      "html": "<div class=\"ds-lime\"><label class=\"ds-label\" for=\"ds-ph\">Phone or WhatsApp number</label><input class=\"ds-input\" id=\"ds-ph\" placeholder=\"0712 345 678\"><label class=\"ds-label\" for=\"ds-nm\" style=\"margin-top:16px\">Your name</label><input class=\"ds-input\" id=\"ds-nm\" aria-invalid=\"true\"><p class=\"ds-err\">Add your name so Kenstar knows who to reply to.</p></div>",
+      "css": ".ds-lime { background: #f2efe8; padding: 24px; max-width: 26rem; } .ds-label { display: block; margin-bottom: 8px; font: 500 0.9375rem/1.4 Inter, 'Segoe UI', system-ui, sans-serif; color: #343a40; } .ds-input { display: block; width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: 0; font: 400 1rem/1.4 Inter, 'Segoe UI', system-ui, sans-serif; color: #343a40; background: #ffffff; box-shadow: inset 0 0 0 1px rgb(52 58 64 / 0.42); caret-color: #c58b45; transition: box-shadow 0.16s cubic-bezier(0.16,1,0.3,1); } .ds-input:hover { box-shadow: inset 0 0 0 1px #343a40; } .ds-input:focus-visible { outline: 2px solid #14283b; outline-offset: 2px; } .ds-input::placeholder { color: #565d63; } .ds-input[aria-invalid=true] { box-shadow: inset 0 0 0 2px #a8321e; } .ds-err { margin: 6px 0 0; font: 500 0.875rem/1.4 Inter, 'Segoe UI', system-ui, sans-serif; color: #a8321e; }"
+    },
+    {
+      "name": "Choice Chips",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Radio chips; the checked one fills brass with midnight-deep text.",
+      "html": "<div class=\"ds-mid\"><label class=\"ds-chip\"><input type=\"radio\" name=\"ds-w\" checked><span>Building works</span></label><label class=\"ds-chip\"><input type=\"radio\" name=\"ds-w\"><span>Roadworks</span></label><label class=\"ds-chip\"><input type=\"radio\" name=\"ds-w\"><span>Civil works</span></label></div>",
+      "css": ".ds-mid { background: #14283b; padding: 24px; display: flex; flex-wrap: wrap; gap: 8px; } .ds-chip { position: relative; display: inline-flex; } .ds-chip input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; } .ds-chip span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; font: 500 0.9375rem/1.2 Inter, 'Segoe UI', system-ui, sans-serif; color: #f2efe8; box-shadow: inset 0 0 0 1px rgb(242 239 232 / 0.38); pointer-events: none; transition: background-color 0.16s cubic-bezier(0.16,1,0.3,1), box-shadow 0.16s cubic-bezier(0.16,1,0.3,1); } .ds-chip:hover span { box-shadow: inset 0 0 0 1px #f2efe8; } .ds-chip input:checked + span { background: #c58b45; color: #0c1a28; box-shadow: inset 0 0 0 1px #c58b45; } .ds-chip input:focus-visible + span { outline: 2px solid #d6a160; outline-offset: 2px; }"
+    },
+    {
+      "name": "Header",
+      "kind": "nav",
+      "refersTo": "header",
+      "description": "Midnight on every page: reversed logo with gold star, Inter 500 links, brass current-page underline, live status and an outlined WhatsApp.",
+      "html": "<header class=\"ds-kh\"><svg class=\"ds-logo\" viewBox=\"0 0 120 30\" aria-label=\"Kenstar\"><text x=\"0\" y=\"23\" font-family=\"Manrope, sans-serif\" font-weight=\"800\" font-size=\"24\" fill=\"#ffffff\">KENST</text><path d=\"M93 4l3.2 8 8.8.8-6.7 5.3 2.1 8-7.4-4.6-7.4 4.6 2.1-8-6.7-5.3 8.8-.8z\" fill=\"#f59e0b\"/><text x=\"105\" y=\"23\" font-family=\"Manrope, sans-serif\" font-weight=\"800\" font-size=\"24\" fill=\"#ffffff\">R</text></svg><nav><a href=\"#\" aria-current=\"page\">Products</a><a href=\"#\">Construction</a><a href=\"#\">Accommodation</a><a href=\"#\">About</a><a href=\"#\">Contact</a></nav><span class=\"ds-status\"><i></i>Open now, until 5pm</span><a href=\"#\" class=\"ds-wa\">WhatsApp us</a></header>",
+      "css": ".ds-kh { display: flex; align-items: center; gap: 32px; height: 72px; padding: 0 48px; background: #14283b; color: #f2efe8; box-shadow: inset 0 -1px 0 rgb(242 239 232 / 0.14); } .ds-logo { height: 30px; width: auto; flex: none; } .ds-kh nav { display: flex; gap: 28px; } .ds-kh nav a { padding-block: 10px; font: 500 0.9375rem/1 Inter, 'Segoe UI', system-ui, sans-serif; color: #aab3b8; text-decoration: none; transition: color 0.16s cubic-bezier(0.16,1,0.3,1); } .ds-kh nav a:hover { color: #f2efe8; } .ds-kh nav a[aria-current=page] { color: #f2efe8; box-shadow: inset 0 -2px 0 #c58b45; } .ds-kh a:focus-visible { outline: 2px solid #d6a160; outline-offset: 3px; } .ds-status { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font: 400 0.9375rem/1 Inter, 'Segoe UI', system-ui, sans-serif; color: #aab3b8; white-space: nowrap; } .ds-status i { width: 8px; height: 8px; border-radius: 50%; background: #93a691; } .ds-wa { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px 0 14px; font: 600 0.875rem/1 Inter, 'Segoe UI', system-ui, sans-serif; color: #f2efe8; text-decoration: none; box-shadow: inset 0 0 0 1px rgb(242 239 232 / 0.38); } .ds-wa:hover { box-shadow: inset 0 0 0 1px #f2efe8; }"
+    },
+    {
+      "name": "Finishes Schedule Line",
+      "kind": "custom",
+      "description": "A ruled product line: outlined code, 4:3 photo, name and one soft line, Add to schedule. Selected fills the code brass and washes the row.",
+      "html": "<div class=\"ds-lime\"><div class=\"ds-row\" data-on><span class=\"ds-code\">B-04</span><span class=\"ds-ph\"></span><div><h3>Basin mixers</h3><p>Chrome, grey, black and gold, on display together.</p></div><button class=\"ds-add\">In your schedule</button></div><div class=\"ds-row\"><span class=\"ds-code\">B-05</span><span class=\"ds-ph\"></span><div><h3>Wall mirrors</h3><p>Framed and frameless.</p><p class=\"ds-ill\">Illustrative photo</p></div><button class=\"ds-add ds-off\">Add to schedule</button></div></div>",
+      "css": ".ds-lime { background: #f2efe8; padding: 24px; color: #343a40; } .ds-row { display: grid; grid-template-columns: 64px 120px minmax(0,1fr) auto; gap: 24px; align-items: center; padding: 20px 0; border-bottom: 1px solid rgb(52 58 64 / 0.16); transition: background-color 0.24s cubic-bezier(0.16,1,0.3,1); } .ds-row[data-on] { background: linear-gradient(90deg, rgb(197 139 69 / 0.1), rgb(197 139 69 / 0) 70%); } .ds-code { justify-self: start; padding: 5px 7px 4px; font: 600 0.75rem/1 Inter, 'Segoe UI', system-ui, sans-serif; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; color: #14283b; box-shadow: inset 0 0 0 1px rgb(52 58 64 / 0.42); } .ds-row[data-on] .ds-code { background: #c58b45; color: #0c1a28; box-shadow: inset 0 0 0 1px #c58b45; } .ds-ph { aspect-ratio: 4 / 3; background: #e6e1d6; } .ds-row h3 { margin: 0; font: 700 1.25rem/1.3 Manrope, 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.01em; color: #14283b; } .ds-row p { margin: 2px 0 0; font: 400 0.9375rem/1.5 Inter, 'Segoe UI', system-ui, sans-serif; color: #565d63; } .ds-ill { margin-top: 6px !important; font: 500 0.75rem/1.35 Inter, sans-serif !important; letter-spacing: 0.08em; text-transform: uppercase; } .ds-add { min-height: 40px; padding: 0 16px; border: 0; cursor: pointer; font: 600 0.875rem/1 Inter, 'Segoe UI', system-ui, sans-serif; color: #865826; background: rgb(197 139 69 / 0.12); box-shadow: inset 0 0 0 1px #865826; } .ds-add.ds-off { color: #14283b; background: transparent; box-shadow: inset 0 0 0 1px #14283b; } .ds-add.ds-off:hover { background: rgb(20 40 59 / 0.06); } .ds-add:focus-visible { outline: 2px solid #14283b; outline-offset: 3px; }"
+    },
+    {
+      "name": "Field Note",
+      "kind": "card",
+      "refersTo": "field-note",
+      "description": "Midnight-deep plate cut 14px at 45 degrees top left: note number in brass light, a 4:3 photograph, one true sentence, its source line and a link.",
+      "html": "<div class=\"ds-stage\"><div class=\"ds-note\"><div class=\"ds-note-body\"><header><span class=\"ds-id\">Field note 06.1</span><span>Lighting</span></header><div class=\"ds-note-ph\"></div><div class=\"ds-note-tx\"><p>A gold ribbon pendant with three crystal lamps, hanging in the lighting hall.</p><p class=\"ds-src\">Photographed at Kenstar, Embu</p><a href=\"#\">See the lighting range</a></div></div></div></div>",
+      "css": ".ds-stage { background: #f2efe8; padding: 32px; } .ds-note { width: 300px; filter: drop-shadow(0 16px 32px rgb(12 26 40 / 0.32)); } .ds-note-body { background: #0c1a28; color: #f2efe8; clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px); } .ds-note header { display: flex; justify-content: space-between; gap: 8px; padding: 12px 14px 10px 18px; border-bottom: 1px solid rgb(242 239 232 / 0.14); font: 500 0.75rem/1.35 Inter, 'Segoe UI', system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #aab3b8; } .ds-note .ds-id { color: #d6a160; } .ds-note-ph { aspect-ratio: 4 / 3; background: #14283b; } .ds-note-tx { display: grid; gap: 8px; padding: 12px 14px 14px; font: 400 0.875rem/1.5 Inter, 'Segoe UI', system-ui, sans-serif; } .ds-note-tx p { margin: 0; } .ds-src { font: 500 0.75rem/1.35 Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #aab3b8; } .ds-note-tx a { justify-self: start; font-weight: 600; color: #f2efe8; text-decoration: underline; text-decoration-color: rgb(242 239 232 / 0.35); text-underline-offset: 0.24em; transition: text-decoration-color 0.16s; } .ds-note-tx a:hover { text-decoration-color: #f2efe8; } .ds-note-tx a:focus-visible { outline: 2px solid #d6a160; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ruled Fact Rows",
+      "kind": "custom",
+      "description": "Key and value rows under hairlines: technical-caps keys, Inter values, live open dot.",
+      "html": "<div class=\"ds-mid\"><dl class=\"ds-facts\"><div><dt>Today</dt><dd><i></i>Open now, until 5pm</dd></div><div><dt>Hours</dt><dd>Monday to Friday, 8am to 5pm<br>Saturday and Sunday, 10am to 5pm</dd></div><div><dt>Address</dt><dd>Market Road, Embu</dd></div></dl></div>",
+      "css": ".ds-mid { background: #14283b; color: #f2efe8; padding: 24px; } .ds-facts { margin: 0; max-width: 28rem; border-top: 1px solid rgb(242 239 232 / 0.14); } .ds-facts > div { display: grid; grid-template-columns: 6.5rem minmax(0,1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid rgb(242 239 232 / 0.14); } .ds-facts dt { padding-top: 3px; font: 500 0.75rem/1.35 Inter, 'Segoe UI', system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #aab3b8; } .ds-facts dd { margin: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font: 400 1rem/1.55 Inter, 'Segoe UI', system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-facts i { width: 8px; height: 8px; border-radius: 50%; background: #93a691; flex: none; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Showroom After Dark, Set as a Drawing Sheet",
+    "overview": "Kenstar is architectural editorial luxury: Swiss order, contemporary architecture, the showroom's own photography and the plain honesty of construction documents. Two environments carry every page. Midnight is the hour the chandeliers are lit, and it holds the cinematic and arrival moments: the header, the homepage showroom, the visit sections, the door sign, the enquiry bands and the footer. Limestone is the showroom by day, the warm stone of its floor and walls, and it holds reading and browsing: Products, Construction, About and Contact. White serves one page, the Accommodation spread, as an interiors magazine would.\n\nStructure comes from rules, not boxes. Sections open on a 2px rule, ledgers and schedules are ruled with hairlines, facts sit in key and value rows, and codes are set in tracked technical type. Corners are square everywhere except one cut: the 45° chamfer from the KENST★R wordmark, which marks the primary action and the midnight Field Note. Photography is evidence. It is cropped and lightly corrected, never tinted, and every stand-in or render says what it is.\n\nMotion is construction, and only three experiences perform: the logo loader, the showroom carousel and the homepage journey. Everywhere else, motion is feedback: a 160ms colour change, a 3px arrow nudge, a 1px press.",
+    "keyCharacteristics": [
+      "Two environments, midnight and limestone, alternate by purpose, with white for the Accommodation spread.",
+      "Brass marks what is selected or current and fills the one primary on midnight. Star gold lives only in the logo.",
+      "Manrope for everything large, Inter for everything read or measured.",
+      "A 2px rule opens each section, hairlines rule everything else, and there are no cards.",
+      "Square corners, with a 45° cut on primary actions (10px) and Field Notes (14px).",
+      "Only three experiences animate. Elsewhere, motion is feedback only.",
+      "Images say what they are: \"Illustrative photo\" on stand-in stock, \"Visualisation\" on renders."
+    ],
+    "rules": [
+      { "name": "The Brass Marks the Choice Rule", "body": "Brass shows what is selected, current or active, and fills the one primary action on midnight. It is never a decorative line, a background wash outside a selection, or running text. Brass at full strength is never text on limestone or white (2.6:1). Brass ink carries accent text there.", "section": "colors" },
+      { "name": "The Logo Owns the Star Rule", "body": "Star gold and logo navy appear only inside the logo. They are not UI colours, not a selection colour, and not a highlight.", "section": "colors" },
+      { "name": "The Environment Changes, the Box Doesn't Rule", "body": "A section is either midnight or limestone (white on Accommodation). Midnight deep is a ground for plates, images and the footer, never a third section colour.", "section": "colors" },
+      { "name": "The Two Faces, Two Jobs Rule", "body": "Manrope never goes below 20px and Inter never above 24px. Headings are 600 at display sizes and 700 at Title sizes. Text is 400, and emphasis is Inter 600, never colour or caps.", "section": "typography" },
+      { "name": "The Caps Carry Facts Rule", "body": "Tracked caps carry codes, table keys, captions, note headers and image labels, and nothing else. There are no eyebrows or kickers: a caps label never sits above a headline to introduce it. A block has at most one.", "section": "typography" },
+      { "name": "The Strong Heading Rule", "body": "On light grounds, headings take text-strong (midnight) and body takes graphite. A heading is never soft.", "section": "typography" },
+      { "name": "The Flat Ground Rule", "body": "Nothing floats except the Field Note. A container is separated by a rule, a hairline or a change of environment, never a drop shadow, blur or glass layer.", "section": "elevation" },
+      { "name": "The One Cut Rule", "body": "The 45° cut appears on the primary action and on midnight Field Note plates, nowhere else. No radii, no pills, no rounded photos.", "section": "shapes" }
+    ],
+    "dos": [
+      "**Do** build every section in an environment class (`env-midnight`, `env-limestone`, `env-white`) and style through its roles (surface, text, text-strong, line, accent, action-bg).",
+      "**Do** give each view one primary: filled, with a 10px cut. Brass on midnight, midnight on limestone and white. Keep the header's WhatsApp outlined.",
+      "**Do** open sections, ranges and stages with a 2px text-strong rule, and rule lists and facts with 1px hairlines.",
+      "**Do** set codes, keys, captions and image labels in 12px Inter caps at +0.08em with tabular figures.",
+      "**Do** label stand-in stock \"Illustrative photo\" and every render \"Visualisation\", and embed provenance in every shipping raster.",
+      "**Do** use the authored icon set (24px grid, 1.75 stroke, square caps, mitre joins) at 18–20px.",
+      "**Do** keep touch targets at 44px or more, and the focus ring at 2px in the environment's focus colour.",
+      "**Do** let enquiries open WhatsApp or email with the message written. The site itself sends nothing."
+    ],
+    "donts": [
+      "**Don't** use star gold (#F59E0B) or logo navy (#0B2D52) outside the logo, or show the full-colour logo on midnight.",
+      "**Don't** use brass as decoration or as running text on light grounds. It marks selection and fills the primary on midnight.",
+      "**Don't** put a tracked-caps eyebrow or kicker above a headline.",
+      "**Don't** round corners, add drop shadows (except under a Field Note), or use blur or glass.",
+      "**Don't** cut a corner anywhere but the primary action and midnight Field Note plates.",
+      "**Don't** animate outside the logo loader, the showroom carousel and the journey: no scroll fades, parallax or cursor effects.",
+      "**Don't** tint, duotone or recolour product photography, or present stock or rendered images as Kenstar's own.",
+      "**Don't** build new work on the legacy palette or classes (`--paper`, `--navy`, `--gold`, `.btn-gold`, `.letter`, Archivo, Barlow)."
+    ]
+  }
+}

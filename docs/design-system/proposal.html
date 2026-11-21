@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenstar design system</title>
+<meta name="description" content="Proposed visual design system for the Kenstar Limited website, presented for approval before implementation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+<style>
+/* ===== Palette: materials sampled from the showroom ===== */
+:root {
+  --c-midnight: #14283B;  --c-midnight-deep: #0C1A28;  --c-midnight-raised: #1C3348;
+  --c-limestone: #F2EFE8; --c-stone: #E6E1D6;          --c-white: #FFFFFF;
+  --c-graphite: #343A40;  --c-graphite-soft: #565D63;
+  --c-mineral: #89949B;   --c-mineral-light: #AAB3B8;
+  --c-brass: #C58B45;     --c-brass-light: #D6A160;    --c-brass-ink: #865826;
+  --c-olive: #697B68;     --c-olive-ink: #4C5C4B;      --c-olive-light: #93A691;
+  --c-error: #A8321E;     --c-error-light: #F08A73;
+  --c-logo-navy: #0B2D52; --c-star: #F59E0B;
+
+  --font-display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-text: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px; --s-11: 192px;
+  --section-y: clamp(64px, 4rem + 4vw, 144px);
+  --cut: 10px;
+
+  --dur-instant: 100ms; --dur-fast: 160ms; --dur-base: 240ms; --dur-slow: 480ms; --dur-scene: 900ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+
+  --cols: 4; --gutter: 16px; --margin: 20px;
+}
+@media (min-width: 768px)  { :root { --cols: 8;  --gutter: 20px; --margin: 40px; } }
+@media (min-width: 1280px) { :root { --cols: 12; --gutter: 24px; --margin: clamp(48px, 5vw, 96px); } }
+
+/* ===== Environments: semantic tokens ===== */
+.env-limestone, :root {
+  --surface: var(--c-limestone); --surface-alt: var(--c-stone); --surface-raised: var(--c-white);
+  --text: var(--c-graphite); --text-soft: var(--c-graphite-soft);
+  --line: rgb(52 58 64 / 0.16); --line-strong: rgb(52 58 64 / 0.42);
+  --accent: var(--c-brass); --accent-ink: var(--c-brass-ink);
+  --action-bg: var(--c-midnight); --action-fg: var(--c-limestone); --action-bg-hover: var(--c-midnight-deep);
+  --focus: var(--c-midnight); --status-open: var(--c-olive); --error: var(--c-error);
+  --annotation: rgb(52 58 64 / 0.62); --plate: var(--c-limestone);
+}
+.env-white { --surface: var(--c-white); --surface-alt: var(--c-limestone); --surface-raised: var(--c-limestone); }
+.env-stone { --surface: var(--c-stone); --surface-alt: var(--c-limestone); }
+.env-midnight {
+  --surface: var(--c-midnight); --surface-alt: var(--c-midnight-deep); --surface-raised: var(--c-midnight-raised);
+  --text: var(--c-limestone); --text-soft: var(--c-mineral-light);
+  --line: rgb(242 239 232 / 0.14); --line-strong: rgb(242 239 232 / 0.38);
+  --accent: var(--c-brass); --accent-ink: var(--c-brass-light);
+  --action-bg: var(--c-brass); --action-fg: var(--c-midnight-deep); --action-bg-hover: var(--c-brass-light);
+  --focus: var(--c-brass-light); --status-open: var(--c-olive-light); --error: var(--c-error-light);
+  --annotation: rgb(242 239 232 / 0.55); --plate: var(--c-midnight-deep);
+}
+.env-deep { --surface: var(--c-midnight-deep); --surface-alt: var(--c-midnight); }
+.env { background: var(--surface); color: var(--text); }
+
+/* ===== Base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 1ms !important; animation: none !important; } }
+body { margin: 0; background: var(--c-limestone); color: var(--c-graphite); font: 400 1.0625rem/1.65 var(--font-text); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--c-brass); color: var(--c-midnight-deep); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+a { color: inherit; text-underline-offset: 0.24em; text-decoration-thickness: 1px; }
+p { margin: 0; }
+h1, h2, h3, h4 { margin: 0; }
+table { border-collapse: collapse; width: 100%; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding-inline: var(--margin); }
+.grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); column-gap: var(--gutter); }
+.full { grid-column: 1 / -1; }
+
+/* ===== Type roles ===== */
+/* Hierarchy: each heading level is at least 1.25x the next on phones and about 1.45x on desktop.
+   Weight rises as size falls, so small headings hold their rank: 600 at display sizes, 700 at H2 and H3. */
+.display-1 { font: 600 clamp(3.25rem, 2.23rem + 4.19vw, 6rem)/0.94 var(--font-display); letter-spacing: -0.04em; text-wrap: balance; }
+.display-2 { font: 600 clamp(2.5rem, 1.94rem + 2.29vw, 4rem)/1 var(--font-display); letter-spacing: -0.035em; text-wrap: balance; }
+.h1 { font: 600 clamp(2rem, 1.72rem + 1.14vw, 2.75rem)/1.08 var(--font-display); letter-spacing: -0.03em; text-wrap: balance; }
+.h2 { font: 700 clamp(1.5625rem, 1.49rem + 0.29vw, 1.75rem)/1.2 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.h3 { font: 700 1.25rem/1.3 var(--font-display); letter-spacing: -0.01em; }
+.lede { font: 400 clamp(1.125rem, 1.08rem + 0.19vw, 1.25rem)/1.55 var(--font-text); letter-spacing: -0.006em; text-wrap: pretty; max-width: 58ch; }
+.body { font: 400 1.0625rem/1.65 var(--font-text); max-width: 66ch; text-wrap: pretty; }
+.small { font: 400 0.9375rem/1.55 var(--font-text); }
+.caption { font: 500 0.8125rem/1.45 var(--font-text); }
+.tech { font: 500 0.75rem/1.35 var(--font-text); letter-spacing: 0.08em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.soft { color: var(--text-soft); }
+.ink { color: var(--accent-ink); }
+
+/* ===== Section frame ===== */
+.sec { padding-block: var(--section-y); }
+.sec-head { border-top: 2px solid var(--text); padding-top: var(--s-4); row-gap: var(--s-5); margin-bottom: var(--s-8); }
+.sec-head h2 { grid-column: 1 / -1; display: flex; gap: var(--s-4); align-items: baseline; }
+.sec-head h2 .num { font: 500 0.875rem/1 var(--font-text); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; color: var(--text-soft); min-width: 2.2em; transform: translateY(-0.2em); }
+.sec-head .intro { grid-column: 1 / -1; }
+@media (min-width: 1280px) {
+  .sec-head h2 { grid-column: 1 / span 6; }
+  .sec-head .intro { grid-column: 8 / span 5; padding-top: var(--s-2); }
+}
+.sub { margin: var(--s-9) 0 var(--s-5); }
+.sub:first-child { margin-top: 0; }
+.rule-top { border-top: 1px solid var(--line-strong); padding-top: var(--s-3); }
+
+/* ===== Buttons ===== */
+.btn { --h: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: var(--h); padding: 0 22px 0 20px; font: 600 0.9688rem/1 var(--font-text); letter-spacing: -0.003em; text-decoration: none; white-space: nowrap; border: 0; cursor: pointer; color: inherit; background: none;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.btn svg { flex: none; transition: transform var(--dur-base) var(--ease-out); }
+.btn:hover svg.nudge { transform: translateX(3px); }
+.btn:active { transform: translateY(1px); }
+.btn-sm { --h: 40px; padding: 0 16px 0 14px; font-size: 0.875rem; }
+.btn-lg { --h: 56px; padding: 0 28px 0 26px; font-size: 1.0313rem; }
+/* The cut corner: 45 degrees, from the chamfers in the KENSTAR wordmark. Primary actions only. */
+.btn-primary { color: var(--action-fg); background: linear-gradient(225deg, transparent var(--cut), var(--action-bg) calc(var(--cut) + 0.5px)); }
+.btn-primary:hover { background: linear-gradient(225deg, transparent var(--cut), var(--action-bg-hover) calc(var(--cut) + 0.5px)); }
+.btn-secondary { box-shadow: inset 0 0 0 1px var(--line-strong); }
+.btn-secondary:hover { box-shadow: inset 0 0 0 1px var(--text); }
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.btn-loading { position: relative; }
+.btn-loading::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 62%; background: currentColor; }
+.link { display: inline-flex; align-items: center; gap: 8px; font: 600 0.9688rem/1.3 var(--font-text); text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); transition: text-decoration-color var(--dur-fast); }
+.link:hover { text-decoration-color: currentColor; }
+.icon-btn { width: 44px; height: 44px; display: inline-grid; place-items: center; box-shadow: inset 0 0 0 1px var(--line-strong); background: none; color: inherit; border: 0; }
+
+/* ===== Cover ===== */
+.cover { padding-block: var(--s-7) var(--s-9); position: relative; overflow: hidden; }
+.cover-top { display: flex; justify-content: space-between; align-items: center; gap: var(--s-5); padding-bottom: var(--s-8); }
+.cover-top img { width: 152px; height: auto; margin: -14px 0 -14px -12px; }
+.cover-title { grid-column: 1 / -1; }
+.cover-copy { grid-column: 1 / -1; margin-top: var(--s-6); }
+.cover-figure { grid-column: 1 / -1; margin-top: var(--s-8); position: relative; }
+@media (min-width: 1280px) {
+  .cover-title { grid-column: 1 / span 7; align-self: end; }
+  .cover-copy { grid-column: 1 / span 5; }
+  .cover-figure { grid-column: 8 / span 5; grid-row: 1 / span 2; margin-top: 0; }
+}
+.window { position: relative; overflow: hidden; background: var(--c-midnight-deep); }
+.window img { width: 100%; height: 100%; object-fit: cover; }
+.dims { position: absolute; color: var(--annotation); }
+
+/* ===== Swatches ===== */
+.envs { row-gap: var(--gutter); }
+.env-panel { grid-column: 1 / -1; padding: var(--s-6); min-height: 360px; display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-6); }
+@media (min-width: 1280px) { .env-panel.a { grid-column: 1 / span 7; } .env-panel.b { grid-column: 8 / span 5; } }
+.env-panel img.logo { width: 200px; margin: -18px 0 -18px -18px; }
+.env-panel.c { min-height: 0; flex-direction: row; align-items: center; padding-block: var(--s-5); }
+.swatches { row-gap: var(--s-6); }
+.swatch { grid-column: span 2; }
+@media (min-width: 1280px) { .swatch { grid-column: span 3; } }
+@media (min-width: 1440px) { .swatches { --cols: 12; } }
+.chip { aspect-ratio: 3 / 2; margin-bottom: var(--s-3); box-shadow: inset 0 0 0 1px rgb(52 58 64 / 0.12); }
+.chip-pair { display: grid; grid-template-columns: 2fr 1fr 1fr; aspect-ratio: 3 / 2; margin-bottom: var(--s-3); box-shadow: inset 0 0 0 1px rgb(52 58 64 / 0.12); }
+.swatch .h3 { font-size: 1.125rem; }
+.swatch .caption { color: var(--text-soft); margin-top: var(--s-1); }
+.swatch .tech { margin-top: var(--s-2); color: var(--text); }
+
+.tokens { font-size: 0.9375rem; }
+.tokens th { text-align: left; font: 500 0.75rem/1.35 var(--font-text); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); padding: 0 var(--s-3) var(--s-2) 0; border-bottom: 1px solid var(--line-strong); }
+.tokens td { padding: var(--s-3) var(--s-3) var(--s-3) 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tokens code { font: 500 0.8125rem/1.4 var(--font-text); font-variant-numeric: tabular-nums; }
+.dot { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; margin-right: 8px; box-shadow: inset 0 0 0 1px rgb(52 58 64 / 0.2); }
+.scroll-x { overflow-x: auto; }
+.scroll-x table { min-width: 680px; }
+
+/* ===== Type specimen ===== */
+.spec-row { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr; gap: var(--s-3); padding-block: var(--s-6); border-top: 1px solid var(--line); }
+@media (min-width: 1280px) { .spec-row { grid-template-columns: 2fr 7fr 3fr; gap: var(--gutter); align-items: baseline; } }
+.spec-row .meta { color: var(--text-soft); }
+.hier { row-gap: var(--gutter); }
+.hier > div { grid-column: 1 / -1; padding: var(--s-7) var(--s-6); }
+.hier-b { box-shadow: inset 0 0 0 1px var(--line); }
+@media (min-width: 1280px) { .hier-a { grid-column: 1 / span 6 !important; } .hier-b { grid-column: 7 / span 6 !important; } }
+.compare { row-gap: var(--s-7); }
+.compare > div { grid-column: 1 / -1; }
+@media (min-width: 768px) { .compare > div { grid-column: span 4; } }
+@media (min-width: 1280px) { .compare > div { grid-column: span 6; } }
+.compare .big { font-size: clamp(2.5rem, 2rem + 2vw, 3.75rem); line-height: 1; letter-spacing: -0.035em; margin: var(--s-4) 0; }
+
+/* ===== Grid diagrams ===== */
+.gd { margin-bottom: var(--s-7); }
+.gd-frame { display: grid; height: 120px; padding-inline: var(--m); column-gap: var(--g); grid-template-columns: repeat(var(--n), 1fr); background: var(--c-white); box-shadow: inset 0 0 0 1px var(--line); }
+.gd-frame span { background: rgb(197 139 69 / 0.16); box-shadow: inset 1px 0 0 rgb(197 139 69 / 0.6), inset -1px 0 0 rgb(197 139 69 / 0.6); }
+.gd-meta { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-6); margin-top: var(--s-3); }
+
+/* ===== Spacing ===== */
+.space-row { display: grid; grid-template-columns: 56px 64px 1fr; align-items: center; gap: var(--s-4); padding-block: 6px; border-bottom: 1px solid var(--line); }
+.space-row i { display: block; height: 12px; background: var(--c-brass); }
+
+/* ===== Image ratios ===== */
+.ratios { row-gap: var(--s-7); align-items: end; }
+.ratio figure { margin: 0; }
+.ratio .window { width: 100%; }
+.ratio figcaption { margin-top: var(--s-3); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-1) var(--s-4); }
+.ratio figcaption .tech { white-space: nowrap; }
+.r-cine { grid-column: 1 / -1; } .r-cine .window { aspect-ratio: 21 / 9; }
+.r-arch { grid-column: 1 / -1; } .r-arch .window { aspect-ratio: 3 / 2; }
+.r-portal { grid-column: span 2; } .r-portal .window { aspect-ratio: 3 / 4; }
+.r-sq { grid-column: span 2; } .r-sq .window { aspect-ratio: 1; }
+.r-tall { grid-column: span 2; } .r-tall .window { aspect-ratio: 2 / 3; }
+.r-note { grid-column: span 2; } .r-note .window { aspect-ratio: 4 / 3; }
+@media (min-width: 768px) { .r-arch { grid-column: span 5; } .r-portal { grid-column: span 3; } }
+@media (min-width: 1280px) { .r-arch { grid-column: span 7; } .r-portal { grid-column: span 3; } .r-sq, .r-tall, .r-note { grid-column: span 3; } }
+
+.dos { row-gap: var(--s-5); }
+.dos > div { grid-column: 1 / -1; }
+@media (min-width: 768px) { .dos > div { grid-column: span 4; } }
+@media (min-width: 1280px) { .dos > div { grid-column: span 6; } }
+.list { list-style: none; padding: 0; margin: var(--s-3) 0 0; }
+.list li { padding: var(--s-3) 0; border-bottom: 1px solid var(--line); }
+
+/* ===== Surfaces ===== */
+.surf { row-gap: var(--gutter); }
+.surf > div { grid-column: span 2; padding: var(--s-5); min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; }
+@media (min-width: 1280px) { .surf > div { grid-column: span 3; } .surf > div.wide { grid-column: span 6; } }
+.lines > div { display: grid; grid-template-columns: 1fr; gap: var(--s-2); padding-block: var(--s-4); border-bottom: 1px solid var(--line); }
+@media (min-width: 768px) { .lines > div { grid-template-columns: 220px 1fr 1.4fr; align-items: center; gap: var(--s-5); } }
+
+/* ===== Nav mocks ===== */
+.mock { box-shadow: inset 0 0 0 1px var(--line); margin-bottom: var(--s-5); overflow: hidden; }
+.hdr { display: flex; align-items: center; gap: var(--s-6); height: 72px; padding: 0 var(--s-5); }
+.hdr img { width: 128px; margin: 0 -8px 0 -10px; }
+.hdr nav { display: flex; gap: var(--s-5); font: 500 0.9375rem/1 var(--font-text); }
+.hdr nav a { text-decoration: none; padding-block: 8px; }
+.hdr nav a[aria-current] { box-shadow: inset 0 -2px 0 var(--accent); }
+.hdr .right { margin-left: auto; display: flex; align-items: center; gap: var(--s-5); }
+.status { display: inline-flex; align-items: center; gap: 8px; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--status-open); }
+@media (max-width: 1279px) { .hdr nav, .hdr .status { display: none; } }
+.phone-frames { display: flex; gap: var(--gutter); flex-wrap: wrap; }
+.phone { width: 300px; max-width: 100%; box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+.phone .ph-hdr { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 var(--s-4); }
+.phone .ph-hdr img { width: 104px; margin-left: -8px; }
+.menu-sheet { padding: var(--s-5) var(--s-4) var(--s-4); }
+.menu-sheet a { display: flex; justify-content: space-between; align-items: center; font: 600 1.75rem/1.1 var(--font-display); letter-spacing: -0.025em; text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.actionbar { display: grid; grid-template-columns: 1.3fr 1fr 1fr; }
+.actionbar a { display: flex; align-items: center; justify-content: center; gap: 8px; height: 56px; font: 600 0.875rem/1 var(--font-text); text-decoration: none; }
+.actionbar a + a { box-shadow: inset 1px 0 0 var(--line); }
+.actionbar .wa { background: var(--c-brass); color: var(--c-midnight-deep); }
+
+.ftr { padding: var(--s-8) var(--s-6) var(--s-5); }
+.ftr .closing { grid-column: 1 / -1; margin-bottom: var(--s-8); }
+.ftr .col { grid-column: 1 / -1; margin-bottom: var(--s-6); }
+@media (min-width: 768px) { .ftr .col { grid-column: span 4; } }
+@media (min-width: 1280px) { .ftr .col { grid-column: span 3; } .ftr .closing { max-width: 14em; } }
+.ftr .col p, .ftr .col a { display: block; font-size: 0.9375rem; line-height: 1.7; text-decoration: none; }
+.ftr .col .tech { margin-bottom: var(--s-3); color: var(--text-soft); }
+.ftr .base { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); justify-content: space-between; padding-top: var(--s-4); border-top: 1px solid var(--line); color: var(--text-soft); }
+
+/* ===== Button board ===== */
+.board { padding: var(--s-6); display: grid; gap: var(--s-6); }
+.board .row { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-4); align-items: center; }
+.board .tech { color: var(--text-soft); }
+
+/* ===== Catalogue ===== */
+.cat-head { row-gap: var(--s-5); padding-bottom: var(--s-6); }
+.cat-head h3 { grid-column: 1 / -1; }
+.cat-head .lede { grid-column: 1 / -1; }
+.cat-head .facts { grid-column: 1 / -1; }
+@media (min-width: 1280px) { .cat-head h3 { grid-column: 1 / span 6; } .cat-head .lede { grid-column: 1 / span 6; } .cat-head .facts { grid-column: 9 / span 4; grid-row: 1 / span 2; align-self: end; } }
+.facts dl { display: grid; grid-template-columns: auto 1fr; margin: 0; }
+.facts dt, .facts dd { margin: 0; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.facts dt { padding-right: var(--s-5); }
+.tabs { display: flex; gap: var(--s-5); overflow-x: auto; border-bottom: 1px solid var(--line); margin-bottom: 1px; scrollbar-width: none; }
+.tabs a { flex: none; font: 500 0.9375rem/1 var(--font-text); text-decoration: none; padding: 16px 0 14px; color: var(--text-soft); }
+.tabs a[aria-current] { color: var(--text); box-shadow: inset 0 -2px 0 var(--text); }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); box-shadow: 0 0 0 1px var(--line); }
+@media (min-width: 768px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.tile { background: var(--c-white); padding: var(--s-3) var(--s-3) var(--s-5); display: flex; flex-direction: column; gap: var(--s-3); }
+.tile .window { aspect-ratio: 4 / 5; background: var(--c-limestone); }
+.tile .window img { transition: transform var(--dur-slow) var(--ease-out); }
+.tile:hover .window img { transform: scale(1.03); }
+.tile.feature { grid-column: span 2; }
+.tile.feature .window { aspect-ratio: auto; flex: 1; min-height: 220px; }
+.tile h4 { font: 600 1rem/1.3 var(--font-text); letter-spacing: -0.006em; }
+.tile p { font-size: 0.875rem; line-height: 1.45; color: var(--text-soft); }
+.tile .link { margin-top: auto; font-size: 0.875rem; }
+.enq { display: flex; flex-wrap: wrap; gap: var(--s-5); justify-content: space-between; align-items: center; padding: var(--s-6); margin-top: var(--s-5); }
+.sample-note { margin-top: var(--s-4); color: var(--text-soft); }
+
+/* ===== Annotation ===== */
+.anno-sheet { padding: var(--s-5); }
+.anno-sheet svg { width: 100%; height: auto; display: block; }
+.anno-sheet text { font: 500 11px var(--font-text); letter-spacing: 0.08em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.intensity td:nth-child(2) i { display: inline-block; width: 10px; height: 10px; margin-right: 3px; box-shadow: inset 0 0 0 1px var(--line-strong); }
+.intensity td:nth-child(2) i.on { background: var(--text); box-shadow: none; }
+
+/* ===== Field note ===== */
+.scene { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--c-midnight-deep); }
+.scene > img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.62) saturate(0.9); }
+.scene .stand-in { position: absolute; left: var(--s-4); bottom: var(--s-4); background: var(--c-midnight-deep); color: var(--c-mineral-light); padding: 6px 10px; }
+.reticle { position: absolute; width: 28px; height: 28px; transform: translate(-50%, -50%); color: var(--c-limestone); }
+.leader { position: absolute; color: var(--c-limestone); overflow: visible; }
+.note { position: absolute; width: min(300px, 78%); background: var(--c-midnight-deep); color: var(--c-limestone);
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px); box-shadow: 0 16px 40px rgb(12 26 40 / 0.45); }
+.note-wrap { position: absolute; filter: drop-shadow(0 16px 32px rgb(12 26 40 / 0.5)); }
+.note-wrap .note { position: static; box-shadow: none; }
+.note header { display: flex; justify-content: space-between; gap: 8px; padding: 12px 14px 10px 18px; border-bottom: 1px solid rgb(242 239 232 / 0.14); }
+.note header .tech { color: var(--c-mineral-light); }
+.note header .tech.b { color: var(--c-brass-light); }
+.note .ph { aspect-ratio: 4 / 3; overflow: hidden; }
+.note .ph img { width: 100%; height: 100%; object-fit: cover; }
+.note .tx { padding: 12px 14px 14px; display: grid; gap: 10px; }
+.note .tx p { font-size: 0.875rem; line-height: 1.5; }
+.note .src { color: var(--c-mineral-light); }
+.anatomy { margin-top: var(--s-6); row-gap: var(--s-5); }
+.anatomy > div { grid-column: 1 / -1; }
+@media (min-width: 768px) { .anatomy > div { grid-column: span 4; } }
+@media (min-width: 1280px) { .anatomy > div { grid-column: span 3; } }
+.fn-mobile { display: flex; gap: var(--gutter); flex-wrap: wrap; margin-top: var(--s-7); align-items: flex-start; }
+.fn-mobile .phone { position: relative; aspect-ratio: 9 / 16; width: 260px; }
+.fn-mobile .phone > img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+.sheet { position: absolute; left: 12px; right: 12px; bottom: 12px; background: var(--c-midnight-deep); color: var(--c-limestone); clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px); }
+.sheet .row { display: grid; grid-template-columns: 72px 1fr; gap: 10px; padding: 10px; align-items: center; }
+.sheet .row img { width: 72px; aspect-ratio: 1; object-fit: cover; }
+.pin { position: absolute; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--c-limestone); display: grid; place-items: center; font: 600 11px/1 var(--font-text); color: var(--c-limestone); background: rgb(12 26 40 / 0.6); }
+.pin.on { background: var(--c-brass); color: var(--c-midnight-deep); border-color: var(--c-brass); }
+
+/* ===== Tables / motion ===== */
+.motion-cols { row-gap: var(--s-7); }
+.motion-cols > div { grid-column: 1 / -1; }
+@media (min-width: 1280px) { .motion-cols > .a { grid-column: 1 / span 5; } .motion-cols > .b { grid-column: 7 / span 6; } }
+.principles { counter-reset: p; list-style: none; padding: 0; margin: 0; }
+.principles li { counter-increment: p; display: grid; grid-template-columns: 2.2em 1fr; gap: var(--s-2); padding: var(--s-4) 0; border-bottom: 1px solid var(--line); }
+.principles li::before { content: counter(p, decimal-leading-zero); font: 500 0.75rem/1.9 var(--font-text); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; color: var(--text-soft); }
+.principles strong { font-weight: 600; }
+.curve { display: inline-block; vertical-align: middle; }
+
+.routes td:nth-child(2) { width: 34%; }
+.mix { display: flex; height: 14px; width: 100%; min-width: 120px; outline: 1px solid var(--line-strong); outline-offset: 0; }
+.mix i { display: block; height: 100%; }
+.mix i + i { box-shadow: inset 1px 0 0 var(--line-strong); }
+
+.decide { list-style: none; padding: 0; margin: 0; counter-reset: d; }
+.decide li { counter-increment: d; display: grid; grid-template-columns: 2.4em 1fr; gap: var(--s-3); padding: var(--s-5) 0; border-bottom: 1px solid var(--line); }
+.decide li::before { content: counter(d); font: 500 1.25rem/1.3 var(--font-display); color: var(--accent-ink); }
+.env-midnight .decide li::before { color: var(--c-brass-light); }
+
+.refs td:first-child { width: 22%; }
+.refs td:nth-child(2) { width: 46%; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="env env-midnight cover" aria-labelledby="t">
+  <div class="wrap">
+    <div class="cover-top">
+      <img src="../../public/brand/logo/logo-white.svg" alt="Kenstar Limited">
+      <p class="tech soft">Design system proposal · 19 November 2026 · For approval</p>
+    </div>
+    <div class="grid">
+      <h1 id="t" class="display-1 cover-title">The making of a space, set as a&nbsp;system.</h1>
+      <div class="cover-copy">
+        <p class="lede">Architectural editorial luxury for every Kenstar route: Swiss order, contemporary architecture, the showroom's own photography and the honesty of construction documents. Two environments carry it. Midnight is the hour the chandeliers are lit. Limestone is the showroom by day.</p>
+        <p class="small soft" style="margin-top:24px;max-width:52ch">Nothing here is implemented yet. After approval, these tokens and foundation components move into the app, and DESIGN.md records them from the built result.</p>
+      </div>
+      <figure class="cover-figure" style="margin:0">
+        <div class="window" style="aspect-ratio:4/5">
+          <img src="../../public/images/showroom-chandelier-hall-0980.webp" alt="Chandeliers hanging in the Kenstar lighting hall">
+        </div>
+        <svg class="dims" viewBox="0 0 100 20" preserveAspectRatio="none" style="left:0;right:0;bottom:-28px;height:20px;width:100%" aria-hidden="true">
+          <path d="M0 10H100M0 4V16M100 4V16" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" fill="none"/>
+        </svg>
+        <figcaption class="tech soft" style="margin-top:36px;display:flex;justify-content:space-between;gap:16px"><span>Lighting hall, Market Road</span><span>00°32′08″S 37°26′39″E</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REFERENCES ===================== -->
+<section class="env env-limestone sec" aria-labelledby="refs">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="refs" class="h1"><span class="num">00</span>What the references teach</h2>
+      <p class="intro body soft">Principles only. None of these layouts, palettes or faces is borrowed: Ferrow's cream and italic serif, Illoca's grid paper and handwriting, and Archon's dark sci-fi grade all belong to other worlds.</p>
+    </div>
+    <div class="scroll-x">
+      <table class="tokens refs">
+        <thead><tr><th>Reference</th><th>Principle we take</th><th>How Kenstar uses it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ferrow Interiors</strong><br><span class="caption soft">codethatmoves.com</span></td><td>One fixed camera. A room accumulates in layers: sketch lines, surfaces, furniture, then evening light. The caption plate never moves.</td><td>Each journey chapter keeps one camera. Light is the last layer, and the stage caption sits in one fixed grid position.</td></tr>
+          <tr><td><strong>Illoca</strong><br><span class="caption soft">rickcreates.com teardown</span></td><td>One unbroken shot in the real working order. The picture is a window cut into the page and placed by counting grid cells. The camera stops while you read. Proof appears only in contained panels.</td><td>Image windows snap to column lines. The journey holds still at each Field Note. Real photos appear only as Field Notes, never as decoration.</td></tr>
+          <tr><td><strong>Pearl Towers</strong><br><span class="caption soft">contra.com</span></td><td>A modelled building rendered offline as an image sequence. It reads as 3D without loading 3D. First paint arrives fast and the frames stream in behind it.</td><td>Blender renders become frames. The first frame of each chapter is a real image in the HTML, and the rest stream in.</td></tr>
+          <tr><td><strong>GSAP scroll image sequence</strong><br><span class="caption soft">gsapvault.com</span></td><td>One timeline draws frames to a canvas, opens a viewing aperture, crossfades captions and tracks progress. It pins only for the journey, and everything reverses.</td><td>The star opening and the showroom carousel use the same aperture idea: each range opens as a window that grows to fill the screen. A still <code>img</code> sits under every canvas as the fallback.</td></tr>
+          <tr><td><strong>Archon</strong><br><span class="caption soft">dev.viseni.com</span></td><td>A full-viewport canvas with cover-fit frames. Scroll distance per frame is longer on touch screens (22px against 10px) for thumb pacing.</td><td>Pacing is a token: 10px of scroll per frame on desktop, 20px on touch. Unlike Archon, we never preload a whole sequence.</td></tr>
+          <tr><td><strong>landing.love GSAP collection</strong></td><td colspan="2" class="soft">Not reviewed: the page sits behind a Cloudflare bot check. Send any sites from it you want studied and I'll add them.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 1. COLOUR ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c1" style="padding-top:0">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c1" class="h1"><span class="num">01</span>Colour</h2>
+      <p class="intro body soft">Every colour is a material in the showroom photographs. Two environments alternate by purpose, not by habit: midnight for cinematic, arrival and night-lit moments, limestone for editorial reading and browsing, white for the product gallery.</p>
+    </div>
+
+    <div class="grid envs">
+      <div class="env env-midnight env-panel a">
+        <img class="logo" src="../../public/brand/logo/logo-white.svg" alt="Kenstar logo, reversed for midnight">
+        <div>
+          <p class="h2">Midnight</p>
+          <p class="small soft" style="margin-top:8px;max-width:46ch">The cinematic environment: the homepage, the journey, the showroom visit, Contact and the footer. Photography glows here like a lit window. The logo is always reversed.</p>
+          <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" href="#c1">Visit the showroom</a><a class="btn btn-secondary" href="#c1">Call us</a></div>
+        </div>
+      </div>
+      <div class="env env-limestone env-panel b" style="box-shadow:inset 0 0 0 1px var(--line)">
+        <img class="logo" src="../../public/brand/logo/logo.svg" alt="Kenstar logo in full colour">
+        <div>
+          <p class="h2">Limestone</p>
+          <p class="small soft" style="margin-top:8px">The editorial environment: Products, About, Construction and Accommodation. It is the warm stone of the showroom floor and walls, never paper or parchment.</p>
+          <div style="margin-top:24px"><a class="btn btn-primary" href="#c1">Ask on WhatsApp</a></div>
+        </div>
+      </div>
+      <div class="env env-white env-panel c full" style="box-shadow:inset 0 0 0 1px var(--line);justify-content:space-between;flex-wrap:wrap">
+        <p class="h3">White, the gallery</p>
+        <p class="small soft" style="max-width:62ch">Only behind product photography in the catalogue, so finishes read true, as they do on the showroom's white display walls.</p>
+      </div>
+    </div>
+
+    <h3 class="h2 sub">Materials</h3>
+    <div class="grid swatches">
+      <div class="swatch"><div class="chip" style="background:#14283B"></div><p class="h3">Midnight</p><p class="caption">The hour the chandeliers are lit</p><p class="tech">#14283B · deep #0C1A28 · raised #1C3348</p></div>
+      <div class="swatch"><div class="chip" style="background:#F2EFE8"></div><p class="h3">Limestone</p><p class="caption">The showroom's floor and walls</p><p class="tech">#F2EFE8 · stone #E6E1D6</p></div>
+      <div class="swatch"><div class="chip" style="background:#FFFFFF"></div><p class="h3">White</p><p class="caption">Display walls, the product gallery</p><p class="tech">#FFFFFF</p></div>
+      <div class="swatch"><div class="chip" style="background:#343A40"></div><p class="h3">Graphite</p><p class="caption">Matte black taps; all text on light</p><p class="tech">#343A40 · soft #565D63</p></div>
+      <div class="swatch"><div class="chip-pair"><span style="background:#C58B45"></span><span style="background:#D6A160"></span><span style="background:#865826"></span></div><p class="h3">Brass</p><p class="caption">Fittings, chandelier gold. The one accent</p><p class="tech">#C58B45 · light #D6A160 · ink #865826</p></div>
+      <div class="swatch"><div class="chip-pair" style="grid-template-columns:2fr 1fr"><span style="background:#89949B"></span><span style="background:#AAB3B8"></span></div><p class="h3">Mineral</p><p class="caption">Chrome and steel; lines and soft text on midnight</p><p class="tech">#89949B · light #AAB3B8</p></div>
+      <div class="swatch"><div class="chip-pair"><span style="background:#697B68"></span><span style="background:#93A691"></span><span style="background:#4C5C4B"></span></div><p class="h3">Olive</p><p class="caption">Embu's landscape outside: status, success, construction</p><p class="tech">#697B68 · light #93A691 · ink #4C5C4B</p></div>
+      <div class="swatch"><div class="chip-pair"><span style="background:#0B2D52"></span><span style="background:#F59E0B"></span><span style="background:#0B2D52"></span></div><p class="h3">Brand marks</p><p class="caption">Logo navy and star gold live inside the logo only</p><p class="tech">#0B2D52 · #F59E0B</p></div>
+    </div>
+
+    <h3 class="h2 sub">Semantic tokens</h3>
+    <div class="scroll-x">
+      <table class="tokens">
+        <thead><tr><th>Token</th><th>Limestone</th><th>Midnight</th><th>Job</th></tr></thead>
+        <tbody>
+          <tr><td><code>--surface</code></td><td><span class="dot" style="background:#F2EFE8"></span>limestone</td><td><span class="dot" style="background:#14283B"></span>midnight</td><td>Section ground</td></tr>
+          <tr><td><code>--surface-alt</code></td><td><span class="dot" style="background:#E6E1D6"></span>stone</td><td><span class="dot" style="background:#0C1A28"></span>midnight deep</td><td>Alternate band, form panels, canvas letterbox</td></tr>
+          <tr><td><code>--surface-raised</code></td><td><span class="dot" style="background:#fff"></span>white</td><td><span class="dot" style="background:#1C3348"></span>midnight raised</td><td>Product tiles, menus</td></tr>
+          <tr><td><code>--text</code></td><td><span class="dot" style="background:#343A40"></span>graphite · 10.0:1</td><td><span class="dot" style="background:#F2EFE8"></span>limestone · 13.1:1</td><td>All running text and headings</td></tr>
+          <tr><td><code>--text-soft</code></td><td><span class="dot" style="background:#565D63"></span>graphite soft · 5.8:1</td><td><span class="dot" style="background:#AAB3B8"></span>mineral light · 7.1:1</td><td>Secondary text, captions, keys</td></tr>
+          <tr><td><code>--line</code> / <code>--line-strong</code></td><td>graphite 16% / 42%</td><td>limestone 14% / 38%</td><td>Hairlines; input and frame borders</td></tr>
+          <tr><td><code>--action-bg</code></td><td><span class="dot" style="background:#14283B"></span>midnight, limestone text</td><td><span class="dot" style="background:#C58B45"></span>brass, deep text · 6.0:1</td><td>The one primary action per view</td></tr>
+          <tr><td><code>--accent-ink</code></td><td><span class="dot" style="background:#865826"></span>brass ink · 5.3:1</td><td><span class="dot" style="background:#D6A160"></span>brass light · 6.5:1</td><td>Accent text and active markers</td></tr>
+          <tr><td><code>--status-open</code></td><td><span class="dot" style="background:#697B68"></span>olive</td><td><span class="dot" style="background:#93A691"></span>olive light</td><td>The open-now dot, success</td></tr>
+          <tr><td><code>--error</code></td><td><span class="dot" style="background:#A8321E"></span>#A8321E · 5.8:1</td><td><span class="dot" style="background:#F08A73"></span>#F08A73 · 6.2:1</td><td>Form errors only</td></tr>
+          <tr><td><code>--focus</code></td><td>midnight</td><td>brass light</td><td>2px focus ring, 3px offset</td></tr>
+          <tr><td><code>--annotation</code> / <code>--plate</code></td><td>graphite 62% / limestone</td><td>limestone 55% / midnight deep</td><td>Drawing lines; the solid plate under drawing labels</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid" style="margin-top:32px;row-gap:16px">
+      <p class="small full" style="max-width:none"><strong>Contrast rules.</strong> Brass is never text on limestone or white (2.6:1); it fills buttons on midnight and draws rules and markers on light. Mineral on limestone (2.7:1) is for hairlines only. Olive marks status and success, and is never body text.</p>
+      <p class="small full" style="max-width:none"><strong>The logo rule.</strong> Midnight and the logo's navy share a hue (209° and 211°), so they sit together as one family. The full-colour logo appears only on limestone, stone or white. On midnight it is always reversed: white letters, gold star. Star gold appears outside the logo once, when the light switches on at the end of the journey.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. TYPOGRAPHY ===================== -->
+<section class="env env-white sec" aria-labelledby="c2">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c2" class="h1"><span class="num">02</span>Typography</h2>
+      <p class="intro body soft">Two faces, each with a strict job. Manrope sets everything large: its geometric construction and flat terminals answer the chamfered wordmark. Inter sets everything read or measured: text, captions, figures and drawing labels. Manrope never goes below 20px, and Inter never above 24px.</p>
+    </div>
+
+    <div class="grid">
+      <div class="spec-row"><p class="tech meta">Display 1<br>Manrope 600</p><p class="display-1">Chandeliers, lit at dusk.</p><p class="caption meta">52–96px · line 0.94 · −0.04em · homepage and route openers</p></div>
+      <div class="spec-row"><p class="tech meta">Display 2<br>Manrope 600</p><p class="display-2">From the first line to the final light.</p><p class="caption meta">40–64px · line 1.0 · −0.035em · cinematic section openers, footer close</p></div>
+      <div class="spec-row"><p class="tech meta">Heading 1<br>Manrope 600</p><p class="h1">Bathroom and toiletries</p><p class="caption meta">32–44px · line 1.08 · −0.03em · page, category and section titles</p></div>
+      <div class="spec-row"><p class="tech meta">Heading 2<br>Manrope 700</p><p class="h2">Taps, basins and the fittings behind them</p><p class="caption meta">25–28px · line 1.2 · −0.02em · titles inside a section</p></div>
+      <div class="spec-row"><p class="tech meta">Heading 3<br>Manrope 700</p><p class="h3">Basin mixers</p><p class="caption meta">20px · line 1.3 · −0.01em · sub-sections, tiles, Field Note titles</p></div>
+      <div class="spec-row"><p class="tech meta">Lede<br>Inter 400</p><p class="lede">Hardware, electricals, bathroom, finishing, furniture and lighting under one roof on Market Road, Embu.</p><p class="caption meta">18–20px · line 1.55 · max 58ch</p></div>
+      <div class="spec-row"><p class="tech meta">Body<br>Inter 400</p><p class="body">Visit the showroom to see finishes in person, or send a list on WhatsApp and we will reply with what is in stock. Running text holds a 66-character measure.</p><p class="caption meta">17px · line 1.65 · max 66ch</p></div>
+      <div class="spec-row"><p class="tech meta">Caption<br>Inter 500</p><p class="caption">Basin mixer taps in chrome, grey, black and gold, on display in the bathroom section.</p><p class="caption meta">13px · line 1.45 · photo captions and source lines</p></div>
+      <div class="spec-row"><p class="tech meta">Technical<br>Inter 500</p><p class="tech">Field note 03.1 · Sheet 04 of 06 · 00°32′08″S 37°26′39″E · 2400 mm</p><p class="caption meta">12px caps · +0.08em · tabular figures · facts only</p></div>
+    </div>
+
+    <h3 class="h2 sub">Hierarchy</h3>
+    <div class="scroll-x">
+      <table class="tokens">
+        <thead><tr><th>Level</th><th>Phone</th><th>Desktop</th><th>Step to next level (phone · desktop)</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td>Display 1</td><td>52px</td><td>96px</td><td>×1.30 · ×1.50</td><td>Manrope 600</td></tr>
+          <tr><td>Display 2</td><td>40px</td><td>64px</td><td>×1.25 · ×1.45</td><td>Manrope 600</td></tr>
+          <tr><td>Heading 1</td><td>32px</td><td>44px</td><td>×1.28 · ×1.57</td><td>Manrope 600</td></tr>
+          <tr><td>Heading 2</td><td>25px</td><td>28px</td><td>×1.25 · ×1.40</td><td>Manrope 700</td></tr>
+          <tr><td>Heading 3</td><td>20px</td><td>20px</td><td>The last heading level</td><td>Manrope 700</td></tr>
+          <tr><td>Lede · Body · Caption · Technical</td><td>18 · 17 · 13 · 12px</td><td>20 · 17 · 13 · 12px</td><td>Text sizes step by role, not ratio</td><td>Inter 400 · 400 · 500 · 500</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid hier" style="margin-top:48px">
+      <div class="env env-midnight hier-a">
+        <p class="display-2">Chandeliers, lit at dusk.</p>
+        <p class="lede soft" style="margin-top:24px">The lighting hall on Market Road holds crystal, gold and ring pendants, from single fittings to cascades.</p>
+        <div style="margin-top:32px"><a class="btn btn-primary" href="#c2">Visit the showroom</a></div>
+      </div>
+      <div class="env env-limestone hier-b">
+        <p class="h1">Bathroom and toiletries</p>
+        <p class="lede soft" style="margin-top:16px">Taps, basins and fittings for the rooms that carry water.</p>
+        <p class="h2" style="margin-top:48px">Taps and mixers</p>
+        <p class="body" style="margin-top:12px">Basin mixers in chrome, grey, black and gold are on display together, so finishes can be compared side by side.</p>
+        <p class="h3" style="margin-top:32px">Basin mixers</p>
+        <p class="small soft" style="margin-top:8px">Ask on WhatsApp for what is in stock.</p>
+      </div>
+    </div>
+    <ol class="principles small" style="margin-top:32px">
+      <li><span><strong>One display line per view.</strong> A cinematic opener uses Display 1 or 2. Editorial pages open with Heading 1 and never use Display 1.</span></li>
+      <li><span><strong>Never skip the step.</strong> Two neighbouring heading levels are always at least 1.25× apart. When a design wants a size in between, it uses the level above or below instead.</span></li>
+      <li><span><strong>Weight carries rank at small sizes.</strong> Headings are 600–700 and text is 400. Inside running text, emphasis is Inter 600 only, never colour or caps.</span></li>
+      <li><span><strong>Space binds a heading to its text.</strong> A heading's space above is at least twice the space below it. Display to lede is 24–32px, Heading 1 to lede 16px, Heading 2 to body 12px, Heading 3 to text 8px. Groups inside a section are 32–48px apart.</span></li>
+      <li><span><strong>Colour ranks once.</strong> Headings are always full <code>--text</code>. Ledes and secondary lines take <code>--text-soft</code>. A heading is never soft.</span></li>
+      <li><span><strong>Technical labels stay quiet.</strong> At most one caps label per block, and never above a heading.</span></li>
+    </ol>
+
+    <h3 class="h2 sub">Evaluation: Manrope and Inter</h3>
+    <div class="grid compare">
+      <div>
+        <p class="tech soft">Manrope 400, display size</p>
+        <p class="big" style="font-family:var(--font-display);font-weight:400">Ring pendant, gold</p>
+        <p class="small soft">Geometric construction, wider rounds and flatter terminals, closer to the wordmark. At text sizes it runs wide and loose.</p>
+      </div>
+      <div>
+        <p class="tech soft">Inter 400, display size</p>
+        <p class="big" style="font-family:var(--font-text);font-weight:400">Ring pendant, gold</p>
+        <p class="small soft">The better text face: compact, clear at 13–17px, with true tabular figures for hours, sizes and coordinates.</p>
+      </div>
+      <div>
+        <p class="tech soft">Manrope 600, as specified</p>
+        <p class="big" style="font-family:var(--font-display);font-weight:600">Ring pendant, gold</p>
+        <p class="small soft"><strong style="color:var(--text)">Chosen for display and headings.</strong> Semibold at display sizes, bold for H2 and H3.</p>
+      </div>
+      <div>
+        <p class="tech soft">Inter 400, as specified</p>
+        <p class="body" style="margin:16px 0">A gold ribbon pendant with three crystal lamps, hanging in the lighting hall on Market Road.</p>
+        <p class="small soft"><strong style="color:var(--text)">Chosen for text, captions and technical labels.</strong></p>
+      </div>
+    </div>
+    <p class="small soft" style="margin-top:32px;max-width:90ch"><strong style="color:var(--text)">Finding.</strong> At the same weight the two are almost indistinguishable, as the top pair shows. The pairing only earns its place through role and weight: Manrope heavy and large, Inter regular and small, never side by side at one size. The pairing is also common in software marketing, so Kenstar's identity has to come from the scale contrast, the grid, the photography and the annotation layer, not from the faces.</p>
+  </div>
+</section>
+
+<!-- ===================== 3. GRID ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c3">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c3" class="h1"><span class="num">03</span>Grid</h2>
+      <p class="intro body soft">A modular column grid on an 8px baseline. Image windows, text columns and drawings all start and end on column lines, the way Illoca places its window by counting cells. Asymmetry is deliberate: 7 + 5 and 5 + 1 + 6 rather than halves.</p>
+    </div>
+    <div class="gd">
+      <div class="gd-frame" style="--n:12;--g:1.7%;--m:4.4%"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="gd-meta"><p class="h3">Desktop · 1280px and up</p><p class="small soft">12 columns · 24px gutter · margin 48–96px · content max 1600px; cinematic images go full bleed</p></div>
+    </div>
+    <div class="gd">
+      <div class="gd-frame" style="--n:8;--g:2.4%;--m:4.9%;max-width:820px"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="gd-meta"><p class="h3">Tablet · 768–1279px</p><p class="small soft">8 columns · 20px gutter · 40px margin</p></div>
+    </div>
+    <div class="gd" style="margin-bottom:0">
+      <div class="gd-frame" style="--n:4;--g:4.1%;--m:5.1%;max-width:390px"><span></span><span></span><span></span><span></span></div>
+      <div class="gd-meta"><p class="h3">Phone · under 768px</p><p class="small soft">4 columns · 16px gutter · 20px margin</p></div>
+    </div>
+    <div class="scroll-x" style="margin-top:48px">
+      <table class="tokens">
+        <thead><tr><th>Named span</th><th>Desktop</th><th>Tablet</th><th>Phone</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Reading column</td><td>6 of 12, max 66ch</td><td>6 of 8</td><td>4 of 4</td><td>Body text, About long-read</td></tr>
+          <tr><td>Plan</td><td>image 7 + text 5</td><td>image 8, text 6 below</td><td>stacked</td><td>Editorial pairs, category openers</td></tr>
+          <tr><td>Offset</td><td>text 5, void 1, image 6</td><td>text 4 + image 4</td><td>stacked</td><td>Quieter editorial rhythm</td></tr>
+          <tr><td>Gallery</td><td>6 tiles of 2 (feature tile 4)</td><td>4 tiles of 2</td><td>2 tiles of 2</td><td>Catalogue</td></tr>
+          <tr><td>Cinematic</td><td>full bleed, text on columns 1–6</td><td>full bleed</td><td>full bleed, portrait crop</td><td>Homepage, journey, route openers</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. SPACING ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c4" style="padding-top:0">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c4" class="h1"><span class="num">04</span>Spacing and sizing</h2>
+      <p class="intro body soft">A 4px base that doubles at the large end. Tight inside a group, generous between groups, and always more space above a heading than below it. Sections breathe at 64–144px.</p>
+    </div>
+    <div class="grid" style="row-gap:48px">
+      <div class="full" style="max-width:760px">
+        <div class="space-row"><span class="tech">s-1</span><span class="caption soft">4px</span><i style="width:4px"></i></div>
+        <div class="space-row"><span class="tech">s-2</span><span class="caption soft">8px</span><i style="width:8px"></i></div>
+        <div class="space-row"><span class="tech">s-3</span><span class="caption soft">12px</span><i style="width:12px"></i></div>
+        <div class="space-row"><span class="tech">s-4</span><span class="caption soft">16px</span><i style="width:16px"></i></div>
+        <div class="space-row"><span class="tech">s-5</span><span class="caption soft">24px</span><i style="width:24px"></i></div>
+        <div class="space-row"><span class="tech">s-6</span><span class="caption soft">32px</span><i style="width:32px"></i></div>
+        <div class="space-row"><span class="tech">s-7</span><span class="caption soft">48px</span><i style="width:48px"></i></div>
+        <div class="space-row"><span class="tech">s-8</span><span class="caption soft">64px</span><i style="width:64px"></i></div>
+        <div class="space-row"><span class="tech">s-9</span><span class="caption soft">96px</span><i style="width:96px"></i></div>
+        <div class="space-row"><span class="tech">s-10</span><span class="caption soft">128px</span><i style="width:128px"></i></div>
+        <div class="space-row"><span class="tech">s-11</span><span class="caption soft">192px</span><i style="width:192px"></i></div>
+      </div>
+      <div class="full scroll-x">
+        <table class="tokens">
+          <thead><tr><th>Size</th><th>Value</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td>Controls</td><td>40 · 48 · 56px</td><td>Small, default and hero actions. The touch target is never under 44px.</td></tr>
+            <tr><td>Header</td><td>72px desktop · 60px phone</td><td>The sticky bar; the phone action bar is 56px</td></tr>
+            <tr><td>Icons</td><td>16 · 20 · 24px, 1.5px stroke</td><td>Authored set, one stroke weight</td></tr>
+            <tr><td>Lines</td><td>1px hairline · 2px rule</td><td>2px only for section-opening rules and active tabs</td></tr>
+            <tr><td>Section padding</td><td>clamp(64px, 4rem + 4vw, 144px)</td><td>Every section; the cinematic stages use full viewport height instead</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. IMAGES ===================== -->
+<section class="env env-midnight sec" aria-labelledby="c5">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c5" class="h1"><span class="num">05</span>Image ratios and photography</h2>
+      <p class="intro body soft">The showroom shoot is 3:2, so 3:2 is home. Every other ratio is a crop with a job. Photography is evidence: it is cropped and lightly corrected, never restyled.</p>
+    </div>
+    <div class="grid ratios">
+      <figure class="ratio r-cine" style="margin:0"><div class="window"><img src="../../public/images/showroom-chandeliers-0916.webp" alt="Rows of gold chandeliers in the Kenstar showroom" style="object-position:50% 40%"></div><figcaption><span class="tech">21:9 · Cinematic</span><span class="caption soft">Homepage, route openers. On phones it becomes 4:5.</span></figcaption></figure>
+      <figure class="ratio r-arch" style="margin:0"><div class="window"><img src="../../public/images/showroom-chandelier-floor-0914.webp" alt="Chandeliers over the showroom floor"></div><figcaption><span class="tech">3:2 · Architectural</span><span class="caption soft">Native ratio. Editorial default.</span></figcaption></figure>
+      <figure class="ratio r-portal" style="margin:0"><div class="window"><img src="../../public/images/range-lighting-chandelier-0774.webp" alt="A cascading crystal chandelier"></div><figcaption><span class="tech">3:4 · Index window</span><span class="caption soft">The carousel's thumbnails. Each range's photograph opens full screen out of its window.</span></figcaption></figure>
+      <figure class="ratio r-sq" style="margin:0"><div class="window"><img src="../../public/images/range-bathroom-mixer-taps-0686.webp" alt="Basin mixer taps" style="object-position:40% 50%"></div><figcaption><span class="tech">1:1 · Detail</span><span class="caption soft">Catalogue tiles, details</span></figcaption></figure>
+      <figure class="ratio r-tall" style="margin:0"><div class="window"><img src="../../public/images/range-lighting-ring-pendant-0981.webp" alt="A gold ribbon pendant" style="object-position:55% 50%"></div><figcaption><span class="tech">2:3 · Vertical</span><span class="caption soft">Hanging fittings, tall editorial</span></figcaption></figure>
+      <figure class="ratio r-note" style="margin:0"><div class="window"><img src="../../public/images/showroom-bathroom-mirrors-0715.webp" alt="Wall mirrors on display"></div><figcaption><span class="tech">4:3 · Field Note</span><span class="caption soft">Evidence crops inside notes</span></figcaption></figure>
+    </div>
+    <div class="grid dos" style="margin-top:64px">
+      <div>
+        <p class="h3">Do</p>
+        <ul class="list small">
+          <li>Crop to one product family and remove price tags, signage and aisle clutter.</li>
+          <li>Correct once: neutral white balance, protected highlights in crystal, slight contrast lift.</li>
+          <li>Let midnight frame the photo as a lit opening; text sits beside the image, not across it.</li>
+          <li>Keep construction and roadworks photos in their daylight register on limestone pages.</li>
+          <li>Label every Blender render "Visualisation" in technical type.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="h3">Don't</p>
+        <ul class="list small">
+          <li>Tint, duotone or recolour product photography. Finishes must read true.</li>
+          <li>Use stock imagery, or AI imagery presented as Kenstar's.</li>
+          <li>Lay text over busy chandelier areas. Where text must overlay, use a midnight scrim from that edge, at most 60%.</li>
+          <li>Round corners, add shadows or frames around photographs.</li>
+          <li>Run the same crop twice on one page.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. SURFACES ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c6">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c6" class="h1"><span class="num">06</span>Surfaces, borders and containers</h2>
+      <p class="intro body soft">Depth comes from changing environment, never from lifting boxes. Corners are square. The 45° cut from the wordmark appears in exactly two places: primary actions and Field Notes. Circles are kept for markers.</p>
+    </div>
+    <div class="grid surf">
+      <div class="env env-limestone" style="box-shadow:inset 0 0 0 1px var(--line)"><p class="tech">Limestone</p><p class="small soft">Editorial ground</p></div>
+      <div class="env env-stone"><p class="tech">Stone</p><p class="small soft">Alternate band, form panel, enquiry strip</p></div>
+      <div class="env env-white" style="box-shadow:inset 0 0 0 1px var(--line)"><p class="tech">White</p><p class="small soft">Product gallery only</p></div>
+      <div class="env env-midnight"><p class="tech">Midnight</p><p class="small soft">Cinematic, arrival, footer</p></div>
+      <div class="env env-midnight env-deep wide"><p class="tech">Midnight deep</p><p class="small soft">Canvas ground, image letterbox, Field Note plate and the footer. Never a general section colour.</p></div>
+      <div class="env env-midnight wide" style="background:var(--c-midnight-raised)"><p class="tech">Midnight raised</p><p class="small soft">Menus and panels that sit on midnight</p></div>
+    </div>
+    <div class="lines" style="margin-top:56px">
+      <div><p class="tech">Hairline · 1px</p><svg viewBox="0 0 300 10" preserveAspectRatio="none" style="width:100%;height:10px" aria-hidden="true"><path d="M0 5H300" stroke="rgb(52 58 64 / 0.16)" vector-effect="non-scaling-stroke"/></svg><p class="small soft">Dividers, table rows, tile grid</p></div>
+      <div><p class="tech">Strong · 1px</p><svg viewBox="0 0 300 10" preserveAspectRatio="none" style="width:100%;height:10px" aria-hidden="true"><path d="M0 5H300" stroke="rgb(52 58 64 / 0.42)" vector-effect="non-scaling-stroke"/></svg><p class="small soft">Inputs, secondary buttons, table heads</p></div>
+      <div><p class="tech">Rule · 2px</p><svg viewBox="0 0 300 10" preserveAspectRatio="none" style="width:100%;height:10px" aria-hidden="true"><path d="M0 5H300" stroke="#343A40" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><p class="small soft">Opens a section, as on a drawing sheet. One per section.</p></div>
+      <div><p class="tech">Cut corner · 45°</p><div><span class="btn btn-primary">Primary action</span></div><p class="small soft">10px on actions, 14px on Field Notes. Nowhere else.</p></div>
+    </div>
+    <p class="small" style="margin-top:32px;max-width:90ch"><strong>No generic cards.</strong> The only containers are product tiles (photo on white, separated by hairlines), Field Notes, ruled specification lists and the stone enquiry panel. There are no shadows, except under a Field Note floating over an image.</p>
+  </div>
+</section>
+
+<!-- ===================== 7. NAVIGATION + FOOTER ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c7" style="padding-top:0">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c7" class="h1"><span class="num">07</span>Navigation and footer</h2>
+      <p class="intro body soft">The header takes the environment of the section beneath it: reversed and transparent over the cinematic homepage, solid limestone under a hairline on editorial pages. The showroom's open status always sits in the header.</p>
+    </div>
+
+    <div class="mock env env-limestone"><div class="hdr">
+      <img src="../../public/brand/logo/logo.svg" alt="Kenstar">
+      <nav aria-label="Example navigation"><a href="#c7" aria-current="page">Products</a><a href="#c7">Construction</a><a href="#c7">Accommodation</a><a href="#c7">About</a><a href="#c7">Contact</a></nav>
+      <div class="right"><span class="status small"><i></i>Open today, 8am–5pm</span><a class="btn btn-primary btn-sm" href="#c7">WhatsApp us</a></div>
+    </div></div>
+    <div class="mock env env-midnight"><div class="hdr">
+      <img src="../../public/brand/logo/logo-white.svg" alt="Kenstar">
+      <nav aria-label="Example navigation, midnight"><a href="#c7">Products</a><a href="#c7">Construction</a><a href="#c7">Accommodation</a><a href="#c7">About</a><a href="#c7">Contact</a></nav>
+      <div class="right"><span class="status small"><i></i>Open today, 8am–5pm</span><a class="btn btn-primary btn-sm" href="#c7">WhatsApp us</a></div>
+    </div></div>
+    <p class="caption soft" style="margin-bottom:40px">The active page takes a 2px brass underline. Links are Inter 500 at 15px, sentence case.</p>
+
+    <div class="phone-frames">
+      <div class="phone env env-midnight">
+        <div class="ph-hdr"><img src="../../public/brand/logo/logo-white.svg" alt="Kenstar"><button class="icon-btn" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="menu-sheet">
+          <a href="#c7">Products <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#c7">Construction</a><a href="#c7">Accommodation</a><a href="#c7">About</a><a href="#c7">Contact</a>
+          <p class="status small" style="margin-top:24px"><i></i>Open today, 8am–5pm</p>
+          <p class="small soft" style="margin-top:6px">Market Road, opposite the former KPLC offices, Embu</p>
+        </div>
+        <div class="actionbar" style="box-shadow:inset 0 1px 0 var(--line)"><a class="wa" href="#c7">WhatsApp</a><a href="#c7">Call</a><a href="#c7">Directions</a></div>
+      </div>
+      <div style="flex:1;min-width:240px;max-width:520px">
+        <p class="h3">Phone</p>
+        <ul class="list small">
+          <li>60px header: logo and a 44px menu button.</li>
+          <li>The menu is a full-height midnight sheet with Manrope 28px links, hours and the address.</li>
+          <li>A fixed action bar on every page: WhatsApp (brass), Call, Directions.</li>
+          <li>Header and action bar never hide on scroll.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mock env env-midnight env-deep ftr" style="margin-top:56px">
+      <div class="grid">
+        <p class="display-2 closing">From the first line to the final&nbsp;light.</p>
+        <div class="col"><p class="tech">Visit</p><p>Market Road, opposite the former KPLC offices</p><p>P.O. Box 778 – 60100, Embu</p><a class="link" href="#c7" style="margin-top:8px">Get directions</a></div>
+        <div class="col"><p class="tech">Hours</p><p>Monday to Friday, 8am–5pm</p><p>Saturday and Sunday, 10am–5pm</p><p class="soft">Public holidays: call first</p></div>
+        <div class="col"><p class="tech">Contact</p><a href="#c7">+254 713 643 643</a><a href="#c7">WhatsApp</a><a href="#c7">Kenstarhardware@gmail.com</a></div>
+        <div class="col"><p class="tech">Explore</p><a href="#c7">Products</a><a href="#c7">Construction</a><a href="#c7">Accommodation</a><a href="#c7">About</a><a href="#c7">TikTok</a></div>
+        <div class="base small"><span>© Kenstar Limited, Embu</span><span class="tech">00°32′08″S 37°26′39″E</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 8. BUTTONS ===================== -->
+<section class="env env-white sec" aria-labelledby="c8">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c8" class="h1"><span class="num">08</span>Buttons and calls to action</h2>
+      <p class="intro body soft">One primary action per view. Primary is the only filled and cut-corner control. Labels are verbs in sentence case. WhatsApp uses Kenstar's colours, not WhatsApp green.</p>
+    </div>
+    <div class="grid" style="row-gap:24px">
+      <div class="full env env-limestone board" style="box-shadow:inset 0 0 0 1px var(--line)">
+        <div class="row"><span class="tech" style="width:100%">On limestone</span>
+          <a class="btn btn-primary btn-lg" href="#c8">Visit the showroom <svg class="nudge" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-primary" href="#c8">Ask on WhatsApp</a>
+          <a class="btn btn-secondary" href="#c8">Call +254 713 643 643</a>
+          <a class="link" href="#c8">See the bathroom range <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="row"><span class="tech" style="width:100%">States: hover · focus · loading · disabled · small</span>
+          <span class="btn btn-primary" style="background:linear-gradient(225deg,transparent var(--cut),var(--c-midnight-deep) calc(var(--cut) + .5px))">Hover</span>
+          <span class="btn btn-primary" style="outline:2px solid var(--focus);outline-offset:3px">Focus</span>
+          <span class="btn btn-primary btn-loading">Sending…</span>
+          <button class="btn btn-primary" disabled>Disabled</button>
+          <a class="btn btn-secondary btn-sm" href="#c8">Small secondary</a>
+          <button class="icon-btn" aria-label="Next category"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+      <div class="full env env-midnight board">
+        <div class="row"><span class="tech" style="width:100%">On midnight</span>
+          <a class="btn btn-primary btn-lg" href="#c8">Explore the showroom <svg class="nudge" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-secondary" href="#c8">Get directions</a>
+          <a class="link" href="#c8">Ask about chandeliers <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <button class="icon-btn" aria-label="Previous category"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-x" style="margin-top:40px">
+      <table class="tokens">
+        <thead><tr><th>Variant</th><th>Look</th><th>When</th></tr></thead>
+        <tbody>
+          <tr><td>Primary</td><td>Filled with <code>--action-bg</code>, cut corner, Inter 600</td><td>The one main action of a view: visit, ask, explore</td></tr>
+          <tr><td>Secondary</td><td>1px strong line, square</td><td>Alternatives: call, directions, email</td></tr>
+          <tr><td>Text link</td><td>Underline at 35%, solid on hover, trailing arrow</td><td>Inline and tile actions</td></tr>
+          <tr><td>Icon button</td><td>44px square, 1px line</td><td>Carousel steps, menu, close</td></tr>
+          <tr><td>Motion</td><td>Colour 160ms; arrow moves 3px; press drops 1px</td><td>Loading draws a 2px line along the base, the drafting way</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 9. CATALOGUE ===================== -->
+<section class="env env-white sec" aria-labelledby="c9" style="padding-top:0">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c9" class="h1"><span class="num">09</span>Product catalogue</h2>
+      <p class="intro body soft">A gallery, not a shop. White ground, product photos at true colour, hairline grid and no prices, carts or badges. Every tile ends in a question to Kenstar. One feature tile per row breaks the rhythm the way a showroom display does.</p>
+    </div>
+    <div class="grid cat-head">
+      <h3 class="h1">Bathroom and toiletries</h3>
+      <p class="lede soft">Taps, basins and fittings for the rooms that carry water, on display on Market Road.</p>
+      <div class="facts"><dl class="small"><dt class="tech soft">Range</dt><dd>5 sub-categories</dd><dt class="tech soft">See it</dt><dd>In the showroom, Embu</dd><dt class="tech soft">Ask</dt><dd>WhatsApp +254 713 643 643</dd></dl></div>
+    </div>
+    <nav class="tabs" aria-label="Sub-categories"><a href="#c9" aria-current="true">All</a><a href="#c9">Water taps</a><a href="#c9">Hand basins</a><a href="#c9">Bathroom and toilet</a><a href="#c9">Wall mirrors</a><a href="#c9">Soap dispensers</a></nav>
+    <div class="tiles">
+      <article class="tile feature"><div class="window"><img src="../../public/images/range-bathroom-taps-wall-0693.webp" alt="A wall of taps and fittings" style="object-position:50% 45%"></div><h4>The tap wall</h4><p>Every finish on one display, in the bathroom section</p><a class="link" href="#c9">Ask what's in stock</a></article>
+      <article class="tile"><div class="window"><img src="../../public/images/range-bathroom-mixer-taps-0686.webp" alt="Basin mixer taps" style="object-position:38% 50%"></div><h4>Basin mixers</h4><p>Chrome, grey, black and gold</p><a class="link" href="#c9">Ask about this</a></article>
+      <article class="tile"><div class="window"><img src="../../public/images/showroom-bathroom-mirrors-0715.webp" alt="Wall mirrors" style="object-position:60% 50%"></div><h4>Wall mirrors</h4><p>Framed and frameless</p><a class="link" href="#c9">Ask about this</a></article>
+      <article class="tile"><div class="window"><img src="../../public/images/range-electricals-switches-0964.webp" alt="Switch and socket plates" style="object-position:30% 50%"></div><h4>Switches and sockets</h4><p>White and grey plates</p><a class="link" href="#c9">Ask about this</a></article>
+      <article class="tile"><div class="window"><img src="../../public/images/range-lighting-chandelier-0774.webp" alt="A crystal chandelier"></div><h4>Chandeliers</h4><p>Crystal and gold, cascading</p><a class="link" href="#c9">Ask about this</a></article>
+    </div>
+    <div class="env env-stone enq">
+      <div><p class="h3">Seen something you need?</p><p class="small soft" style="margin-top:4px">Send the list on WhatsApp and we'll reply with what is in stock.</p></div>
+      <a class="btn btn-primary" href="#c9">Send on WhatsApp</a>
+    </div>
+    <p class="caption sample-note">Sample content from Kenstar's own photographs. Tile names are sub-categories, not product names; real product names come from Kenstar. The tiles mix ranges here only to show the grid.</p>
+  </div>
+</section>
+
+<!-- ===================== 10. ANNOTATION ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c10">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c10" class="h1"><span class="num">10</span>Architectural annotation</h2>
+      <p class="intro body soft">The construction-document layer. Every mark states a fact: a dimension, a coordinate, a sequence, a name. Real drafting conventions only, drawn at hairline weight, with labels on a solid plate so they hold over photographs.</p>
+    </div>
+    <div class="env env-white anno-sheet" style="box-shadow:inset 0 0 0 1px var(--line)">
+      <svg viewBox="0 0 1200 420" role="img" aria-label="Annotation specimens: line weights, dimension line, leader, grid bubble, datum, coordinate and reticle">
+        <g fill="none" stroke="#343A40" stroke-linecap="square">
+          <!-- line weights -->
+          <path d="M40 60H240" stroke-width="1.5"/><path d="M40 100H240" stroke-width="1"/><path d="M40 140H240" stroke-width="1" stroke-dasharray="6 4" opacity="0.7"/><path d="M40 180H240" stroke-width="1" stroke-dasharray="18 4 2 4" opacity="0.7"/>
+          <!-- dimension -->
+          <path d="M510 110H790" stroke-width="1"/><path d="M510 86V140M790 86V140" stroke-width="1" opacity="0.6"/><path d="M502 118L518 102M782 118L798 102" stroke-width="1.5"/>
+          <!-- leader -->
+          <circle cx="520" cy="300" r="3.5" fill="#343A40"/><path d="M520 300L570 250H720" stroke-width="1"/>
+          <!-- grid bubble -->
+          <circle cx="870" cy="100" r="22" stroke-width="1"/><path d="M870 122V190" stroke-width="1" stroke-dasharray="18 4 2 4" opacity="0.7"/>
+          <!-- datum -->
+          <path d="M940 100H1160" stroke-width="1"/><path d="M960 100L972 82H948Z" fill="#343A40" stroke="none"/>
+          <!-- reticle -->
+          <circle cx="880" cy="300" r="10" stroke-width="1"/><path d="M880 280V288M880 312V320M860 300H868M892 300H900" stroke-width="1"/>
+          <path d="M892 300L930 262H1020" stroke-width="1"/>
+        </g>
+        <g fill="#343A40">
+          <text x="256" y="64">Object 1.5</text><text x="256" y="104">Dimension, leader 1.0</text><text x="256" y="144">Hidden, future</text><text x="256" y="184">Centre line</text>
+          <rect x="607" y="98" width="86" height="22" fill="#FFFFFF"/><text x="650" y="114" text-anchor="middle">2400 mm</text>
+          <text x="726" y="254">Basin mixer</text>
+          <text x="870" y="104" text-anchor="middle" style="font-size:13px">04</text>
+          <text x="984" y="90">+0.00 Showroom floor</text>
+          <text x="1026" y="266" fill="#865826">Field note 03.1</text>
+          <text x="40" y="300">Leader ends in a dot</text><text x="40" y="320" fill="#565D63">Dimension ends in 45° ticks</text><text x="40" y="340" fill="#565D63">Bubble numbers a real sequence</text><text x="40" y="360" fill="#565D63">Reticle anchors a Field Note</text>
+          <text x="860" y="390">00°32′08″S 37°26′39″E</text>
+        </g>
+      </svg>
+    </div>
+    <h3 class="h2 sub">Intensity by route</h3>
+    <div class="scroll-x">
+      <table class="tokens intensity">
+        <thead><tr><th>Route</th><th>Intensity</th><th>What appears</th></tr></thead>
+        <tbody>
+          <tr><td>Home</td><td><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></td><td>The full set: the wireframe logo, the carousel's drawn window edge, drawn chapter scenes, reticles and Field Notes, chapter bubbles</td></tr>
+          <tr><td>Construction</td><td><i class="on"></i><i class="on"></i><i class="on"></i><i></i></td><td>Project sheets: dimensions, datums, coordinates, scope schedules</td></tr>
+          <tr><td>Products</td><td><i class="on"></i><i class="on"></i><i></i><i></i></td><td>Hairline grid, sub-category index, one dimension per category opener</td></tr>
+          <tr><td>About</td><td><i class="on"></i><i></i><i></i><i></i></td><td>Section rules and a single datum line marking Market Road</td></tr>
+          <tr><td>Accommodation</td><td><i class="on"></i><i></i><i></i><i></i></td><td>A room schedule as a ruled list; nothing drawn over photographs</td></tr>
+          <tr><td>Contact</td><td><i class="on"></i><i class="on"></i><i></i><i></i></td><td>Coordinates, the route to Market Road and the hours as a ruled schedule</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11. FIELD NOTE ===================== -->
+<section class="env env-midnight sec" aria-labelledby="c11">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c11" class="h1"><span class="num">11</span>Field Notes</h2>
+      <p class="intro body soft">Field Notes are where real Kenstar photographs enter the journey: evidence pinned to the rendered environment, like an AR tag on site. A reticle marks the point, a leader draws out to it, and a solid plate holds the photo and one true sentence.</p>
+    </div>
+    <div class="scene">
+      <img src="../../public/images/showroom-chandelier-hall-0980.webp" alt="" style="object-position:50% 35%">
+      <svg class="reticle" style="left:58%;top:30%" viewBox="0 0 28 28" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="14" cy="14" r="7"/><path d="M14 0v5M14 23v5M0 14h5M23 14h5"/></svg>
+      <svg class="leader" style="left:58%;top:30%;width:12%;height:14%" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M6 6L40 70H100" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
+      <div class="note-wrap" style="left:70%;top:34%;width:min(300px,28%)">
+        <article class="note" style="width:100%">
+          <header><span class="tech b">Field note 06.1</span><span class="tech">Lighting</span></header>
+          <div class="ph"><img src="../../public/images/range-lighting-ring-pendant-0981.webp" alt="A gold ribbon pendant with three crystal lamps"></div>
+          <div class="tx">
+            <p>A gold ribbon pendant with three crystal lamps, hanging in the lighting hall.</p>
+            <p class="tech src">Photographed at Kenstar, Embu · June 2026</p>
+            <a class="link" href="#c11" style="font-size:.875rem">See the lighting range</a>
+          </div>
+        </article>
+      </div>
+      <p class="tech stand-in">Stand-in scene: the Blender render goes here</p>
+    </div>
+    <div class="grid anatomy">
+      <div><p class="h3">Anchor</p><p class="small soft">A 14px reticle in limestone at the real point in the scene. At rest it shows at 40%.</p></div>
+      <div><p class="h3">Leader</p><p class="small soft">A 1px line that draws out at 45°, then runs level, in 240ms. Scrolling up undraws it.</p></div>
+      <div><p class="h3">Plate</p><p class="small soft">Midnight deep, a 14px cut at the top left, 300px wide on desktop. Header: note number and range.</p></div>
+      <div><p class="h3">Evidence</p><p class="small soft">A 4:3 Kenstar photo, one factual sentence, the source line, and a link into the range.</p></div>
+    </div>
+    <div class="fn-mobile">
+      <div class="phone">
+        <img src="../../public/images/showroom-chandelier-hall-0980.webp" alt="">
+        <span class="pin on" style="left:52%;top:26%">1</span><span class="pin" style="left:24%;top:44%">2</span>
+        <div class="sheet"><div class="row"><img src="../../public/images/range-lighting-ring-pendant-0981.webp" alt=""><div><p class="tech" style="color:var(--c-brass-light)">Field note 06.1</p><p class="small" style="margin-top:4px;font-size:.8125rem;line-height:1.4">A gold ribbon pendant in the lighting hall.</p></div></div></div>
+      </div>
+      <div style="flex:1;min-width:240px;max-width:520px">
+        <p class="h3">On phones</p>
+        <ul class="list small">
+          <li>Reticles become numbered pins; the active one fills brass.</li>
+          <li>One note at a time, as a sheet docked to the bottom of the pinned scene.</li>
+          <li>Notes are also a plain list in the page, so screen readers and keyboards reach them without the scene.</li>
+          <li>With reduced motion, each chapter shows its final still with its notes already open.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 12. RESPONSIVE ===================== -->
+<section class="env env-limestone sec" aria-labelledby="c12">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c12" class="h1"><span class="num">12</span>Responsive behaviour</h2>
+      <p class="intro body soft">Phone is a first-class composition, not a squeezed desktop. Type scales fluidly between the breakpoints. The grid steps 4, 8 and 12 columns at 768 and 1280px.</p>
+    </div>
+    <div class="scroll-x">
+      <table class="tokens">
+        <thead><tr><th>Part</th><th>Phone &lt; 768</th><th>Tablet 768–1279</th><th>Desktop 1280+</th></tr></thead>
+        <tbody>
+          <tr><td>Header</td><td>60px, menu sheet, fixed action bar</td><td>72px, menu sheet</td><td>72px, full nav, status, WhatsApp</td></tr>
+          <tr><td>Logo intro</td><td>Star at 42% of the short side</td><td>Same</td><td>Same; skippable everywhere</td></tr>
+          <tr><td>Showroom carousel</td><td>Photograph fills the screen; words over a bottom shade; thumbnails and swipe</td><td>Full screen; words left, index and arrows right</td><td>Full screen; words over a left shade, index and arrows bottom right, count top right</td></tr>
+          <tr><td>Journey</td><td>Portrait frames (3:4), 20px scroll per frame, pinned notes</td><td>Landscape frames, notes as pins</td><td>Landscape frames, 10px per frame, full notes</td></tr>
+          <tr><td>Catalogue</td><td>2 tiles; the feature tile spans both</td><td>4 tiles</td><td>6 tiles plus feature</td></tr>
+          <tr><td>Editorial pairs</td><td>Image then text</td><td>Image 8, text 6</td><td>Plan 7 + 5 or offset 5 + 1 + 6</td></tr>
+          <tr><td>Tables</td><td>Stack to label and value rows</td><td>Full table</td><td>Full table</td></tr>
+          <tr><td>Footer</td><td>One column</td><td>Two columns</td><td>Four columns</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 13. MOTION ===================== -->
+<section class="env env-midnight sec" aria-labelledby="c13">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="c13" class="h1"><span class="num">13</span>Motion</h2>
+      <p class="intro body soft">Motion is construction: things are drawn, assembled and lit. There are three authored experiences and nothing else performs. Every other movement is feedback.</p>
+    </div>
+    <div class="grid motion-cols">
+      <div class="a">
+        <ol class="principles small">
+          <li><span><strong>Three experiences only.</strong> The logo, the showroom carousel and the journey. No scroll-fade on editorial sections, no parallax, no cursor effects.</span></li>
+          <li><span><strong>Scroll is the camera.</strong> Scrubbed to native scroll and never hijacked. It pins only inside the journey and reverses exactly.</span></li>
+          <li><span><strong>Hold to read.</strong> The camera stops at every Field Note for at least 40% of a screen of scroll.</span></li>
+          <li><span><strong>Light is the climax.</strong> Brightness and time-of-day change only at the end of a chapter, and star gold only at the very end.</span></li>
+          <li><span><strong>Nothing bounces.</strong> Exponential ease-out for arrivals, symmetrical in-out for camera moves, linear for scrubbing.</span></li>
+          <li><span><strong>Content is visible by default.</strong> Motion starts from a readable state, and reduced motion gets stills and 200ms crossfades.</span></li>
+        </ol>
+      </div>
+      <div class="b">
+        <div class="scroll-x">
+          <table class="tokens">
+            <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td><code>--dur-instant</code></td><td>100ms</td><td>Press, toggle</td></tr>
+              <tr><td><code>--dur-fast</code></td><td>160ms</td><td>Hover colour, underline</td></tr>
+              <tr><td><code>--dur-base</code></td><td>240ms</td><td>Field Note leader, tabs, menus</td></tr>
+              <tr><td><code>--dur-slow</code></td><td>480ms</td><td>Menu sheet, image hover zoom (1.03)</td></tr>
+              <tr><td><code>--dur-scene</code></td><td>900ms</td><td>Carousel window opening</td></tr>
+              <tr><td><code>--ease-out</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Arrivals</td></tr>
+              <tr><td><code>--ease-in-out</code></td><td>cubic-bezier(0.65, 0, 0.35, 1)</td><td>Camera, apertures, the carousel window</td></tr>
+              <tr><td><code>--ease-in</code></td><td>cubic-bezier(0.7, 0, 0.84, 0)</td><td>Exits only</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h3 class="h2 sub">Timing for the three experiences</h3>
+    <div class="scroll-x">
+      <table class="tokens">
+        <thead><tr><th>Experience</th><th>Budget</th><th>Sequence</th></tr></thead>
+        <tbody>
+          <tr><td>Logo</td><td>At most 3.6s, skippable, once per session</td><td>Construction lines 0–0.6s, letters drawn 0.2–1.0s, fills 1.0–1.4s, zoom to the star 1.4–2.0s, eyes 2.0–2.8s, then the star opens in 0.75s. The eyes draw 3–4 moves from a set of six (glance left, glance right, look up, squint, double blink, wide), with 280–620ms gaps and never the same move twice in a row.</td></tr>
+          <tr><td>Showroom carousel</td><td>900ms, input-ready after 300ms</td><td>The new photograph opens as a window out of its thumbnail and grows to fill the screen (900ms, in-out), its edge drawn as a hairline that fades as it reaches the edges; the old photograph recedes and dims. Headline lines rise 12px with 60ms stagger from 120ms. Description at 280ms, actions at 360ms, index counts at the same moment. Manual only.</td></tr>
+          <tr><td>Journey</td><td>About 2.2 screens of scroll per chapter</td><td>60–90 frames at 10px each (20px on touch), plus a hold of at least 40% of a screen at each Field Note. Wireframe, then environment, then evidence, in that order inside one sequence.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ROUTES ===================== -->
+<section class="env env-limestone sec" aria-labelledby="rt">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="rt" class="h1">Route character</h2>
+      <p class="intro body soft">One system, six art-directed rooms. The bar shows each route's balance of midnight, limestone and white.</p>
+    </div>
+    <div class="scroll-x">
+      <table class="tokens routes">
+        <thead><tr><th>Route</th><th>Environments</th><th>Art direction</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Home</strong></td><td><span class="mix"><i style="width:70%;background:#14283B"></i><i style="width:30%;background:#F2EFE8"></i></span></td><td>Cinematic. The logo opens onto the full-screen showroom carousel, and the journey runs from road to the lit, furnished room. Full bleed, full annotation.</td></tr>
+          <tr><td><strong>Products</strong></td><td><span class="mix"><i style="width:15%;background:#14283B"></i><i style="width:35%;background:#F2EFE8"></i><i style="width:50%;background:#fff"></i></span></td><td>A gallery. Category openers in the plan grid, white tile walls, and one midnight band for the showroom visit.</td></tr>
+          <tr><td><strong>Construction</strong></td><td><span class="mix"><i style="width:15%;background:#14283B"></i><i style="width:85%;background:#F2EFE8"></i></span></td><td>Technical. Project sheets with real dimensions and coordinates, large daylight photos, olive as the landscape accent.</td></tr>
+          <tr><td><strong>Accommodation</strong></td><td><span class="mix"><i style="width:60%;background:#F2EFE8"></i><i style="width:40%;background:#fff"></i></span></td><td>Calm. Generous white space, large interior photos once supplied, a ruled room schedule and almost no drawing.</td></tr>
+          <tr><td><strong>About</strong></td><td><span class="mix"><i style="width:10%;background:#14283B"></i><i style="width:90%;background:#F2EFE8"></i></span></td><td>A long read. Reading column with offset images. The confirmed figures (100+ clients, 50+ projects, 200+ products) are set inside sentences, never as stat tiles.</td></tr>
+          <tr><td><strong>Contact</strong></td><td><span class="mix"><i style="width:55%;background:#14283B"></i><i style="width:45%;background:#E6E1D6"></i></span></td><td>Arrival. A midnight visit opener with directions, hours, open status and coordinates, then a stone form panel.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APPROVAL ===================== -->
+<section class="env env-midnight sec" aria-labelledby="ap">
+  <div class="wrap">
+    <div class="grid sec-head">
+      <h2 id="ap" class="h1">For approval</h2>
+      <p class="intro body soft">After approval: the tokens go into <code>app/globals.css</code> and the fonts into the layout. Then the foundation components: Section and grid, Button and TextLink, Header, phone menu and action bar, Footer, Figure, ProductTile, CategoryHeader, the annotation primitives and FieldNote. DESIGN.md is then written from what was built.</p>
+    </div>
+    <ol class="decide body">
+      <li><span><strong>Palette.</strong> The brief's seven colours, plus derived tones for stone, deep and raised midnight, brass light and ink, and olive light and ink. Midnight stays as the dark environment, with the logo reversed on it.</span></li>
+      <li><span><strong>Type.</strong> Manrope for display and headings, 20px and up: 600 at display sizes, 700 for H2 and H3. Inter for text, captions and technical labels, 24px and down. Each heading level is at least 1.25× the next on phones and 1.4× or more on desktop.</span></li>
+      <li><span><strong>Corners.</strong> Square throughout. The 45° cut appears only on primary actions and Field Notes.</span></li>
+      <li><span><strong>Accent.</strong> Brass is the only accent. Olive is limited to status, success and the construction world.</span></li>
+      <li><span><strong>Showroom carousel.</strong> Full-screen photographs; a new range opens as a window growing out of its thumbnail. (Changed on 2026-11-20 at the client's request; this replaces the gable portals.)</span></li>
+      <li><span><strong>Renders.</strong> Every Blender render carries a "Visualisation" label. Real photos appear only as evidence.</span></li>
+    </ol>
+  </div>
+</section>
+
+</body>
+</html>

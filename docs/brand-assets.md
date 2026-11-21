@@ -38,11 +38,30 @@ text can't be read at 16 px.
 
 Shortcut: you can supply only the 3 logo SVGs. The favicon set can be generated from `logo-mark.svg`.
 
-## After the files are added
+## What was supplied, and how it is wired (2026-11-18)
 
-These still need wiring up in code:
+**Supplied**
 
-- Remove the default Next.js `app/favicon.ico`, which would otherwise override these icons.
-- Point `metadata.icons` in `app/layout.tsx` at `/brand/favicon/*`.
-- Add `app/manifest.ts` for the 192 / 512 icons.
-- Use the logos in the header and footer.
+- Logo lockups `logo.svg` (navy) and `logo-white.svg`. These were renamed from the two "…surface preview only" files, which the user confirmed are final.
+- Marks `logo-icon-light.svg` and `logo-icon-dark.svg`.
+- Favicon `kenstar-c01-app-icon.svg`, plus 36–96 px PNGs.
+
+**Generated from the supplied mark**
+
+- `favicon.ico` (16 / 32 / 48 px).
+- `icon.svg`, with navy panes on light browser tabs and white panes on dark tabs. The supplied favicon's white panes vanished on light tabs.
+- `apple-touch-icon.png` (180 px, navy ground).
+- `icon-192.png` and `icon-512.png`.
+- `icon-maskable-512.png`.
+
+**Wired using Next.js file conventions**
+
+- In `app/`: `app/favicon.ico`, `app/icon.svg` and `app/apple-icon.png` replace the Next.js defaults.
+- `app/manifest.ts` points at the 192 / 512 / maskable icons in `public/brand/favicon/`.
+- The header, footer and intro draw the logo inline, from the same path data, in `app/_components/brand.tsx`.
+
+**Logo shape**
+
+- The star doubles as the "A" in KENST★R.
+- The house is the notch cut out of the star.
+- The four window panes are separate paths in the code, so the two upper panes can animate as eyes in the intro.
