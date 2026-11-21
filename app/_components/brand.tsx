@@ -35,13 +35,14 @@ type WordmarkProps = {
 };
 
 export function Wordmark({ tone = "navy", className, title = "Kenstar Limited, Embu" }: WordmarkProps) {
-  const ink = tone === "navy" ? "var(--navy)" : "#ffffff";
+  // Brand marks are fixed values, not theme tokens: logo navy and star gold never change.
+  const ink = tone === "navy" ? "#0b2d52" : "#ffffff";
   return (
     <svg viewBox="60 40 760 196" className={className} role="img" aria-label={title} xmlns="http://www.w3.org/2000/svg">
       {Object.entries(LETTERS).map(([k, d]) => (
         <path key={k} d={d} fill={ink} fillRule="evenodd" />
       ))}
-      <path d={STAR} fill="var(--gold)" />
+      <path d={STAR} fill="#f59e0b" />
       {Object.values(PANES).map((d) => (
         <path key={d} d={d} fill={ink} />
       ))}

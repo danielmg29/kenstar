@@ -1,0 +1,242 @@
+/* Products: the catalogue as a finishes schedule. Limestone sheet, graphite rules, ruled lines with
+   real showroom photographs, and "Your schedule" docked as a midnight Field Note. */
+
+.ps { --index-h: 49px; }
+.ps h1, .ps h2, .ps h3 { color: var(--text-strong); }
+.ps .env-midnight h2, .ps .env-midnight h3 { color: var(--text); }
+.ps [id] { scroll-margin-top: calc(var(--header-h) + var(--index-h) + 8px); }
+.ps-status { display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---------- Title block and the lighting hall ---------- */
+.ps-top { display: grid; }
+.ps-title { display: flex; flex-direction: column; padding: 32px var(--margin) 0; }
+.ps-h1 { font: 600 clamp(2.5rem, 1.9rem + 2.3vw, 3.75rem)/1 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.035em; text-wrap: balance; max-width: 13em; }
+.ps-lede { margin-top: 20px; color: var(--text); max-width: 46ch; }
+.ps-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 24px; border-top: 1px solid var(--line); }
+.ps-meta > div { padding: 10px 16px 12px 0; border-bottom: 1px solid var(--line); }
+.ps-meta > div + div { padding-left: 16px; box-shadow: inset 1px 0 0 var(--line); }
+.ps-meta .ps-meta-wide { grid-column: 1 / -1; padding-left: 0; box-shadow: none; }
+.ps-meta dt { color: var(--text-soft); }
+.ps-meta dd { margin-top: 4px; font: 600 1rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.ps-hero { position: relative; margin-top: 24px; aspect-ratio: 16 / 9; background: #0c1a28; overflow: hidden; }
+/* Phones: the range index sits right below and already lists the six ranges. */
+@media (max-width: 767px) {
+  .ps-meta { grid-template-columns: auto minmax(0, 1fr); }
+  .ps-meta .ps-meta-ranges { display: none; }
+  .ps-meta .ps-meta-ranges + div { padding-left: 0; padding-right: 24px; box-shadow: none; }
+  .ps-meta .ps-meta-wide { grid-column: auto; padding-left: 16px; box-shadow: inset 1px 0 0 var(--line); }
+}
+.ps-hero img, .ps-plate img, .ps-ph img, .ps-visit-photo img { object-fit: cover; }
+
+@media (min-width: 768px) {
+  .ps-hero { aspect-ratio: 16 / 9; }
+}
+@media (min-width: 1024px) {
+  .ps-top { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: clamp(400px, calc(100svh - var(--header-h) - var(--index-h) - 300px), 520px); }
+  .ps-title { padding: 48px 40px 0 max(var(--margin), calc((100vw - 1600px) / 2 + var(--margin))); border-right: 1px solid var(--line); }
+  .ps-meta { margin-top: auto; }
+}
+@media (min-width: 1280px) {
+  .ps-meta { grid-template-columns: auto auto minmax(0, 1fr); }
+  .ps-meta > div { border-bottom: 0; padding-right: 24px; }
+  .ps-meta .ps-meta-wide { grid-column: auto; padding-left: 16px; box-shadow: inset 1px 0 0 var(--line); }
+  .ps-hero { margin-top: 0; aspect-ratio: auto; }
+}
+
+/* ---------- Index: the six ranges, then "Your schedule" over the dock. Sticky over the catalogue only. ---------- */
+.ps-index { position: sticky; top: var(--header-h); z-index: 30; background: var(--surface); box-shadow: inset 0 1px 0 var(--line), inset 0 -1px 0 var(--line); }
+.ps-index-in { display: grid; grid-template-columns: minmax(0, 1fr); }
+.ps-index-ranges {
+  display: flex; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+  /* On phones the strip scrolls sideways: its right edge fades so the cut-off cell reads as more. */
+  mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent);
+}
+.ps-index-ranges::-webkit-scrollbar { display: none; }
+.ps-index-ranges li { flex: none; }
+.ps-index a {
+  display: flex; align-items: baseline; gap: 8px; height: var(--index-h); padding: 15px 16px 0; white-space: nowrap;
+  font: 500 0.9375rem/1.2 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); text-decoration: none;
+  box-shadow: inset -1px 0 0 var(--line);
+  transition: color 0.16s var(--ease-out), background-color 0.16s var(--ease-out);
+}
+.ps-index-ranges li:first-child a { padding-left: 0; }
+.ps-index-ranges li:last-child a { margin-right: 32px; }
+.ps-index a:hover { color: var(--text-strong); }
+.ps-index a[aria-current] { color: var(--text-strong); box-shadow: inset -1px 0 0 var(--line), inset 0 -2px 0 var(--accent); }
+.ps-index a:focus-visible { outline-offset: -3px; }
+.ps-index-code, .ps-index-n { font: 600 0.75rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.ps-index-code { color: var(--text-strong); }
+.ps-index-n { color: var(--text-soft); }
+.ps-index .ps-index-mine { display: none; }
+@media (min-width: 1024px) {
+  .ps-index-in { grid-template-columns: minmax(0, 1fr) 316px; column-gap: 32px; }
+  .ps-index-ranges { mask-image: none; }
+  .ps-index-ranges li:last-child a { margin-right: 0; }
+  .ps-index .ps-index-mine {
+    display: flex; justify-content: space-between; padding: 15px 16px 0 24px;
+    background: #14283b; color: #f2efe8; box-shadow: none;
+    clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+  }
+  .ps-index .ps-index-mine:hover { background: #0c1a28; color: #f2efe8; }
+  .ps-index-mine .ps-index-code { color: #d6a160; }
+  .ps-index-mine .ps-index-n { color: #f2efe8; letter-spacing: 0; font-size: 0.875rem; }
+  .ps-index .ps-index-mine:focus-visible { outline-color: #14283b; outline-offset: 2px; }
+}
+@media (min-width: 1280px) {
+  .ps-index-in { grid-template-columns: minmax(0, 9fr) minmax(0, 3fr); column-gap: calc(var(--col-gap) * 2); }
+  .ps-index-ranges li { flex: 1 1 0; min-width: 0; }
+  .ps-index-ranges a { overflow: hidden; }
+  .ps-index-name { overflow: hidden; text-overflow: ellipsis; }
+  .ps-index-ranges .ps-index-n { margin-left: auto; }
+}
+
+/* ---------- The schedule ---------- */
+.ps-body { display: grid; grid-template-columns: minmax(0, 1fr); padding-bottom: var(--section-y); }
+.ps-range { padding-top: 56px; }
+.ps-range:first-child { padding-top: 40px; }
+.ps-range-head { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 8px; align-items: baseline; padding-top: 14px; border-top: 2px solid var(--text-strong); }
+.ps-range-code { font: 600 0.8125rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.1em; color: var(--text-strong); min-width: 2.2em; }
+.ps-range-name { font: 600 clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem)/1.1 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.03em; text-wrap: balance; }
+.ps-range-intro { grid-column: 2; max-width: 60ch; font: 400 1rem/1.6 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); text-wrap: pretty; }
+.ps-plate { position: relative; display: none; margin-top: 20px; aspect-ratio: 12 / 5; overflow: hidden; background: var(--surface-alt); }
+/* Phones go straight from the range heading to its lines; each line carries its own photograph. */
+@media (min-width: 768px) { .ps-plate { display: block; } }
+
+.ps-list { margin-top: 4px; }
+.ps-row {
+  display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "ph code" "ph text" "act act";
+  grid-template-rows: auto 1fr auto; column-gap: 16px; row-gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--line);
+  transition: background-color 0.24s var(--ease-out);
+}
+.ps-row[data-on] { background: linear-gradient(90deg, rgb(197 139 69 / 0.1), rgb(197 139 69 / 0) 70%); }
+.ps-code {
+  grid-area: code; justify-self: start; align-self: start; padding: 5px 7px 4px;
+  font: 600 0.75rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; font-variant-numeric: tabular-nums;
+  color: var(--text-strong); box-shadow: inset 0 0 0 1px var(--line-strong);
+  transition: background-color 0.16s var(--ease-out), color 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out);
+}
+.ps-row[data-on] .ps-code { background: var(--accent); color: #0c1a28; box-shadow: inset 0 0 0 1px var(--accent); }
+.ps-ph { grid-area: ph; position: relative; align-self: start; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-alt); }
+.ps-text .ps-ill { margin-top: 6px; font: 500 0.75rem/1.35 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); }
+.ps-text { grid-area: text; min-width: 0; }
+.ps-text h3 { font: 700 1.25rem/1.3 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.01em; }
+.ps-text p { margin-top: 2px; max-width: 52ch; font: 400 0.9375rem/1.5 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); text-wrap: pretty; }
+.ps-act { grid-area: act; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 12px; }
+.ps-add { box-shadow: inset 0 0 0 1px var(--text-strong); color: var(--text-strong); min-width: 11.5rem; }
+.ps-add:hover { background: rgb(20 40 59 / 0.06); }
+.ps-add[data-on] { box-shadow: inset 0 0 0 1px var(--accent-ink); color: var(--accent-ink); background: rgb(197 139 69 / 0.12); }
+.ps-add[data-on]:hover { background: rgb(197 139 69 / 0.2); }
+.ps-ask { font: 600 0.9375rem/1.3 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-strong); min-height: 40px; display: inline-flex; align-items: center; }
+
+@media (min-width: 768px) {
+  .ps-row { grid-template-columns: 64px 176px minmax(0, 1fr); grid-template-areas: "code ph text" "code ph act"; grid-template-rows: auto 1fr; column-gap: 24px; padding: 20px 0; }
+  .ps-code { margin-top: 4px; }
+  .ps-act { align-self: end; }
+}
+@media (min-width: 1440px) {
+  .ps-row { grid-template-columns: 64px 176px minmax(0, 1fr) auto; grid-template-areas: "code ph text act"; align-items: center; }
+  .ps-code, .ps-ph { align-self: center; }
+  .ps-code { margin-top: 0; }
+  .ps-act { flex-direction: column; align-items: stretch; margin-top: 0; gap: 4px; }
+  .ps-ask { justify-content: center; }
+}
+
+/* ---------- Your schedule, docked: a midnight Field Note cut at 45 degrees ---------- */
+.ps-dock { display: none; }
+.ps-panel-body {
+  padding: 20px 20px 20px 24px;
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+}
+.ps-panel-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.ps-panel-title { color: var(--accent-ink); }
+.ps-count { font: 700 1.375rem/1.2 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.015em; color: var(--text); font-variant-numeric: tabular-nums; }
+.ps-empty { margin-top: 14px; font: 400 0.9375rem/1.55 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.ps-items { margin-top: 6px; max-height: min(16rem, 30svh); overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgb(242 239 232 / 0.3) transparent; }
+.ps-items li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr) 36px; align-items: center; gap: 8px; min-height: 44px; border-bottom: 1px solid var(--line); }
+.ps-items-code { color: var(--accent-ink); }
+.ps-items-name { font: 500 0.9375rem/1.3 var(--font-inter), "Segoe UI", system-ui, sans-serif; }
+.ps-x { display: grid; place-items: center; width: 36px; height: 36px; color: var(--text-soft); cursor: pointer; transition: color 0.16s var(--ease-out), background-color 0.16s var(--ease-out); }
+.ps-x:hover { color: var(--text); background: rgb(242 239 232 / 0.08); }
+.ps-note-label { display: block; margin-top: 16px; font: 500 0.875rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; }
+.ps-note-label span { color: var(--text-soft); font-weight: 400; }
+.ps-note {
+  display: block; width: 100%; margin-top: 6px; padding: 10px 12px; resize: vertical; min-height: 4.5rem;
+  font: 400 0.9375rem/1.5 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text);
+  background: #0c1a28; box-shadow: inset 0 0 0 1px var(--line-strong); caret-color: var(--accent-ink);
+  field-sizing: content; max-height: 12rem;
+}
+.ps-note::placeholder { color: var(--text-soft); }
+.ps-note:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ps-send { width: 100%; margin-top: 16px; }
+.ps-more { display: grid; gap: 8px; margin-top: 8px; }
+.ps-more .k-btn { justify-content: flex-start; gap: 10px; }
+.ps-left { margin-top: 6px; font: 400 0.8125rem/1.4 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); font-variant-numeric: tabular-nums; }
+.ps-sent { margin-top: 10px; padding-left: 12px; box-shadow: inset 2px 0 0 var(--status-open); font: 400 0.875rem/1.5 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text); }
+.ps-undo { font: 600 0.9375rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text); cursor: pointer; }
+.ps-clear { display: inline-flex; align-items: center; min-height: 40px; margin-top: 8px; font: 500 0.875rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); cursor: pointer; }
+
+@media (min-width: 1024px) {
+  .ps-body { grid-template-columns: minmax(0, 1fr) 316px; column-gap: 32px; }
+  .ps-dock { display: block; padding-top: 40px; }
+  .ps-panel { position: sticky; top: calc(var(--header-h) + var(--index-h) + 24px); }
+}
+@media (min-width: 1280px) {
+  .ps-body { grid-template-columns: minmax(0, 9fr) minmax(0, 3fr); column-gap: calc(var(--col-gap) * 2); }
+}
+
+/* ---------- Phones and tablets: once the schedule has items, this bar takes the action bar's place ---------- */
+.ps-bar { position: fixed; inset: auto 0 0; z-index: 41; display: grid; grid-template-columns: 1.5fr 1fr 1fr; padding-bottom: env(safe-area-inset-bottom); background: var(--surface); box-shadow: inset 0 1px 0 var(--line); }
+.ps-bar[hidden] { display: none; }
+.ps-bar > * { display: flex; align-items: center; justify-content: center; gap: 8px; height: 56px; color: var(--text); text-decoration: none; font: 600 0.875rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; }
+.ps-bar > * + * { box-shadow: inset 1px 0 0 var(--line); }
+.ps-bar .ps-bar-open { flex-direction: column; align-items: flex-start; gap: 4px; padding: 0 16px; cursor: pointer; text-align: left; }
+.ps-bar-label { font: 500 0.75rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
+.ps-bar-count { font: 600 1rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.ps-bar .ps-bar-send { background: #c58b45; color: #0c1a28; box-shadow: none; }
+.ps-bar :focus-visible { outline-offset: -4px; }
+@media (min-width: 1024px) { .ps-bar { display: none; } }
+@media (min-width: 768px) and (max-width: 1023px) { html:has(.ps-bar:not([hidden])) .kf { padding-bottom: calc(56px + 32px); } }
+
+.ps-sheet {
+  margin: auto 0 0; width: 100%; max-width: none; max-height: min(88svh, 44rem); padding: 0; border: 0;
+  overflow-y: auto; overscroll-behavior: contain;
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+}
+.ps-sheet::backdrop { background: rgb(12 26 40 / 0.6); }
+.ps-sheet-in { position: relative; padding: 20px var(--margin) calc(24px + env(safe-area-inset-bottom)); }
+.ps-sheet-close { position: absolute; top: 12px; right: calc(var(--margin) - 8px); }
+@media (min-width: 768px) { .ps-sheet { margin: auto auto 0 auto; max-width: 28rem; } }
+
+/* ---------- Show at the counter: the whole screen, large enough to read across a counter ---------- */
+.ps-counter { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow-y: auto; }
+.ps-counter::backdrop { background: #0c1a28; }
+.ps-counter-in { max-width: 56rem; margin-inline: auto; padding: 16px var(--margin) 48px; }
+.ps-counter-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.ps-counter-logo { height: 32px; width: auto; }
+.ps-counter-close { color: var(--text-strong); }
+.ps-counter-close:hover { background: rgb(20 40 59 / 0.06); }
+.ps-counter-h { margin-top: 32px; font: 600 clamp(2.5rem, 1.9rem + 2.3vw, 3.75rem)/1 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.035em; color: var(--text-strong); }
+.ps-counter-meta { margin-top: 12px; font: 400 1rem/1.5 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text-soft); }
+.ps-counter-list { margin-top: 28px; border-top: 2px solid var(--text-strong); }
+.ps-counter-list li { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ps-counter-ph { position: relative; flex: none; width: 96px; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-alt); }
+.ps-counter-ph img { object-fit: cover; }
+.ps-counter-name { display: grid; gap: 6px; font: 600 clamp(1.5rem, 1.3rem + 0.9vw, 2.125rem)/1.15 var(--font-manrope), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.02em; color: var(--text-strong); }
+.ps-counter-code { font: 600 0.8125rem/1 var(--font-inter), "Segoe UI", system-ui, sans-serif; letter-spacing: 0.08em; color: var(--text-soft); }
+.ps-counter-note { margin-top: 24px; padding: 16px 20px; background: var(--surface-alt); }
+.ps-counter-note .t-tech { color: var(--text-soft); }
+.ps-counter-note p + p { margin-top: 6px; font: 400 1.125rem/1.55 var(--font-inter), "Segoe UI", system-ui, sans-serif; color: var(--text); white-space: pre-wrap; }
+
+/* ---------- Visit the showroom ---------- */
+.ps-visit-grid { display: grid; gap: 40px; padding-block: var(--section-y); }
+.ps-visit-lede { margin-top: 20px; max-width: 48ch; }
+.ps-visit-facts { margin-top: 32px; border-top: 1px solid var(--line); }
+.ps-visit-facts > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.ps-visit-facts dt { color: var(--text-soft); padding-top: 3px; }
+.ps-visit-facts dd { font: 400 1rem/1.55 var(--font-inter), "Segoe UI", system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.ps-visit-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.ps-visit-photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0c1a28; }
+@media (min-width: 1024px) {
+  .ps-visit-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); column-gap: calc(var(--col-gap) * 2); align-items: stretch; }
+  .ps-visit-photo { aspect-ratio: auto; min-height: 32rem; }
+}

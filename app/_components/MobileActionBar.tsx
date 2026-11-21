@@ -1,21 +1,20 @@
 import { Chat, Phone, Pin } from "./icons";
 import { MAPS_DIRECTIONS_URL, PHONE_TEL, whatsappLink } from "../_content/site";
 
-// Persistent one-tap actions on phones: WhatsApp, call, directions.
+// Phones only: one tap to WhatsApp (brass), call or get directions. It never hides on scroll.
 export function MobileActionBar() {
-  const item = "flex flex-1 flex-col items-center justify-center gap-1 py-2.5 font-label text-[0.82rem] font-semibold tracking-[0.03em] no-underline";
   return (
-    <nav aria-label="Quick actions" className="on-navy fixed inset-x-0 bottom-0 z-40 flex border-t border-[var(--line-on-navy)] bg-navy pb-[env(safe-area-inset-bottom)] text-paper md:hidden">
-      <a href={whatsappLink("Hello Kenstar, I have a question.")} target="_blank" rel="noopener noreferrer" className={`${item} bg-gold text-navy-deep`}>
-        <Chat size={20} />
+    <nav aria-label="Quick actions" className="kab env-midnight">
+      <a href={whatsappLink("Hello Kenstar, I have a question.")} target="_blank" rel="noopener noreferrer" className="kab-wa">
+        <Chat size={18} />
         WhatsApp
       </a>
-      <a href={PHONE_TEL} className={`${item} border-r border-[var(--line-on-navy)]`}>
-        <Phone size={20} />
+      <a href={PHONE_TEL}>
+        <Phone size={18} />
         Call
       </a>
-      <a href={MAPS_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className={item}>
-        <Pin size={20} />
+      <a href={MAPS_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">
+        <Pin size={18} />
         Directions
       </a>
     </nav>

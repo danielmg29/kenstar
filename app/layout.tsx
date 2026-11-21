@@ -22,13 +22,15 @@ const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], displa
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
+  // Where the site is served; Next resolves social and canonical URLs against it.
+  metadataBase: new URL("https://hardware.silvavalley.co.ke"),
   title: "Kenstar Limited | Hardware & home showroom, Embu",
   description:
     "Hardware, electricals, bathroom, finishing, furniture and lighting at the Kenstar showroom on Market Road, Embu. Construction, civil works and roadworks too.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b2d52",
+  themeColor: "#14283b",
 };
 
 // Decides before first paint how the logo loader covers this page load: the full intro on the

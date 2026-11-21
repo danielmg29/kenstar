@@ -47,3 +47,12 @@ export const Close = (p: P) => (
 export const Clock = (p: P) => (
   <Base {...p}><path d="M12 20.5a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17Z" /><path d="M12 7.5V12l3 2" /></Base>
 );
+export const Plus = (p: P) => (
+  <Base {...p}><path d="M12 5v14M5 12h14" /></Base>
+);
+export const Check = (p: P) => (
+  <Base {...p}><path d="M4.5 12.5l5 5 10-11" /></Base>
+);
+export const Expand = (p: P) => (
+  <Base {...p}><path d="M14 4.5h5.5V10M10 19.5H4.5V14M19.5 4.5l-6 6M4.5 19.5l6-6" /></Base>
+);
