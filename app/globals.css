@@ -177,8 +177,8 @@
   html.ll-on .ll {
     display: block;
     position: fixed; inset: 0; z-index: 100;
-    /* Failsafe: if the script has not taken over within ~3s (slow network), uncover the page. */
-    animation: ll-failsafe 0s linear 3.2s forwards;
+    /* Failsafe: if the script has not taken over within ~5s (slow network), uncover the page. */
+    animation: ll-failsafe 0s linear 5.2s forwards;
   }
   html.ll-on.ll-running .ll { animation: none; }
   @keyframes ll-failsafe { to { visibility: hidden; pointer-events: none; } }
@@ -291,6 +291,10 @@
   .sr-tab[aria-selected="true"] { color: var(--accent-ink); }
   .sr-tab[aria-selected="true"] .sr-thumb { opacity: 1; transform: translateY(-3px); box-shadow: 0 0 0 1px var(--accent-ink); }
   @media (min-width: 1024px) { .sr-tab { padding: 4px; } .sr-tab .sr-thumb { width: 52px; } }
+  /* Time to the next range, drawn along the foot of the active thumbnail while the slideshow plays. */
+  .sr-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--accent-ink); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+  /* With reduced motion the slideshow never moves on by itself, so there is nothing to pause. */
+  @media (prefers-reduced-motion: reduce) { .sr-play, .sr-progress { display: none !important; } }
 
   /* ---------- The journey (homepage, after the showroom) ----------
      A sticky stage under the header. The canvas fills it; the title block sits bottom left (top on

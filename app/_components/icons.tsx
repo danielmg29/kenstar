@@ -56,3 +56,9 @@ export const Check = (p: P) => (
 export const Expand = (p: P) => (
   <Base {...p}><path d="M14 4.5h5.5V10M10 19.5H4.5V14M19.5 4.5l-6 6M4.5 19.5l6-6" /></Base>
 );
+export const Pause = (p: P) => (
+  <Base {...p}><path d="M8.5 5v14M15.5 5v14" /></Base>
+);
+export const Play = (p: P) => (
+  <Base {...p}><path d="M7 4.5v15l12-7.5-12-7.5Z" /></Base>
+);

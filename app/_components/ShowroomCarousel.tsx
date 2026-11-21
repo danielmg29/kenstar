@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { ArrowRight, Chat, ChevronLeft, ChevronRight } from "./icons";
+import { ArrowRight, Chat, ChevronLeft, ChevronRight, Pause, Play } from "./icons";
 import { useOpenStatus } from "./OpenStatus";
 import { SHOWROOM, SHOWROOM_START } from "../_content/showroom";
 import { ADDRESS_LINE, MAPS_DIRECTIONS_URL, TOWN } from "../_content/site";
@@ -19,6 +19,8 @@ const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").match
 const OPEN_FOR = 0.9;
 const TEXT_OUT = 0.12;
 const INPUT_LOCK = 300;
+// Autoplay: each range stays this long, counted only while the visitor can see it and is not using it.
+const AUTOPLAY_MS = 6500;
 
 type Inset = { t: number; r: number; b: number; l: number };
 const insetCss = (i: Inset) => `inset(${i.t}px ${i.r}px ${i.b}px ${i.l}px)`;
@@ -27,7 +29,8 @@ const insetCss = (i: Inset) => `inset(${i.t}px ${i.r}px ${i.b}px ${i.l}px)`;
  * The homepage's first section: the showroom, one range at a time, each photograph filling the
  * screen. Choosing a range opens its photograph as a window that grows out of its thumbnail until
  * it is the whole view, its edge drawn as a hairline on the way. The active range drives the
- * photograph, headline, description, both actions and the index. Manual only.
+ * photograph, headline, description, both actions and the index. It moves on by itself every
+ * few seconds, holding while the visitor points at it, uses it, or cannot see it; a button pauses it.
  */
 export function ShowroomCarousel() {
   const [index, setIndex] = useState(SHOWROOM_START);
@@ -46,6 +49,11 @@ export function ShowroomCarousel() {
   const swap = useRef(0);
   const swipe = useRef<{ x: number; y: number } | null>(null);
   const status = useOpenStatus();
+  const [playing, setPlaying] = useState(true);
+  const pointerIn = useRef(false);
+  const focusIn = useRef(false);
+  const inView = useRef(true);
+  const progress = useRef<HTMLSpanElement | null>(null);
 
   const range = SHOWROOM[index];
 
@@ -163,6 +171,51 @@ export function ShowroomCarousel() {
     textIn.current = tl;
   }, [index]);
 
+  // Autoplay. Time counts only while the section is on screen, the tab is visible, the loader has
+  // gone, and the visitor is neither pointing at nor focused inside it; a manual change restarts the
+  // count (index is a dependency). With reduced motion it never advances on its own.
+  useEffect(() => {
+    const bar = () => progress.current;
+    if (!playing) {
+      bar()?.style.setProperty("transform", "scaleX(0)");
+      return;
+    }
+    let raf = 0;
+    let last = performance.now();
+    let elapsed = 0;
+    const tick = (now: number) => {
+      const dt = Math.min(now - last, 100);
+      last = now;
+      const held =
+        pointerIn.current ||
+        focusIn.current ||
+        !inView.current ||
+        document.hidden ||
+        document.documentElement.classList.contains("ll-on") ||
+        reducedMotion();
+      if (!held) elapsed += dt;
+      bar()?.style.setProperty("transform", `scaleX(${Math.min(elapsed / AUTOPLAY_MS, 1)})`);
+      if (elapsed >= AUTOPLAY_MS) {
+        elapsed = 0;
+        go(shown.current + 1);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [playing, go, index]);
+
+  // Off screen, the slideshow holds.
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => (inView.current = entry.isIntersecting && entry.intersectionRatio >= 0.4), {
+      threshold: [0, 0.4, 1],
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   // Links such as the footer's "#range-lighting" open that range and bring the showroom into view.
   useEffect(() => {
     const open = () => {
@@ -202,6 +255,12 @@ export function ShowroomCarousel() {
       id="ranges"
       aria-labelledby="sr-title"
       className="env-midnight relative isolate h-[calc(100svh-var(--header-h))] min-h-[38rem] touch-pan-y overflow-hidden"
+      onPointerEnter={(e) => e.pointerType === "mouse" && (pointerIn.current = true)}
+      onPointerLeave={(e) => e.pointerType === "mouse" && (pointerIn.current = false)}
+      onFocus={() => (focusIn.current = true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) focusIn.current = false;
+      }}
       onPointerDown={(e) => (swipe.current = { x: e.clientX, y: e.clientY })}
       onPointerUp={(e) => {
         const start = swipe.current;
@@ -260,6 +319,14 @@ export function ShowroomCarousel() {
           <p className="t-tech text-[var(--text)]/85 md:mt-3">
             {range.photo.standIn ? "Illustrative photo" : `Photographed at Kenstar, ${TOWN}`}
           </p>
+          <button
+            type="button"
+            className="k-icon-btn sr-play order-first md:hidden"
+            aria-label={playing ? "Pause the slideshow" : "Play the slideshow"}
+            onClick={() => setPlaying((p) => !p)}
+          >
+            {playing ? <Pause size={18} /> : <Play size={18} />}
+          </button>
         </div>
 
         {/* The active range */}
@@ -268,7 +335,7 @@ export function ShowroomCarousel() {
           id="sr-panel"
           role="tabpanel"
           aria-labelledby={`sr-tab-${range.slug}`}
-          aria-live="polite"
+          aria-live={playing ? "off" : "polite"}
           className="max-w-[34rem] [grid-area:panel] md:self-end"
         >
           <h2 ref={headline} className="t-h1 max-w-[16ch]">
@@ -322,6 +389,15 @@ export function ShowroomCarousel() {
               >
                 <span className="sr-thumb">
                   <Image src={r.photo.src} alt="" fill sizes="56px" className="object-cover" style={{ objectPosition: r.photo.positionMobile }} />
+                  {i === index && (
+                    <span
+                      className="sr-progress"
+                      aria-hidden="true"
+                      ref={(el) => {
+                        progress.current = el;
+                      }}
+                    />
+                  )}
                 </span>
                 <span className="t-tech">{r.number}</span>
               </button>
@@ -329,6 +405,9 @@ export function ShowroomCarousel() {
           </div>
           {/* On phones the thumbnails and a swipe do this job; the arrows join from tablet width. */}
           <div className="hidden items-center gap-3 md:flex">
+            <button type="button" className="k-icon-btn sr-play" aria-label={playing ? "Pause the slideshow" : "Play the slideshow"} onClick={() => setPlaying((p) => !p)}>
+              {playing ? <Pause size={18} /> : <Play size={18} />}
+            </button>
             <button type="button" className="k-icon-btn" aria-label="Previous range" onClick={() => go(shown.current - 1)}>
               <ChevronLeft size={20} />
             </button>

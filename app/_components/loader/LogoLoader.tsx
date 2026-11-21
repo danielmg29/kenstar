@@ -40,11 +40,16 @@ const STAR_CIRCLE = { cx: 648, cy: 121.9, r: 75.5 }; // through the top tip and 
 const WINDOW = { x: 639.2, y: 144, s: 17.6 };
 
 // ---------- Timing (seconds) ----------
-// The eyes wake as the camera arrives (it lands at 1.75s).
-const T = { draw: 0.3, fill: 0.95, resolve: 1.05, zoom: 1.15, zoomFor: 0.6, eyes: 1.45, openFor: 0.6, groundFor: 0.25 };
+// Timeline positions below are at normal speed; the intro plays at PACE, so its construction takes
+// about 2.9s and the eyes wake as the camera arrives. The star opens over openFor.
+const T = { draw: 0.3, fill: 0.95, resolve: 1.05, zoom: 1.15, zoomFor: 0.6, eyes: 1.45, openFor: 0.9, groundFor: 0.35 };
+const PACE = { intro: 0.6, loader: 1 }; // timeline speed: the intro is drawn slowly enough to follow
 const REVEAL_WAIT = 1200; // longest wait for the page's first image, in ms
-const OPENING_BUDGET = { intro: 3000, loader: 1500 }; // wall-clock ms the eyes' opening may take
-const HARD_CAP = { intro: 7000, loader: 8000 }; // the page is uncovered after this, whatever happens
+const OPENING_BUDGET = { intro: 4000, loader: 2000 }; // wall-clock ms the eyes' opening may take
+// Every visitor sees the animation: the star opens no earlier than this after it starts (ms).
+const MIN_SHOW = { intro: 7000, loader: 2800 };
+const HARD_CAP = { intro: 14000, loader: 9000 }; // the page is uncovered after this, whatever happens
+const LATE_ARRIVAL = 5000; // ms: a page whose scripts arrive later than this goes straight to the page
 
 type Mode = "intro" | "loader";
 type Showing = { finish: () => void; abort: () => void };
@@ -182,7 +187,8 @@ function runShowing(el: HTMLDivElement, mode: Mode, pageReady: Promise<unknown>,
   const startEyes = () => director.play(planOpening(mode), openingDone);
   // The star opens once the eyes have performed their opening (or its time is up) and the page is ready.
   const budget = started.then(() => wait(OPENING_BUDGET[mode]));
-  Promise.all([Promise.race([opening, budget]), pageReady]).then(open);
+  const shownLongEnough = started.then(() => wait(MIN_SHOW[mode]));
+  Promise.all([Promise.race([opening, budget]), shownLongEnough, pageReady]).then(open);
 
   // ----- Entrance -----
   if (mode === "intro") {
@@ -214,7 +220,7 @@ function runShowing(el: HTMLDivElement, mode: Mode, pageReady: Promise<unknown>,
       // While showing, a frame under a second counts in full, so a slow device does not stretch the
       // loader out; a one-off freeze longer than that costs only a quarter second of animation.
       gsap.ticker.lagSmoothing(1000, 250);
-      tl.play();
+      tl.timeScale(PACE[mode]).play();
       begin();
     }),
   );
@@ -246,7 +252,7 @@ export function LogoLoader() {
     if (speed > 0) gsap.globalTimeline.timeScale(speed);
 
     // Only play when the page arrived quickly; on a slow connection go straight to the page.
-    if (performance.now() > 3000 && !(speed > 0)) {
+    if (performance.now() > LATE_ARRIVAL && !(speed > 0)) {
       html.classList.remove("ll-on");
       return;
     }
