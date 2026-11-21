@@ -33,14 +33,13 @@ export default function AccommodationPage() {
             </div>
           </div>
           <figure className="st-hero">
-            <Image src={STAY.loungeTv.src} alt={STAY.loungeTv.alt} fill preload sizes="(min-width: 1024px) 64vw, 100vw" />
+            <Image src={STAY.loungeCorner.src} alt={STAY.loungeCorner.alt} fill preload sizes="(min-width: 1024px) 64vw, 100vw" />
           </figure>
           <nav className="st-credits" aria-label="Rooms">
             <ol>
-              {ROOMS.map((r, i) => (
+              {ROOMS.map((r) => (
                 <li key={r.slug}>
                   <a href={`#${r.slug}`}>
-                    <span className="st-credit-n">{String(i + 1).padStart(2, "0")}</span>
                     {r.name}
                   </a>
                 </li>

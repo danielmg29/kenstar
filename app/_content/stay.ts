@@ -34,7 +34,7 @@ export const ROOMS: Room[] = [
     slug: "lounge",
     name: "Lounge",
     photo: STAY.lounge,
-    more: [STAY.loungeCorner, STAY.hallway],
+    more: [STAY.hallway],
     notes: ["L-shaped upholstered sofa", "Round nested tables on a patterned rug", "Wall-mounted TV and a water dispenser"],
   },
   {

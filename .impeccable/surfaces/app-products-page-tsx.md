@@ -42,3 +42,8 @@ Ticking a row stamps it into "Your schedule", with the count changing and the ro
 
 - Product names, models and specifications (none supplied).
 - Hardware and finishing photography.
+
+## Recorded departures (finish review, 2026-11-21)
+
+- **H1:** "Everything a space needs, in one showroom on Market Road." replaces "…on one floor in Embu.": the showroom photographs show a balcony and an upper floor, so "one floor" would be untrue.
+- **Home decor:** filed under Furniture & home (FU-09), not Lighting: its photographs show framed pictures and decorative glass for walls and shelves. The counts read Lighting 5 and Furniture 9.

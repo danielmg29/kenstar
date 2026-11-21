@@ -279,7 +279,7 @@ function CounterView({ s, date, dialogRef, onClose, close }: CounterProps) {
     <dialog ref={dialogRef} className="ps-counter env-limestone" aria-labelledby="ps-counter-title" onClick={closeOnBackdrop} onClose={onClose}>
       <div className="ps-counter-in">
         <div className="ps-counter-top">
-          <Wordmark className="ps-counter-logo" title="Kenstar Limited, Embu" />
+          <Wordmark className="ps-counter-logo" title="Kenstar Limited, Embu" locator={false} />
           <button type="button" className="k-icon-btn ps-counter-close" aria-label="Close" onClick={close} autoFocus>
             <Close size={20} />
           </button>

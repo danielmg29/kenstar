@@ -39,7 +39,7 @@ export function SiteHeader() {
     <header className="kh env-midnight">
       <div className="kh-bar k-wrap">
         <Link href="/" className="kh-logo" aria-label="Kenstar Limited, home">
-          <Wordmark tone="white" title="Kenstar Limited, Embu" />
+          <Wordmark tone="white" title="Kenstar Limited, Embu" locator={false} />
         </Link>
 
         <nav aria-label="Main" className="kh-nav">

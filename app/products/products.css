@@ -35,18 +35,21 @@
   .ps-top { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: clamp(400px, calc(100svh - var(--header-h) - var(--index-h) - 300px), 520px); }
   .ps-title { padding: 48px 40px 0 max(var(--margin), calc((100vw - 1600px) / 2 + var(--margin))); border-right: 1px solid var(--line); }
   .ps-meta { margin-top: auto; }
+  .ps-hero { margin-top: 0; aspect-ratio: auto; align-self: stretch; }
 }
 @media (min-width: 1280px) {
   .ps-meta { grid-template-columns: auto auto minmax(0, 1fr); }
   .ps-meta > div { border-bottom: 0; padding-right: 24px; }
   .ps-meta .ps-meta-wide { grid-column: auto; padding-left: 16px; box-shadow: inset 1px 0 0 var(--line); }
-  .ps-hero { margin-top: 0; aspect-ratio: auto; }
 }
 
 /* ---------- Index: the six ranges, then "Your schedule" over the dock. Sticky over the catalogue only. ---------- */
 .ps-index { position: sticky; top: var(--header-h); z-index: 30; background: var(--surface); box-shadow: inset 0 1px 0 var(--line), inset 0 -1px 0 var(--line); }
 .ps-index-in { display: grid; grid-template-columns: minmax(0, 1fr); }
 .ps-index-ranges {
+  /* Positioned, so the screen-reader-only counts inside it are clipped with the strip instead of
+     widening the page on phones. */
+  position: relative;
   display: flex; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
   /* On phones the strip scrolls sideways: its right edge fades so the cut-off cell reads as more. */
   mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent);
@@ -70,8 +73,7 @@
 .ps-index .ps-index-mine { display: none; }
 @media (min-width: 1024px) {
   .ps-index-in { grid-template-columns: minmax(0, 1fr) 316px; column-gap: 32px; }
-  .ps-index-ranges { mask-image: none; }
-  .ps-index-ranges li:last-child a { margin-right: 0; }
+
   .ps-index .ps-index-mine {
     display: flex; justify-content: space-between; padding: 15px 16px 0 24px;
     background: #14283b; color: #f2efe8; box-shadow: none;
@@ -83,6 +85,9 @@
   .ps-index .ps-index-mine:focus-visible { outline-color: #14283b; outline-offset: 2px; }
 }
 @media (min-width: 1280px) {
+  /* All six cells fit from here, so the strip stops scrolling and loses its fade. */
+  .ps-index-ranges { mask-image: none; }
+  .ps-index-ranges li:last-child a { margin-right: 0; }
   .ps-index-in { grid-template-columns: minmax(0, 9fr) minmax(0, 3fr); column-gap: calc(var(--col-gap) * 2); }
   .ps-index-ranges li { flex: 1 1 0; min-width: 0; }
   .ps-index-ranges a { overflow: hidden; }

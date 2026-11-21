@@ -32,9 +32,11 @@ type WordmarkProps = {
   tone?: "navy" | "white";
   className?: string;
   title?: string;
+  locator?: boolean;
 };
 
-export function Wordmark({ tone = "navy", className, title = "Kenstar Limited, Embu" }: WordmarkProps) {
+// The EMBU locator reads only at large sizes; small lockups (header, counter view) set locator={false}.
+export function Wordmark({ tone = "navy", className, title = "Kenstar Limited, Embu", locator = true }: WordmarkProps) {
   // Brand marks are fixed values, not theme tokens: logo navy and star gold never change.
   const ink = tone === "navy" ? "#0b2d52" : "#ffffff";
   return (
@@ -46,7 +48,7 @@ export function Wordmark({ tone = "navy", className, title = "Kenstar Limited, E
       {Object.values(PANES).map((d) => (
         <path key={d} d={d} fill={ink} />
       ))}
-      {EMBU.map((d) => (
+      {locator && EMBU.map((d) => (
         <path key={d} d={d} fill={ink} />
       ))}
     </svg>
