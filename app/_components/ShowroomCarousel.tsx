@@ -302,7 +302,7 @@ export function ShowroomCarousel() {
       </div>
 
       {/* The words and controls, laid over the photograph */}
-      <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] grid-rows-[auto_1fr_auto_auto_auto] gap-x-4 gap-y-4 px-5 pb-[calc(56px+1.5rem)] pt-7 [grid-template-areas:'title_title'_'._.'_'count_count'_'tabs_tabs'_'panel_panel'] md:grid-cols-[minmax(0,1fr)_auto] md:grid-rows-[auto_1fr_auto_auto] md:gap-x-12 md:gap-y-6 md:px-10 md:pb-10 md:pt-10 md:[grid-template-areas:'title_count'_'._.'_'panel_tabs'_'visit_tabs'] xl:px-[clamp(3rem,5vw,6rem)]">
+      <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] grid-rows-[auto_auto_1fr_auto_auto] gap-x-4 gap-y-3 px-5 pb-[calc(56px+0.75rem)] pt-6 [grid-template-areas:'title_title'_'count_count'_'._.'_'panel_panel'_'tabs_tabs'] md:grid-cols-[minmax(0,1fr)_auto] md:grid-rows-[auto_1fr_auto_auto] md:gap-x-12 md:gap-y-6 md:px-10 md:pb-10 md:pt-10 md:[grid-template-areas:'title_count'_'._.'_'panel_tabs'_'visit_tabs'] xl:px-[clamp(3rem,5vw,6rem)]">
         <div className="[grid-area:title]">
           <h1 id="sr-title" className="t-display-2 max-w-[11ch]">
             The making of a space.
@@ -311,8 +311,8 @@ export function ShowroomCarousel() {
         </div>
 
         {/* Where we are, and whose photograph this is */}
-        <div className="flex items-baseline justify-end gap-3 whitespace-nowrap text-right [grid-area:count] md:block">
-          <p className="order-2 font-[family-name:var(--font-manrope)] text-[clamp(1.5rem,1.2rem+1.9vw,3.25rem)] font-light leading-none tracking-[-0.03em] md:order-none" aria-hidden="true">
+        <div className="flex items-center justify-between gap-3 [grid-area:count] md:block md:whitespace-nowrap md:text-right">
+          <p className="hidden font-[family-name:var(--font-manrope)] text-[clamp(1.5rem,1.2rem+1.9vw,3.25rem)] font-light leading-none tracking-[-0.03em] md:block" aria-hidden="true">
             {range.number}
             <span className="t-soft"> / {pad(COUNT)}</span>
           </p>
@@ -321,7 +321,7 @@ export function ShowroomCarousel() {
           </p>
           <button
             type="button"
-            className="k-icon-btn sr-play order-first md:hidden"
+            className="k-icon-btn sr-play shrink-0 md:hidden"
             aria-label={playing ? "Pause the slideshow" : "Play the slideshow"}
             onClick={() => setPlaying((p) => !p)}
           >
@@ -341,13 +341,13 @@ export function ShowroomCarousel() {
           <h2 ref={headline} className="t-h1 max-w-[16ch]">
             {range.name}
           </h2>
-          <p className="t-lede mt-3 text-[var(--text)]/85 md:mt-4">{range.description}</p>
-          <div className="mt-5 flex flex-wrap gap-3 md:mt-7">
+          <p className="t-lede sr-desc mt-2 text-[var(--text)]/85 md:mt-4">{range.description}</p>
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 md:mt-7 md:gap-3">
             <a href={range.primary.href} target="_blank" rel="noopener noreferrer" className="k-btn k-btn-primary">
               <Chat size={18} />
               {range.primary.label}
             </a>
-            <a href={range.secondary.href} className="k-btn k-btn-secondary">
+            <a href={range.secondary.href} className="k-btn k-btn-secondary sr-secondary">
               {range.secondary.label}
               <ArrowRight size={18} className="nudge" />
             </a>
